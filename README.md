@@ -1,2 +1,4 @@
-# community-dashboard
-Community dashboard front-end
+# community-app
+Community App front-end
+- web application
+- mobile app
