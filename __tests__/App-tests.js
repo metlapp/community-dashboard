@@ -26,7 +26,7 @@ describe('<App />', () => {
   
   it('text on homepage', () => {
     const wrapper = shallow(<App />);
-    const text = wrapper.find("Text").text();
+    const text = wrapper.find("Text").render().text();
     expect(text).toEqual('Open up App.js to start working on your app!');
   });
 });
