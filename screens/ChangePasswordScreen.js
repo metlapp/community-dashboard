@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "600",
     marginBottom: 30,
-    marginTop: 10,
+    marginTop: 5,
   },
   TextInput: {
     lineHeight: 25,
