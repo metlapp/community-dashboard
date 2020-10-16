@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default function AppButton({ title, onPress, }) {
+export default function AppButton({ title, onPress }) {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Text style={styles.title}>{title}</Text>
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     width: "100%",
-    marginVertical: 5
+    marginVertical: 5,
   },
   title: {
     color: "white",
