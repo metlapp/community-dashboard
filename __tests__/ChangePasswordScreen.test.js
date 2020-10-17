@@ -8,7 +8,27 @@ import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 // You do not need this if using Enzyme 'toMatchSnapshot' etc.
 import renderer from "react-test-renderer";
 
-it("Text on change password screen", () => {
-  const wrapper = shallow(<ChangePasswordScreen />);
-  const text = wrapper.find();
+describe("Testing ChangePasswordScreen", () => {
+  it("renders correctly, test using Jest", () => {
+    renderer.create(<ChangePasswordScreen />);
+  });
+
+  it("matches the snapshot", () => {
+    const tree = renderer.create(<ChangePasswordScreen />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it("text on change password screen", () => {
+    const wrapper = shallow(<ChangePasswordScreen />);
+    const text = wrapper.find("Text").render().text();
+    expect(text).toEqual("Change your password");
+  });
+
+  it("Test click event", () => {
+    const wrapper = shallow(<ChangePasswordScreen />);
+    const element = wrapper.find("AppFormField[name='currentPassword']").render();
+
+    element.simulate("change", { target: { value: "password" } });
+    expect(element.props.value).toEqual("password");
+  });
 });
