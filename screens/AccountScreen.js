@@ -1,22 +1,29 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import { Button, Appbar, Modal, Portal, Card, Title, Paragraph,} from 'react-native-paper';
-
+import {SafeAreaView, StyleSheet, View} from 'react-native';
+import { Button, Appbar, Modal, Portal, Card, Title,TextInput} from 'react-native-paper';
 
 const user = [
     {name : "Dawson", email : "", password : ""}
 ]
 
-const openModel = (props) =>{
-    console.log(props.visible)
+const OpenModal = (props) =>{
+    var newName= ""
+    function closemodal(){
+        user[0].name = newName 
+        props.hidemodal 
+    }
+    
     return(
         <Portal>
-            <Modal visible={true}>
+            <Modal visible={props.visibility} onDismiss={props.hidemodal} >
                 <Card>
-                    <Card.Title title="Card Title" subtitle="Card Subtitle"/>
                     <Card.Content>
-                        <Title>Card title</Title>
-                        <Paragraph>Card content</Paragraph>
+                        <Title>Hello, {user[0].name}</Title>
+                        <TextInput
+                            label="Change Name"
+                            onChangeText={text => newName = text}
+                        />
+                        <Button onPress={props.hidemodal}>Save</Button>
                     </Card.Content>
                 </Card>
             </Modal>
@@ -25,28 +32,23 @@ const openModel = (props) =>{
     )
 }
 
-const AccountScreen = () => {
-    const [visible, setVisible] = React.useState(false);
 
+const AccountScreen = () => {
+    
+    const [visible, setVisible] = React.useState(false);
     const showModal = () => setVisible(true);
-  
     const hideModal = () => setVisible(false);
   return (
     <SafeAreaView>
-       
-           
                 <Appbar.Header>
                     <Appbar.Content title="ACCOUNT" />
                 </Appbar.Header>
+                {visible ? <OpenModal visibility = {visible} hidemodal={hideModal} />:null}
                 <View style={styles.buttonContainer}>
-                    
                     <Button style={styles.buttonStyle} icon="email" mode="contained" onPress={() => console.log('Pressed')}>
                         Change Email address
                     </Button>
-                    <Button style={styles.buttonStyle}  icon="account-edit" mode="contained" onPress={()=>{
-                        showModal;
-                        openModel({visible})
-                    }}>
+                    <Button style={styles.buttonStyle} icon="account-edit" mode="contained" onPress={showModal }>
                         Change name
                     </Button>
                     <Button style={styles.buttonStyle} icon="square-edit-outline" mode="contained" onPress={() => console.log('Pressed')}>
@@ -79,6 +81,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         
   }
+  
 });
 
 export default AccountScreen;
