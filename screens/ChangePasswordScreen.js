@@ -31,6 +31,7 @@ const validationSchema = Yup.object().shape({
 
 export default function ChangePasswordScreen() {
   const [errorVisible, setErrorVisible] = useState(false);
+  const [error, setError] = useState(false);
   const [successVisible, setSuccessVisible] = useState(false);
 
   useEffect(() => {
@@ -38,19 +39,33 @@ export default function ChangePasswordScreen() {
     setErrorVisible(false);
   }, []);
 
+  const resetForm = (values) => {
+    values["newPassword"] = "";
+    values["currentPassword"] = "";
+    values["confirmNewPassword"] = "";
+  };
+
   const handleSubmit = async (values) => {
     setErrorVisible(false);
     if (values["newPassword"] !== values["confirmNewPassword"]) {
+      setError("Please make sure new passwords match!");
       setErrorVisible(true);
       return;
     }
     values["newPassword"] === values["confirmNewPassword"];
     const currentPassword = await runCrypto(values["currentPassword"]);
-    if (user.password === currentPassword) {
-      user.password = await runCrypto(values["newPassword"]);
-      console.log(user.password);
-      setSuccessVisible(true);
+    if (user.password !== currentPassword) {
+      setError("Incorrect password");
+      setErrorVisible(true);
+      return;
     }
+    user.password = await runCrypto(values["newPassword"]);
+    setErrorVisible(false);
+    setSuccessVisible(true);
+    resetForm(values);
+    setTimeout(() => {
+      setSuccessVisible(false);
+    }, 5000);
   };
 
   return (
@@ -68,6 +83,7 @@ export default function ChangePasswordScreen() {
       >
         <AppFormField
           autoFocus
+          onFocus={() => setErrorVisible(false)}
           secureTextEntry
           placeholder="Current Password"
           name="currentPassword"
@@ -85,10 +101,7 @@ export default function ChangePasswordScreen() {
           name="confirmNewPassword"
           style={styles.TextInput}
         />
-        <ErrorMessage
-          error="Please make sure new passwords match"
-          visible={errorVisible}
-        />
+        <ErrorMessage error={error} visible={errorVisible} />
         <SubmitButton title="Save" />
         <SuccessMessage
           success="Password changed successfully"

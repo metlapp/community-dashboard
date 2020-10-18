@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 function SuccessMessage({ success, visible }) {
   if (!visible || !success) return null;
@@ -13,8 +13,13 @@ function SuccessMessage({ success, visible }) {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
+    borderRadius: 20,
     backgroundColor: "#2dbc4e",
+    height: 45,
+    justifyContent: "center",
     opacity: 0.8,
+    width: "85%",
   },
   success: {
     color: "white",
