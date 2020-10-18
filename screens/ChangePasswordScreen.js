@@ -7,6 +7,7 @@ import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import ErrorMessage from "../components/ErrorMessage";
+import SuccessMessage from "../components/SuccessMessage";
 
 const runCrypto = async (pass) => {
   const digest = await Crypto.digestStringAsync(
@@ -29,8 +30,13 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ChangePasswordScreen() {
-  useEffect(() => {}, []);
   const [errorVisible, setErrorVisible] = useState(false);
+  const [successVisible, setSuccessVisible] = useState(false);
+
+  useEffect(() => {
+    setSuccessVisible(false);
+    setErrorVisible(false);
+  }, []);
 
   const handleSubmit = async (values) => {
     setErrorVisible(false);
@@ -43,6 +49,7 @@ export default function ChangePasswordScreen() {
     if (user.password === currentPassword) {
       user.password = await runCrypto(values["newPassword"]);
       console.log(user.password);
+      setSuccessVisible(true);
     }
   };
 
@@ -83,6 +90,10 @@ export default function ChangePasswordScreen() {
           visible={errorVisible}
         />
         <SubmitButton title="Save" />
+        <SuccessMessage
+          success="Password changed successfully"
+          visible={successVisible}
+        />
       </Form>
     </SafeAreaView>
   );
