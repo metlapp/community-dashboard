@@ -9,73 +9,10 @@ import {
   Title,
   TextInput,
 } from "react-native-paper";
-
-const user = [{ name: "Dawson", email: "", password: "" }];
-
-const NameCh = (props) => {
-  var newName = "";
-  const [error, setError] = React.useState(false);
-  const saveAndClose = () => {
-    if (newName == "") {
-      setError(true);
-    } else {
-      setError(false);
-      user[0].name = newName;
-      props.hidemodal();
-    }
-  };
-  return (
-    <>
-      <Title>Hello, {user[0].name}</Title>
-      <TextInput
-        label="Change Name"
-        onChangeText={(text) => (newName = text)}
-        error={error}
-      />
-      <Button onPress={saveAndClose}>Save</Button>
-    </>
-  );
-};
-const EmailCh = () => {
-  console.log("in Email");
-  return (
-    <>
-      <Title>Email</Title>
-    </>
-  );
-};
-const PasswordCh = () => {
-  return (
-    <>
-      <Title>Password</Title>
-    </>
-  );
-};
-
-const OpenModal = (props) => {
-  return (
-    <Portal>
-      <Modal visible={props.visibility} onDismiss={props.hidemodal}>
-        <Card>
-          <Card.Content>
-            {(() => {
-              switch (props.state) {
-                case "Email":
-                  return <EmailCh />;
-                case "Name":
-                  return <NameCh hidemodal={props.hidemodal} />;
-                case "Password":
-                  return <PasswordCh />;
-              }
-            })()}
-          </Card.Content>
-        </Card>
-      </Modal>
-    </Portal>
-  );
-};
+import AccountModal from "../components/AccountModal";
 
 const AccountScreen = () => {
+  //determines what component the modal will render when a button is clicked
   const [state, setState] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
@@ -85,9 +22,13 @@ const AccountScreen = () => {
       <Appbar.Header>
         <Appbar.Content title="ACCOUNT" />
       </Appbar.Header>
-      <OpenModal visibility={visible} hidemodal={hideModal} state={state} />
+      {/* Opens model and takes in the visible state with what component to render */}
+      <AccountModal visibility={visible} hidemodal={hideModal} state={state} />
       <View style={styles.buttonContainer}>
+        {/* When Button is clicked it changes the state of the visibility and
+           tells the modal what component to render inside the modal */}
         <Button
+          className="button"
           style={styles.buttonStyle}
           icon="email"
           mode="contained"
@@ -99,7 +40,7 @@ const AccountScreen = () => {
           Change Email address
         </Button>
         <Button
-          className="changeNameButton"
+          className="button"
           style={styles.buttonStyle}
           icon="account-edit"
           mode="contained"
@@ -111,6 +52,7 @@ const AccountScreen = () => {
           Change name
         </Button>
         <Button
+          className="button"
           style={styles.buttonStyle}
           icon="square-edit-outline"
           mode="contained"
