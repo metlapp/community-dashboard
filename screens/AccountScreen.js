@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
-import { Button, Appbar, Modal, Portal, Card, Title,TextInput} from 'react-native-paper';
+import { Button, Appbar, Modal, Portal, Card, Title, TextInput} from 'react-native-paper';
 
 const user = [
     {name : "Dawson", email : "", password : ""}
@@ -8,22 +8,29 @@ const user = [
 
 const OpenModal = (props) =>{
     var newName= ""
-    function closemodal(){
-        user[0].name = newName 
-        props.hidemodal 
-    }
+    const [error, setError] = React.useState(false);
     
     return(
         <Portal>
-            <Modal visible={props.visibility} onDismiss={props.hidemodal} >
+            <Modal visible={props.visibility} onDismiss={props.hidemodal}  >
                 <Card>
                     <Card.Content>
                         <Title>Hello, {user[0].name}</Title>
                         <TextInput
                             label="Change Name"
                             onChangeText={text => newName = text}
-                        />
-                        <Button onPress={props.hidemodal}>Save</Button>
+                            error={error}
+                            />
+                        <Button onPress={() => 
+                            {if(newName == ""){
+                                setError(true)
+                            }else{
+                                setError(false)
+                                user[0].name = newName
+                                }
+
+                            }} >Save</Button>
+                        <Button onPress={props.hidemodal}>Close</Button>
                     </Card.Content>
                 </Card>
             </Modal>
@@ -43,20 +50,18 @@ const AccountScreen = () => {
                 <Appbar.Header>
                     <Appbar.Content title="ACCOUNT" />
                 </Appbar.Header>
-                {visible ? <OpenModal visibility = {visible} hidemodal={hideModal} />:null}
+                {visible ? <OpenModal visibility = {visible} hidemodal={hideModal} /> : null}
                 <View style={styles.buttonContainer}>
                     <Button style={styles.buttonStyle} icon="email" mode="contained" onPress={() => console.log('Pressed')}>
                         Change Email address
                     </Button>
-                    <Button style={styles.buttonStyle} icon="account-edit" mode="contained" onPress={showModal }>
+                    <Button style={styles.buttonStyle} icon="account-edit" mode="contained" onPress={showModal}>
                         Change name
                     </Button>
                     <Button style={styles.buttonStyle} icon="square-edit-outline" mode="contained" onPress={() => console.log('Pressed')}>
                         Change password
                     </Button>
                 </View>
-            
-  
     </SafeAreaView>
   );
 }
