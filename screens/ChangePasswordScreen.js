@@ -72,6 +72,7 @@ export default function ChangePasswordScreen() {
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Change your password</Text>
       <Form
+        className="form"
         style={styles.form}
         initialValues={{
           currentPassword: "",
@@ -82,6 +83,7 @@ export default function ChangePasswordScreen() {
         validationSchema={validationSchema}
       >
         <AppFormField
+          className="currentPassword"
           autoFocus
           onFocus={() => setErrorVisible(false)}
           secureTextEntry
@@ -90,19 +92,25 @@ export default function ChangePasswordScreen() {
           style={styles.TextInput}
         />
         <AppFormField
+          id="newPassword"
           secureTextEntry
           placeholder="New Password"
           name="newPassword"
           style={styles.TextInput}
         />
         <AppFormField
+          id="confirmPassword"
           secureTextEntry
           placeholder="Confirm Password"
           name="confirmNewPassword"
           style={styles.TextInput}
         />
-        <ErrorMessage error={error} visible={errorVisible} />
-        <SubmitButton title="Save" />
+        <ErrorMessage
+          error={error}
+          visible={errorVisible}
+          className="errorMessage"
+        />
+        <SubmitButton className="submit" title="Save" />
         <SuccessMessage
           success="Password changed successfully"
           visible={successVisible}
