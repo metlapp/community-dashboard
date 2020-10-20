@@ -4,6 +4,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import AccountScreen from "../screens/AccountScreen";
 import ChangeName from "../components/ChangeName";
+import { render, fireEvent } from "@testing-library/react-native";
 // This test just uses Jest snapshot testing
 it("renders correctly, test using Jest", () => {
   renderer.create(<AccountScreen />);
@@ -24,13 +25,19 @@ describe("<AccountScreen />", () => {
     const wrapper = component.find(".button");
     expect(wrapper.getElements()).toHaveLength(3);
   });
-  it("Saves users name", () => {
-    const wrapper = shallow(<ChangeName />);
-    const input = wrapper.find(".newNameInput");
-    input.simulate("change", {
-      currentTarget: { value: "Jerry" },
-    });
-    wrapper.find(".save").simulate("click");
-    expect();
+
+  it("SetUser has bee called", () => {
+    const setUser = jest.fn();
+    const hidemodal = jest.fn();
+    const user = { name: "Dawson" };
+    const { getByText, getByPlaceholderText } = render(
+      // MyComponent renders TextInput which has a placeholder 'Enter details'
+      // and with `onChangeText` bound to handleChangeText
+      <ChangeName setUser={setUser} user={user} hidemodal={hidemodal} />
+    );
+    fireEvent(getByPlaceholderText("Change Name"), "onChangeText", "Jerry");
+
+    fireEvent(getByText("Save"), "onPress");
+    expect(setUser).toHaveBeenCalled();
   });
 });

@@ -14,13 +14,12 @@ const ChangeName = (props) => {
     }
   };
 
-  console.log(props.user);
   return (
     <>
       <Title>Hello, {props.user.name}</Title>
       <TextInput
         className="newNameInput"
-        label="Change Name"
+        placeholder="Change Name"
         onChangeText={(text) => (newName = text)}
         error={error}
       />
