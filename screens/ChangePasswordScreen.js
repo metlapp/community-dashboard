@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import * as Crypto from "expo-crypto";
-
 import { SafeAreaView, StyleSheet, Text } from "react-native";
+
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/SuccessMessage";
-
-const runCrypto = async (pass) => {
-  const digest = await Crypto.digestStringAsync(
-    Crypto.CryptoDigestAlgorithm.SHA256,
-    pass
-  );
-  return digest;
-};
-
-const user = {
-  id: 4,
-  name: "john",
-  password: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-};
+import runCrypto from "../auth/crypto-hashing";
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().required().min(8).label("Current Password"),
@@ -30,36 +16,55 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ChangePasswordScreen() {
+  // Temporary user data
+  const [user, setUser] = useState({
+    id: 4,
+    name: "john",
+    password:
+      "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+  });
   const [errorVisible, setErrorVisible] = useState(false);
   const [error, setError] = useState(false);
   const [successVisible, setSuccessVisible] = useState(false);
 
+  // Reset errors upon page render
   useEffect(() => {
     setSuccessVisible(false);
     setErrorVisible(false);
   }, []);
 
+  // reset form to initial values
   const resetForm = (values) => {
     values["newPassword"] = "";
     values["currentPassword"] = "";
     values["confirmNewPassword"] = "";
   };
 
-  const handleSubmit = async (values) => {
+  const handlePasswordChange = async (values) => {
+    console.log("top level");
     setErrorVisible(false);
+    console.log("top level");
+    // Show error if new passwords do not match
     if (values["newPassword"] !== values["confirmNewPassword"]) {
+      console.log("passes didnt match");
       setError("Please make sure new passwords match!");
       setErrorVisible(true);
       return;
     }
+    console.log("past first if");
     values["newPassword"] === values["confirmNewPassword"];
     const currentPassword = await runCrypto(values["currentPassword"]);
+    // show error if current password doesnt match password from api
     if (user.password !== currentPassword) {
+      console.log("incorrect pass");
       setError("Incorrect password");
       setErrorVisible(true);
       return;
     }
-    user.password = await runCrypto(values["newPassword"]);
+    // If no error, submit password change
+    console.log("passed");
+    const newPassword = await runCrypto(values["newPassword"]);
+    setUser({ ...user, password: newPassword });
     setErrorVisible(false);
     setSuccessVisible(true);
     resetForm(values);
@@ -73,13 +78,16 @@ export default function ChangePasswordScreen() {
       <Text style={styles.text}>Change your password</Text>
       <Form
         className="form"
-        style={styles.form}
         initialValues={{
           currentPassword: "",
           newPassword: "",
           confirmNewPassword: "",
         }}
-        onSubmit={handleSubmit}
+        onSubmit={() => {
+          handlePasswordChange();
+        }}
+        style={styles.form}
+        testID="form"
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -110,7 +118,9 @@ export default function ChangePasswordScreen() {
           visible={errorVisible}
           className="errorMessage"
         />
-        <SubmitButton className="submit" title="Save" />
+        <SubmitButton className="submit" title="Save">
+          Save
+        </SubmitButton>
         <SuccessMessage
           success="Password changed successfully"
           visible={successVisible}
