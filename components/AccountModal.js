@@ -17,7 +17,7 @@ const AccountModal = (props) => {
                 case "Email":
                   return <ChangeEmail />;
                 case "Name":
-                  return <ChangeName hidemodal={props.hidemodal} />;
+                  return <ChangeName hidemodal={props.hidemodal} {...props} />;
                 case "Password":
                   return <ChangePassword />;
               }

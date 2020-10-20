@@ -1,17 +1,9 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import {
-  Button,
-  Appbar,
-  Modal,
-  Portal,
-  Card,
-  Title,
-  TextInput,
-} from "react-native-paper";
+import { Button, Appbar } from "react-native-paper";
 import AccountModal from "../components/AccountModal";
 
-const AccountScreen = () => {
+const AccountScreen = (props) => {
   //determines what component the modal will render when a button is clicked
   const [state, setState] = React.useState("");
   const [visible, setVisible] = React.useState(false);
@@ -23,7 +15,12 @@ const AccountScreen = () => {
         <Appbar.Content title="ACCOUNT" />
       </Appbar.Header>
       {/* Opens model and takes in the visible state with what component to render */}
-      <AccountModal visibility={visible} hidemodal={hideModal} state={state} />
+      <AccountModal
+        visibility={visible}
+        hidemodal={hideModal}
+        state={state}
+        {...props}
+      />
       <View style={styles.buttonContainer}>
         {/* When Button is clicked it changes the state of the visibility and
            tells the modal what component to render inside the modal */}

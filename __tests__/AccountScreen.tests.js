@@ -1,13 +1,9 @@
 import "react-native";
-import React from "react";
 import { shallow } from "enzyme";
-
-// Note: this is just for use with Jest snapshot testing
-// and comes packaged with react-native init project.
-// You do not need this if using Enzyme 'toMatchSnapshot' etc.
+import React from "react";
 import renderer from "react-test-renderer";
 import AccountScreen from "../screens/AccountScreen";
-
+import ChangeName from "../components/ChangeName";
 // This test just uses Jest snapshot testing
 it("renders correctly, test using Jest", () => {
   renderer.create(<AccountScreen />);
@@ -23,9 +19,18 @@ describe("<AccountScreen />", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("Test click event", () => {
+  it("Should have three buttons", () => {
     const component = shallow(<AccountScreen />);
-    const wrapper = component.find(".changeNameButton");
-    expect(wrapper.length).toEqual(1);
+    const wrapper = component.find(".button");
+    expect(wrapper.getElements()).toHaveLength(3);
+  });
+  it("Saves users name", () => {
+    const wrapper = shallow(<ChangeName />);
+    const input = wrapper.find(".newNameInput");
+    input.simulate("change", {
+      currentTarget: { value: "Jerry" },
+    });
+    wrapper.find(".save").simulate("click");
+    expect();
   });
 });

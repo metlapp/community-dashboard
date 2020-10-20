@@ -1,8 +1,6 @@
 import React from "react";
 import { Button, Title, TextInput } from "react-native-paper";
 
-const user = [{ name: "Dawson", email: "", password: "" }];
-
 const ChangeName = (props) => {
   var newName = "";
   const [error, setError] = React.useState(false);
@@ -11,20 +9,24 @@ const ChangeName = (props) => {
       setError(true);
     } else {
       setError(false);
-      user[0].name = newName;
+      props.setUser({ name: newName });
       props.hidemodal();
     }
   };
+
+  console.log(props.user);
   return (
     <>
-      <Title>Hello, {user[0].name}</Title>
+      <Title>Hello, {props.user.name}</Title>
       <TextInput
         className="newNameInput"
         label="Change Name"
         onChangeText={(text) => (newName = text)}
         error={error}
       />
-      <Button onPress={saveAndClose}>Save</Button>
+      <Button className="save" onPress={saveAndClose}>
+        Save
+      </Button>
     </>
   );
 };
