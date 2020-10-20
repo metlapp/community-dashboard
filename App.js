@@ -1,7 +1,7 @@
+import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import AccountScreen from "./screens/AccountScreen";
-import { Provider as PaperProvider } from "react-native-paper";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import LoginScreen from "./screens/LoginScreen";
 
 export default function App() {
   const [user, setUser] = React.useState({
@@ -10,9 +10,11 @@ export default function App() {
     password: "",
   });
   return (
-    <PaperProvider>
-      <AccountScreen setUser={setUser} user={user} />
-    </PaperProvider>
+    <SafeAreaView>
+      <View>
+        <LoginScreen />
+      </View>
+    </SafeAreaView>
   );
 }
 
