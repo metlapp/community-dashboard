@@ -38,23 +38,35 @@ describe("Testing ChangePasswordScreen", () => {
 
     console.log(wrapper.debug());
 
-    const currentPassword = wrapper.find(".currentPassword").get();
-    currentPassword.simulate("change", {
-      target: {
-        name: "currentPassword",
-        value: "Password",
-      },
-    });
+    const currentPassword = wrapper.find("TextInput").find("#currentPassword");
+    const newPassword = wrapper.find("TextInput").find("#newPassword");
+    const confirmPassword = wrapper.find("TextInput").find("#confirmPassword");
 
-    // newPassword.value = "Peyton12";
+    currentPassword.props().value = "Password";
+    newPassword.props().value = "Peyton12";
+    confirmPassword.props().value = "Peyton12";
 
-    // const confirmPassword = wrapper.find("AppTextInput").get(2);
+    expect(currentPassword.props().value).toEqual("Password");
+    expect(newPassword.props().value).toEqual("Peyton12");
+    expect(confirmPassword.props().value).toEqual("Peyton12");
+  });
 
-    // confirmPassword.value = "Peyton12";
+  it('should say "Please make sure new passwords match!" when the new passwords dont match', () => {
+    const wrapper = mount(<ChangePasswordScreen />);
 
-    // wrapper.find(".submit").simulate("click");
-    // const text = wrapper.find(".errorMessage").render().text();
-    // expect(currentPassword.prop("value")).toEqual("Password");
+    const currentPassword = wrapper.find("TextInput").find("#currentPassword");
+    const newPassword = wrapper.find("TextInput").find("#newPassword");
+    const confirmPassword = wrapper.find("TextInput").find("#confirmPassword");
+
+    const errorMessage = wrapper.find(".errorMessage");
+
+    currentPassword.props().value = "password";
+    newPassword.props().value = "Peyton22";
+    confirmPassword.props().value = "Peyton12";
+
+    expect(errorMessage.props("error")).toEqual(
+      "Please make sure new passwords match!"
+    );
   });
 
   // it('should say "Please make sure new passwords match!" when the new passwords dont match', () => {

@@ -83,7 +83,7 @@ export default function ChangePasswordScreen() {
         validationSchema={validationSchema}
       >
         <AppFormField
-          className="currentPassword"
+          id="currentPassword"
           autoFocus
           onFocus={() => setErrorVisible(false)}
           secureTextEntry
