@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AccountScreen from "./screens/AccountScreen";
@@ -14,10 +13,6 @@ export default function App() {
     <PaperProvider>
       <AccountScreen setUser={setUser} user={user} />
     </PaperProvider>
-    // <View style={styles.container}>
-    //   <Text>Open up App.js to start working on your app!</Text>
-    //   <StatusBar style="auto" />
-    // </View>
   );
 }
 
