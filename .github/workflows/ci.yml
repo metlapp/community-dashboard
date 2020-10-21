@@ -1,9 +1,6 @@
 name: Community App CI
 
-#on:
-#  pull_request:
-#    types: [assigned, synchronize]
-on: push
+on: pull_request
 
 jobs:
   community-app-ci:
@@ -22,9 +19,6 @@ jobs:
       - name: install
         run: |
           npm ci
-#      - name: lint
-#        run: |
-#          npm run lint
       - name: run tests
         run: |
           npm run test
