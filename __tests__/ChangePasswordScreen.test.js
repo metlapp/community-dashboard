@@ -43,11 +43,6 @@ describe("Testing ChangePasswordScreen", () => {
     const handlePasswordChange = jest.fn();
     const setUser = jest.fn();
 
-    // const props = {
-    //   handlePasswordChange,
-    //   setUser
-    // };
-
     const { getByText, getByPlaceholderText } = render(
       <ChangePasswordScreen
         handlePasswordChange={handlePasswordChange}
