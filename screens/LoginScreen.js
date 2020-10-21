@@ -24,7 +24,7 @@ export default function LoginScreen() {
           label="Password"
           onChangeText={(text) => (pass = text)}
         />
-        <View style={styles.buttonContainer}>
+        <View>
           <Button mode="contained" style={styles.button}>
             Submit
           </Button>
@@ -55,11 +55,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   container: {
-    height: "100%",
-  },
-  buttonContainer: {
+    height: "90%",
     justifyContent: "center",
   },
+
   forgotButton: {
     marginTop: 20,
     flexDirection: "row",
