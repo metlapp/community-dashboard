@@ -114,4 +114,6 @@ npm-debug.*
 *.orig.*
 web-build/
 
+# editors
 .DS_Store
+.idea
