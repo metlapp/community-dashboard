@@ -7,6 +7,7 @@ import App from "../App";
 // and comes packaged with react-native init project.
 // You do not need this if using Enzyme 'toMatchSnapshot' etc.
 import renderer from "react-test-renderer";
+import AccountScreen from "../screens/AccountScreen";
 
 // This test just uses Jest snapshot testing
 it("renders correctly, test using Jest", () => {
@@ -22,10 +23,8 @@ describe("<App />", () => {
     const tree = renderer.create(<App />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-
-  it("text on homepage", () => {
+  it("renders Child component", () => {
     const wrapper = shallow(<App />);
-    const text = wrapper.find("Text").render().text();
-    expect(text).toEqual("Open up App.js to start working on your app!");
+    expect(wrapper.containsMatchingElement(<AccountScreen />)).toEqual(true);
   });
 });
