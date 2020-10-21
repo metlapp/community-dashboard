@@ -41,9 +41,7 @@ export default function ChangePasswordScreen() {
   };
 
   const handlePasswordChange = async (values) => {
-    console.log("top level");
     setErrorVisible(false);
-    console.log("top level");
     // Show error if new passwords do not match
     if (values["newPassword"] !== values["confirmNewPassword"]) {
       console.log("passes didnt match");
@@ -51,20 +49,18 @@ export default function ChangePasswordScreen() {
       setErrorVisible(true);
       return;
     }
-    console.log("past first if");
     values["newPassword"] === values["confirmNewPassword"];
     const currentPassword = await runCrypto(values["currentPassword"]);
     // show error if current password doesnt match password from api
     if (user.password !== currentPassword) {
-      console.log("incorrect pass");
       setError("Incorrect password");
       setErrorVisible(true);
       return;
     }
     // If no error, submit password change
-    console.log("passed");
     const newPassword = await runCrypto(values["newPassword"]);
     setUser({ ...user, password: newPassword });
+    console.log("hello");
     setErrorVisible(false);
     setSuccessVisible(true);
     resetForm(values);
@@ -83,9 +79,7 @@ export default function ChangePasswordScreen() {
           newPassword: "",
           confirmNewPassword: "",
         }}
-        onSubmit={() => {
-          handlePasswordChange();
-        }}
+        onSubmit={handlePasswordChange}
         style={styles.form}
         testID="form"
         validationSchema={validationSchema}
