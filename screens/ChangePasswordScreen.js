@@ -40,7 +40,7 @@ export default function ChangePasswordScreen() {
     values["confirmNewPassword"] = "";
   };
 
-  const handlePasswordChange = async (values) => {
+  const handleSubmit = async (values) => {
     setErrorVisible(false);
     // Show error if new passwords do not match
     if (values["newPassword"] !== values["confirmNewPassword"]) {
@@ -60,7 +60,6 @@ export default function ChangePasswordScreen() {
     // If no error, submit password change
     const newPassword = await runCrypto(values["newPassword"]);
     setUser({ ...user, password: newPassword });
-    console.log("hello");
     setErrorVisible(false);
     setSuccessVisible(true);
     resetForm(values);
@@ -79,7 +78,7 @@ export default function ChangePasswordScreen() {
           newPassword: "",
           confirmNewPassword: "",
         }}
-        onSubmit={handlePasswordChange}
+        onSubmit={handleSubmit}
         style={styles.form}
         testID="form"
         validationSchema={validationSchema}

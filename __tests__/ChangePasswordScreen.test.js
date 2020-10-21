@@ -26,22 +26,6 @@ describe("Testing ChangePasswordScreen", () => {
     expect(text).toEqual("Change your password");
   });
 
-  it("should say the correct value", () => {
-    const wrapper = mount(<ChangePasswordScreen />);
-
-    const currentPassword = wrapper.find("TextInput").find("#currentPassword");
-    const newPassword = wrapper.find("TextInput").find("#newPassword");
-    const confirmPassword = wrapper.find("TextInput").find("#confirmPassword");
-
-    currentPassword.props().value = "Password";
-    newPassword.props().value = "Peyton12";
-    confirmPassword.props().value = "Peyton12";
-
-    expect(currentPassword.props().value).toEqual("Password");
-    expect(newPassword.props().value).toEqual("Peyton12");
-    expect(confirmPassword.props().value).toEqual("Peyton12");
-  });
-
   it('should say "Please make sure new passwords match!" when the new passwords dont match', () => {
     const wrapper = mount(<ChangePasswordScreen />);
 
@@ -75,23 +59,25 @@ describe("Testing ChangePasswordScreen", () => {
     const newPassword = getByPlaceholderText("New Password");
     const confirmPassword = getByPlaceholderText("Confirm Password");
 
-    await act(async () => {
-      await fireEvent(currentPassword, "onChangeText", "password");
-      await fireEvent(newPassword, "onChangeText", "Peyton12");
-      await fireEvent(confirmPassword, "onChangeText", "Peyton12");
+    act(() => {
+      fireEvent(currentPassword, "onChangeText", "password");
+    });
+    act(() => {
+      fireEvent(newPassword, "onChangeText", "Peyton12");
+    });
+    act(() => {
+      fireEvent(confirmPassword, "onChangeText", "Peyton12");
+    });
 
-      expect(currentPassword.props.value).toEqual("password");
-      expect(newPassword.props.value).toEqual("Peyton12");
-      expect(confirmPassword.props.value).toEqual("Peyton12");
+    act(() => {
+      fireEvent(getByText("Save").parent, "press");
+    });
 
-      fireEvent(getByText("Save"), "onPress");
-
-      waitFor(() => {
-        expect(handlePasswordChange).toHaveBeenCalledTimes(1);
-      });
-      waitFor(() => {
-        expect(setUser).toHaveBeenCalledTimes(1);
-      });
+    waitFor(() => {
+      expect(handlePasswordChange).toHaveBeenCalledTimes(1);
+    });
+    waitFor(() => {
+      expect(setUser).toHaveBeenCalledTimes(1);
     });
   });
 });
