@@ -1,41 +1,52 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { TextInput, HelperText, Button, Title } from "react-native-paper";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  TextInput,
+  HelperText,
+  Button,
+  Title,
+  Appbar,
+} from "react-native-paper";
 
 export default function LoginScreen() {
   var email = "";
   var pass = "";
 
   return (
-    <View style={styles.container}>
-      <TextInput label="Email" onChangeText={(text) => (email = text)} />
-      <TextInput
-        secureTextEntry={true}
-        label="Password"
-        onChangeText={(text) => (pass = text)}
-      />
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" style={styles.button}>
-          Submit
-        </Button>
+    <SafeAreaView>
+      <Appbar.Header>
+        <Appbar.Content title="LOGIN" />
+      </Appbar.Header>
+      <View style={styles.container}>
+        <TextInput label="Email" onChangeText={(text) => (email = text)} />
+        <TextInput
+          secureTextEntry={true}
+          label="Password"
+          onChangeText={(text) => (pass = text)}
+        />
+        <View style={styles.buttonContainer}>
+          <Button mode="contained" style={styles.button}>
+            Submit
+          </Button>
 
-        <Button
-          style={styles.forgotButton}
-          color="blue"
-          onPress={() => {
-            console.log("Press");
-          }}
-        >
-          Forgot Password
-        </Button>
+          <Button
+            style={styles.forgotButton}
+            color="blue"
+            onPress={() => {
+              console.log("Press");
+            }}
+          >
+            Forgot Password
+          </Button>
+        </View>
+
+        <View>
+          <Title style={styles.registerContainer}>Don't Have an account?</Title>
+
+          <Button>Register</Button>
+        </View>
       </View>
-
-      <View>
-        <Title style={styles.registerContainer}>Don't Have an account?</Title>
-
-        <Button>Register</Button>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -45,8 +56,6 @@ const styles = StyleSheet.create({
   },
   container: {
     height: "100%",
-    justifyContent: "center",
-    alignContent: "center",
   },
   buttonContainer: {
     justifyContent: "center",
