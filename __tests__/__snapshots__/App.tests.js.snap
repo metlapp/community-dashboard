@@ -477,6 +477,15 @@ exports[`<App /> matches the snapshot 1`] = `
 
 exports[`<App /> renders correctly, test using Jest + Enzyme 1`] = `
 <Provider>
-  <AccountScreen />
+  <AccountScreen
+    setUser={[Function]}
+    user={
+      Object {
+        "email": "",
+        "name": "Dawson",
+        "password": "",
+      }
+    }
+  />
 </Provider>
 `;

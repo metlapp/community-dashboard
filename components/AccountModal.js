@@ -13,7 +13,7 @@ const AccountModal = (props) => {
         <Card>
           <Card.Content>
             {(() => {
-              switch (props.state) {
+              switch (props.form) {
                 case "Email":
                   return <ChangeEmail />;
                 case "Name":

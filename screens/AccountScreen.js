@@ -5,7 +5,7 @@ import AccountModal from "../components/AccountModal";
 
 const AccountScreen = (props) => {
   //determines what component the modal will render when a button is clicked
-  const [state, setState] = React.useState("");
+  const [form, setForm] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -18,7 +18,7 @@ const AccountScreen = (props) => {
       <AccountModal
         visibility={visible}
         hidemodal={hideModal}
-        state={state}
+        form={form}
         {...props}
       />
       <View style={styles.buttonContainer}>
@@ -30,7 +30,7 @@ const AccountScreen = (props) => {
           icon="email"
           mode="contained"
           onPress={() => {
-            setState("Email");
+            setForm("Email");
             setVisible(true);
           }}
         >
@@ -42,7 +42,7 @@ const AccountScreen = (props) => {
           icon="account-edit"
           mode="contained"
           onPress={() => {
-            setState("Name");
+            setForm("Name");
             showModal();
           }}
         >
@@ -54,7 +54,7 @@ const AccountScreen = (props) => {
           icon="square-edit-outline"
           mode="contained"
           onPress={() => {
-            setState("Password");
+            setForm("Password");
             showModal();
           }}
         >

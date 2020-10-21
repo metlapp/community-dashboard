@@ -572,8 +572,8 @@ exports[`<AccountScreen /> renders correctly, test using Jest + Enzyme 1`] = `
     />
   </withTheme(Appbar.Header)>
   <AccountModal
+    form=""
     hidemodal={[Function]}
-    state=""
     visibility={false}
   />
   <View
