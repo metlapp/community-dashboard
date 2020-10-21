@@ -1,31 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import {
-  TextInput,
-  HelperText,
-  Button,
-  Title,
-  Appbar,
-} from "react-native-paper";
+import { TextInput, Button, Title, Appbar } from "react-native-paper";
+import AuthContext from "../auth/Context";
+import authStorage from "../auth/Storage";
 
 export default function LoginScreen() {
-  var email = "";
-  var pass = "";
+  const authContext = useContext(AuthContext);
 
+  let user = { name: "Jaycob", email: "", password: "" };
+
+  const handleSubmit = () => {
+    //Here we need to check API if valid
+    authContext.setUser(user);
+    authStorage.storeUser(user);
+  };
   return (
     <SafeAreaView>
       <Appbar.Header>
         <Appbar.Content title="LOGIN" />
       </Appbar.Header>
       <View style={styles.container}>
-        <TextInput label="Email" onChangeText={(text) => (email = text)} />
+        <TextInput
+          label="Email"
+          error={true}
+          onChangeText={(text) => (user.email = text)}
+        />
         <TextInput
           secureTextEntry={true}
           label="Password"
-          onChangeText={(text) => (pass = text)}
+          onChangeText={(text) => (user.password = text)}
         />
         <View>
-          <Button mode="contained" style={styles.button}>
+          <Button mode="contained" style={styles.button} onPress={handleSubmit}>
             Submit
           </Button>
 
@@ -41,7 +47,7 @@ export default function LoginScreen() {
         </View>
 
         <View>
-          <Title style={styles.registerContainer}>Don't Have an account?</Title>
+          <Title style={styles.registerContainer}>Don't have an account?</Title>
 
           <Button>Register</Button>
         </View>

@@ -1,26 +1,31 @@
-import React from "react";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import React, { useContext } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Appbar } from "react-native-paper";
+import AuthContext from "../auth/Context";
 import AccountModal from "../components/AccountModal";
+import authStorage from "../auth/Storage";
 
-const AccountScreen = (props) => {
+const AccountScreen = () => {
   //determines what component the modal will render when a button is clicked
+
   const [form, setForm] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const authContext = useContext(AuthContext);
+
+  const handleLogout = () => {
+    authContext.setUser(null);
+    authStorage.removeUser();
+  };
   return (
     <SafeAreaView>
       <Appbar.Header>
         <Appbar.Content title="ACCOUNT" />
       </Appbar.Header>
       {/* Opens model and takes in the visible state with what component to render */}
-      <AccountModal
-        visibility={visible}
-        hidemodal={hideModal}
-        form={form}
-        {...props}
-      />
+      <AccountModal visibility={visible} hidemodal={hideModal} form={form} />
       <View style={styles.buttonContainer}>
         {/* When Button is clicked it changes the state of the visibility and
            tells the modal what component to render inside the modal */}
@@ -59,6 +64,15 @@ const AccountScreen = (props) => {
           }}
         >
           Change password
+        </Button>
+        <Button
+          className="button"
+          style={styles.buttonStyle}
+          icon="square-edit-outline"
+          mode="contained"
+          onPress={handleLogout}
+        >
+          Log Out
         </Button>
       </View>
     </SafeAreaView>
