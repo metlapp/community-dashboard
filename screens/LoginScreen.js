@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput, HelperText, Button } from "react-native-paper";
+import { TextInput, HelperText, Button, Title } from "react-native-paper";
 
 export default function LoginScreen() {
   var email = "";
@@ -20,14 +20,20 @@ export default function LoginScreen() {
         </Button>
 
         <Button
-          style={styles.button}
-          mode="contained"
+          style={styles.forgotButton}
+          color="blue"
           onPress={() => {
             console.log("Press");
           }}
         >
           Forgot Password
         </Button>
+      </View>
+
+      <View>
+        <Title style={styles.registerContainer}>Don't Have an account?</Title>
+
+        <Button>Register</Button>
       </View>
     </View>
   );
@@ -46,8 +52,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   forgotButton: {
+    marginTop: 20,
     flexDirection: "row",
     justifyContent: "center",
-    width: "70%",
+  },
+  registerContainer: {
+    justifyContent: "center",
+    textAlign: "center",
   },
 });
