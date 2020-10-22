@@ -44,7 +44,6 @@ export default function ChangePasswordScreen() {
     setErrorVisible(false);
     // Show error if new passwords do not match
     if (values["newPassword"] !== values["confirmNewPassword"]) {
-      console.log("passes didnt match");
       setError("Please make sure new passwords match!");
       setErrorVisible(true);
       return;
@@ -111,7 +110,7 @@ export default function ChangePasswordScreen() {
           visible={errorVisible}
           className="errorMessage"
         />
-        <SubmitButton className="submit" title="Save">
+        <SubmitButton className="submit" title="Save" width="100%">
           Save
         </SubmitButton>
         <SuccessMessage
