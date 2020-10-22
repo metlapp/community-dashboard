@@ -30,11 +30,13 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
+    "mock-async-storage": "^2.2.0",
     "react-dom": "^16.13.1"
   },
   "jest": {
     "preset": "jest-expo",
     "setupFilesAfterEnv": [
+      "<rootDir>/setup-tests.js",
       "jest-enzyme"
     ],
     "testEnvironment": "enzyme",
