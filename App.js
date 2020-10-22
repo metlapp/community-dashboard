@@ -14,6 +14,8 @@ export default function App() {
 
   const restoreUser = async () => {
     const userData = await authStorage.getUser();
+
+    //If no user data is in the storage than just return which shows the login screen
     if (!userData) {
       setUser();
       return;
@@ -21,6 +23,7 @@ export default function App() {
     setUser(userData);
   };
 
+  //Checks the storage on open of the app
   useEffect(() => {
     restoreUser();
   }, []);

@@ -13,6 +13,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function LoginScreen() {
+  //Grabs user data from the context. witht this you can use setUser and user
   const authContext = useContext(AuthContext);
 
   let user = { name: "Jaycob", email: "", password: "" };
