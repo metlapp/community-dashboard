@@ -8,7 +8,6 @@ function AppFormField({
   autoCapitalize = "none",
   autoCorrect = false,
   onFocus,
-  setValue,
   name,
   width,
   value,

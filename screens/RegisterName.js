@@ -1,33 +1,40 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import * as Yup from "yup";
 
 import SubmitButton from "../components/SubmitButton";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import AppButton from "../components/AppButton";
 import { FormContext } from "../auth/context";
+import defaultStyles from "../config/defaultStyles";
 
-export default function RegisterName() {
-  const [name, setName] = useState();
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required().label("Name"),
+});
+
+export default function RegisterName({ name }) {
   const { setStep, formData, setFormData } = useContext(FormContext);
 
   return (
     <View style={styles.container}>
       <Form
-        initialValues={{ name: "" }}
-        style={styles.form}
+        initialValues={{ name }}
         onSubmit={(values) => {
           setFormData(() => ({
             ...formData,
             name: values.name,
           }));
+          setStep((step) => step + 1);
         }}
+        validationSchema={validationSchema}
       >
         <AppFormField
+          autoCorrect={false}
+          autoCapitalize="none"
           placeholder="Enter your name"
           name="name"
-          style={styles.TextInput}
-          setValue={setName}
+          style={defaultStyles.TextInput}
           width="100%"
         />
         <View>
@@ -42,11 +49,6 @@ export default function RegisterName() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-  },
-  form: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "yellow",
   },
   TextInput: {
     lineHeight: 25,
