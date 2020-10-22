@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Registraion Page matches the snapshot 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "alignItems": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 24,
+        "fontWeight": "600",
+        "marginBottom": 30,
+        "marginTop": 5,
+      }
+    }
+    testID="title"
+  >
+    Registration Page
+  </Text>
+  <Text
+    style={
+      Object {
+        "fontSize": 24,
+        "fontWeight": "600",
+        "marginBottom": 30,
+        "marginTop": 5,
+      }
+    }
+    testID="emailTitle"
+  >
+    Step 1: Enter your email
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 50,
+          "width": "100%",
+        }
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#f2f2f2",
+            "borderRadius": 25,
+            "height": 55,
+            "justifyContent": "center",
+            "marginVertical": 15,
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        onBlur={[Function]}
+        onChangeText={[Function]}
+        onFocus={[Function]}
+        placeholder="Enter your email"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "fontSize": 20,
+            "lineHeight": 25,
+            "paddingLeft": 10,
+          }
+        }
+        testID="emailInput"
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "marginVertical": 5,
+          "opacity": 1,
+          "padding": 15,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "textTransform": "uppercase",
+          }
+        }
+      >
+        Next
+      </Text>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;

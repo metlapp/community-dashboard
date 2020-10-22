@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
-import * as Yup from "yup";
 
 import { FormContext } from "../auth/context";
 import RegisterEmail from "./RegisterEmail";
@@ -20,8 +19,12 @@ export default function RegistrationScreen() {
       <SafeAreaView style={styles.container}>
         {step === 1 ? (
           <>
-            <Text style={styles.text}>Registration Page</Text>
-            <Text style={styles.text}>Step 1: Enter your email</Text>
+            <Text testID="title" style={styles.text}>
+              Registration Page
+            </Text>
+            <Text testID="emailTitle" style={styles.text}>
+              Step 1: Enter your email
+            </Text>
             <RegisterEmail email={formData.email} errorTest={true} />
           </>
         ) : step === 2 ? (

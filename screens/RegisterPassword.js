@@ -37,11 +37,13 @@ export default function RegisterPassword() {
         validationSchema={validationSchema}
       >
         <AppFormField
+          testID="pass"
           placeholder="Enter your password"
           name="password"
           style={defaultStyles.TextInput}
         />
         <AppFormField
+          testID="confirmPass"
           placeholder="Confirm password"
           name="confirmPassword"
           style={defaultStyles.TextInput}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
@@ -38,8 +38,8 @@ export default function RegisterEmail({ email }) {
   const { setStep, formData, setFormData } = useContext(FormContext);
 
   const handleRegister = () => {
-    // const status = fakeApiCall();
-    const status = 200;
+    let status = fakeApiCall();
+    status = 200;
     if (status === 200) {
       setErrorVisible(false);
       return true;
@@ -82,6 +82,7 @@ export default function RegisterEmail({ email }) {
           />
         </View>
         <AppFormField
+          testID="emailInput"
           onFocus={() => {
             setError(false);
           }}

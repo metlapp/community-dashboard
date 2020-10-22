@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
@@ -30,6 +30,7 @@ export default function RegisterName({ name }) {
         validationSchema={validationSchema}
       >
         <AppFormField
+          testID="input"
           autoCorrect={false}
           autoCapitalize="none"
           placeholder="Enter your name"
