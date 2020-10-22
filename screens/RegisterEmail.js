@@ -1,62 +1,119 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import * as Yup from "yup";
 
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
-import AppButton from "../components/AppButton";
 import { FormContext } from "../auth/context";
 import SubmitButton from "../components/SubmitButton";
+import defaultStyles from "../config/defaultStyles";
+import ErrorMessage from "../components/ErrorMessage";
+import errors from "../api/errors";
 
-const saveEmail = async (values, obj) => {
-  const { setFormData, formData } = obj;
-  setFormData({ ...formData, email: values.email });
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+});
+// Testing random status
+const fakeApiCall = () => {
+  const num = Math.floor(Math.random() * Math.floor(4));
+  console.log(num);
+  switch (num) {
+    case 1:
+      return 200;
+      break;
+    case 2:
+      return 403;
+      break;
+    case 3:
+      return 408;
+      break;
+    case 0:
+      return 404;
+  }
 };
 
-// async (values) => {
-//     await formContext.setFormData({
-//       ...formContext.formData,
-//       email: values.email,
-//     });
+export default function RegisterEmail({ email }) {
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [error, setError] = useState(false);
+  const { setStep, formData, setFormData } = useContext(FormContext);
 
-export default function RegisterEmail({ setFormData, formData }) {
-  const { step, setStep } = useContext(FormContext);
+  const handleRegister = () => {
+    // const status = fakeApiCall();
+    const status = 200;
+    if (status === 200) {
+      setErrorVisible(false);
+      return true;
+    }
+    console.log(status);
+    setErrorVisible(true);
+    if (status === 403) {
+      setError(errors.errorNotFound);
+    } else if (status === 408) {
+      setError(errors.errorConnect);
+    } else if (status === 404) {
+      setError(errors.errorDefault);
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Form
-        initialValues={{ email: "" }}
-        innerRef={emailRef}
-        style={styles.form}
-        onSubmit={(values) => {
-          setFormData(() => ({
-            ...formData,
-            email: values.email,
-          }));
+    <Form
+      initialValues={{ email }}
+      onSubmit={(values) => {
+        setFormData(() => ({
+          ...formData,
+          email: values.email,
+        }));
+
+        const status = handleRegister();
+        if (status) {
+          setError(false);
+          setErrorVisible(false);
           setStep((step) => step + 1);
-        }}
-      >
+        }
+      }}
+      validationSchema={validationSchema}
+    >
+      <View style={styles.container}>
+        <View style={styles.errorContainer}>
+          <ErrorMessage
+            error={error}
+            visible={errorVisible}
+            styling={styles.error}
+          />
+        </View>
         <AppFormField
+          onFocus={() => {
+            setError(false);
+          }}
           autoCorrect={false}
           autoCapitalize="none"
           placeholder="Enter your email"
           name="email"
-          style={styles.TextInput}
+          style={defaultStyles.TextInput}
         />
         <SubmitButton title="Next" />
-      </Form>
-    </View>
+      </View>
+    </Form>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     width: "100%",
   },
-  form: {
-    width: "70%",
-  },
-  TextInput: {
-    lineHeight: 25,
+  error: {
+    alignItems: "center",
+    backgroundColor: "red",
+    color: "white",
     fontSize: 20,
-    paddingLeft: 10,
+    fontWeight: "600",
+    height: "100%",
+    justifyContent: "center",
+    textAlign: "center",
+  },
+  errorContainer: {
+    height: 50,
+    width: "100%",
   },
 });

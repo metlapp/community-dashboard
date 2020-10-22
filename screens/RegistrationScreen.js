@@ -7,12 +7,6 @@ import RegisterEmail from "./RegisterEmail";
 import RegisterName from "./RegisterName";
 import RegisterPassword from "./RegisterPassword";
 
-const validationSchema = Yup.object().shape({
-  currentPassword: Yup.string().required().min(8).label("Current Password"),
-  newPassword: Yup.string().required().min(8).label("New Password"),
-  confirmNewPassword: Yup.string().required().min(8).label("Confirm Password"),
-});
-
 export default function RegistrationScreen() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -24,24 +18,30 @@ export default function RegistrationScreen() {
   return (
     <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Registration Page</Text>
         {step === 1 ? (
           <>
+            <Text style={styles.text}>Registration Page</Text>
             <Text style={styles.text}>Step 1: Enter your email</Text>
-            <RegisterEmail setFormData={setFormData} formData={formData} />
+            <RegisterEmail email={formData.email} errorTest={true} />
           </>
         ) : step === 2 ? (
           <>
+            <Text style={styles.text}>Registration Page</Text>
             <Text style={styles.text}>Step 2: Enter your password</Text>
-            <RegisterPassword setFormData={setFormData} formData={formData} />
+            <RegisterPassword />
+          </>
+        ) : step === 3 ? (
+          <>
+            <Text style={styles.text}>Registration Page</Text>
+            <Text style={styles.text}>Step 3: Enter your name</Text>
+            <RegisterName name={formData.name} />
           </>
         ) : (
           <>
-            <Text style={styles.text}>Step 3: Enter your name</Text>
-            <RegisterName setFormData={setFormData} formData={formData} />
+            <Text style={styles.text}>Registration Successful!</Text>
+            {console.log(formData)}
           </>
         )}
-        {console.log(formData)}
       </SafeAreaView>
     </FormContext.Provider>
   );
