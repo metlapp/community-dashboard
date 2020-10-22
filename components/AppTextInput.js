@@ -1,10 +1,18 @@
 import React from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 
-export default function AppTextInput({ width = "100%", ...props }) {
+export default function AppTextInput({
+  autoCapitalize,
+  width = "100%",
+  ...props
+}) {
   return (
     <View style={[styles.container, { width }]}>
-      <TextInput style={[styles.TextInput]} {...props} />
+      <TextInput
+        autoCapitalize={autoCapitalize}
+        style={[styles.TextInput]}
+        {...props}
+      />
     </View>
   );
 }
