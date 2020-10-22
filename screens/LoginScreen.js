@@ -1,8 +1,16 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { TextInput, Button, Title, Appbar } from "react-native-paper";
+import { StyleSheet, View, SafeAreaView } from "react-native";
+import { Button, Title, Appbar } from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
+import Form from "../components/Form";
+import AppFormField from "../components/AppFormField";
+import SubmitButton from "../components/SubmitButton";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+});
 
 export default function LoginScreen() {
   const authContext = useContext(AuthContext);
@@ -20,32 +28,32 @@ export default function LoginScreen() {
         <Appbar.Content title="LOGIN" />
       </Appbar.Header>
       <View style={styles.container}>
-        <TextInput
-          label="Email"
-          error={true}
-          onChangeText={(text) => (user.email = text)}
-        />
-        <TextInput
-          secureTextEntry={true}
-          label="Password"
-          onChangeText={(text) => (user.password = text)}
-        />
-        <View>
-          <Button mode="contained" style={styles.button} onPress={handleSubmit}>
-            Submit
-          </Button>
-
-          <Button
-            style={styles.forgotButton}
-            color="blue"
-            onPress={() => {
-              console.log("Press");
-            }}
-          >
-            Forgot Password
-          </Button>
-        </View>
-
+        <Form
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <AppFormField id="email" placeholder="Email" name="email" />
+          <AppFormField
+            id="paswword"
+            placeholder="Password"
+            name="password"
+            secureTextEntry
+          />
+          <SubmitButton className="submit" title="Login" />
+        </Form>
+        <Button
+          style={styles.forgotButton}
+          color="blue"
+          onPress={() => {
+            console.log("Press");
+          }}
+        >
+          Forgot Password
+        </Button>
         <View>
           <Title style={styles.registerContainer}>Don't have an account?</Title>
 
