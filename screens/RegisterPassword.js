@@ -2,13 +2,14 @@ import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
-import AppFormField from "../components/AppFormField";
-import Form from "../components/Form";
 import AppButton from "../components/AppButton";
-import { FormContext } from "../auth/context";
-import SubmitButton from "../components/SubmitButton";
-import ErrorMessage from "../components/ErrorMessage";
+import AppFormField from "../components/AppFormField";
+import runCrypto from "../auth/crypto-hashing";
 import defaultStyles from "../config/defaultStyles";
+import ErrorMessage from "../components/ErrorMessage";
+import Form from "../components/Form";
+import { FormContext } from "../auth/Context";
+import SubmitButton from "../components/SubmitButton";
 
 const validationSchema = Yup.object().shape({
   password: Yup.string().required().min(8).label("Password"),
@@ -22,14 +23,15 @@ export default function RegisterPassword() {
     <View style={styles.container}>
       <Form
         initialValues={{ password: "", confirmPassword: "" }}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           if (values.password !== values.confirmPassword) {
             setErrorVisible(true);
             return;
           }
+          const password = await runCrypto(values.password);
           setFormData(() => ({
             ...formData,
-            password: values.password,
+            password: password,
           }));
           setErrorVisible(false);
           setStep((step) => step + 1);
@@ -37,16 +39,18 @@ export default function RegisterPassword() {
         validationSchema={validationSchema}
       >
         <AppFormField
-          testID="pass"
-          placeholder="Enter your password"
           name="password"
+          placeholder="Enter your password"
+          secureTextEntry
           style={defaultStyles.TextInput}
+          testID="pass"
         />
         <AppFormField
-          testID="confirmPass"
-          placeholder="Confirm password"
           name="confirmPassword"
+          placeholder="Confirm password"
+          secureTextEntry
           style={defaultStyles.TextInput}
+          testID="confirmPass"
         />
         <ErrorMessage error="Passwords do not match" visible={errorVisible} />
         <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />

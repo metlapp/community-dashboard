@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-import LoginScreen from "./screens/LoginScreen";
+import { StyleSheet } from "react-native";
 import AuthContext from "./auth/Context";
 import AccountScreen from "./screens/AccountScreen";
 import { Provider as PaperProvider } from "react-native-paper";
 import authStorage from "./auth/Storage";
+import AuthNavigator from "./navigation/AuthNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   const [user, setUser] = React.useState();
@@ -28,7 +29,9 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
-        <View>{user ? <AccountScreen /> : <LoginScreen />}</View>
+        <NavigationContainer>
+          {user ? <AccountScreen /> : <AuthNavigator />}
+        </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
   );

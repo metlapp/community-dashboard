@@ -4,7 +4,7 @@ import * as Yup from "yup";
 
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
-import { FormContext } from "../auth/context";
+import { FormContext } from "../auth/Context";
 import SubmitButton from "../components/SubmitButton";
 import defaultStyles from "../config/defaultStyles";
 import ErrorMessage from "../components/ErrorMessage";

@@ -6,7 +6,7 @@ import SubmitButton from "../components/SubmitButton";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import AppButton from "../components/AppButton";
-import { FormContext } from "../auth/context";
+import { FormContext } from "../auth/Context";
 import defaultStyles from "../config/defaultStyles";
 
 const validationSchema = Yup.object().shape({

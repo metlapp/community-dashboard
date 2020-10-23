@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 
-import { FormContext } from "../auth/context";
+import AuthContext from "../auth/Context";
+import authStorage from "../auth/Storage";
+import { FormContext } from "../auth/Context";
 import RegisterEmail from "./RegisterEmail";
 import RegisterName from "./RegisterName";
 import RegisterPassword from "./RegisterPassword";
 
-export default function RegistrationScreen() {
+export default function RegistrationScreen({ navigation }) {
   const [step, setStep] = useState(1);
+  const authContext = useContext(AuthContext);
+
+  const setUser = (user) => {
+    authContext.setUser(user);
+    authStorage.storeUser(user);
+  };
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,12 +46,12 @@ export default function RegistrationScreen() {
           <>
             <Text style={styles.text}>Registration Page</Text>
             <Text style={styles.text}>Step 3: Enter your name</Text>
-            <RegisterName name={formData.name} />
+            <RegisterName name={formData.name} navigation={navigation} />
           </>
         ) : (
           <>
-            <Text style={styles.text}>Registration Successful!</Text>
             {console.log(formData)}
+            {setUser(formData)}
           </>
         )}
       </SafeAreaView>
