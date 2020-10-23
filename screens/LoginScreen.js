@@ -18,8 +18,10 @@ export default function LoginScreen() {
 
   let user = { name: "Jaycob", email: "", password: "" };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (values) => {
     //Here we need to check API if valid
+    user.email = values["email"];
+    user.password = values["password"];
     authContext.setUser(user);
     authStorage.storeUser(user);
   };
