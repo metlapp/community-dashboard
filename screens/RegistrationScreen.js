@@ -34,6 +34,8 @@ export default function RegistrationScreen({ navigation }) {
             <Text testID="emailTitle" style={styles.text}>
               Step 1: Enter your email
             </Text>
+            <Text style={styles.text}>Registration Page</Text>
+            <Text style={styles.text}>Step 1: Enter your email</Text>
             <RegisterEmail email={formData.email} errorTest={true} />
           </>
         ) : step === 2 ? (

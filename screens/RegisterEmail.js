@@ -40,6 +40,8 @@ export default function RegisterEmail({ email }) {
   const handleRegister = () => {
     let status = fakeApiCall();
     status = 200;
+    // const status = fakeApiCall();
+    const status = 200;
     if (status === 200) {
       setErrorVisible(false);
       return true;
