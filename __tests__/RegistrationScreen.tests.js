@@ -2,15 +2,17 @@ import "react-native";
 import React from "react";
 import { mount, shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
-import RegistrationScreen from "../screens/RegistrationScreen";
-import RegisterName from "../screens/RegisterName";
-import { FormContext } from "../auth/context";
+import renderer from "react-test-renderer";
 
 // Note: this is just for use with Jest snapshot testing
 // and comes packaged with react-native init project.
 // You do not need this if using Enzyme 'toMatchSnapshot' etc.
 
-import renderer from "react-test-renderer";
+import { FormContext } from "../auth/context";
+import RegistrationScreen from "../screens/RegistrationScreen";
+import RegisterEmail from "../screens/RegisterEmail";
+import RegisterPassword from "../screens/RegisterPassword";
+import RegisterName from "../screens/RegisterName";
 
 describe("Testing Registraion Page", () => {
   it("renders correctly, test using Jest", () => {
@@ -29,98 +31,92 @@ describe("Testing Registraion Page", () => {
   });
 });
 
-it("should save email to user object", async () => {
-  const formData = jest.fn();
-  const setFormData = jest.fn();
-  const step = jest.fn();
-  const setStep = jest.fn();
-  const { getByText, getByTestId, getByPlaceholderText, debug } = render(
-    <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
-      <RegistrationScreen />
-    </FormContext.Provider>
-  );
+describe("Test register email component", () => {
+  it("should save email to formData object", async () => {
+    const setFormData = jest.fn();
+    const { getByText, getByTestId } = render(
+      <FormContext.Provider value={{ setFormData }}>
+        <RegisterEmail />
+      </FormContext.Provider>
+    );
 
-  const title = getByTestId("title");
-  const emailTitle = getByTestId("emailTitle");
-  const emailInput = getByTestId("emailInput");
-  const emailNextButton = getByText("Next");
+    const emailInput = getByTestId("emailInput");
+    const emailNextButton = getByText("Next");
 
-  expect(title).toBeDefined();
-  expect(emailTitle).toBeDefined();
-  expect(emailInput).toBeDefined();
-  expect(emailNextButton).toBeDefined();
+    expect(emailInput).toBeDefined();
 
-  fireEvent(emailInput, "onChangeText", "this@email.com");
+    act(() => {
+      fireEvent(emailInput, "onChangeText", "this@email.com");
+    });
 
-  act(() => {
-    fireEvent(emailNextButton, "onPress");
+    act(() => {
+      fireEvent(emailNextButton, "onPress");
+    });
+
+    await waitFor(() => {
+      expect(setFormData).toHaveBeenCalled();
+    });
   });
-
-  console.log(debug());
 });
 
-// it("Should render finished screen after form submission", () => {
-//   const formData = jest.fn();
-//   const setFormData = jest.fn();
-//   const step = jest.fn();
-//   const setStep = jest.fn();
+describe("should save password to formdata object", () => {
+  it("should save password to formData object", async () => {
+    const setFormData = jest.fn();
+    const { getByText, getByTestId } = render(
+      <FormContext.Provider value={{ setFormData }}>
+        <RegisterPassword />
+      </FormContext.Provider>
+    );
 
-//   const { getByText, getByTestId } = render(
-//     <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
-//       {setFormData({
-//         email: "jerry@gmail.com",
-//         password: "jerrypassword",
-//         name: "Jerry",
-//       })}
-//       <RegisterName />
-//     </FormContext.Provider>
-//   );
+    const passInput = getByTestId("pass");
+    const confirmPassInput = getByTestId("confirmPass");
+    const passwordNextButton = getByText("Next");
 
-//   fireEvent(getByTestId("input"), "onChangeText", "john");
+    expect(passInput).toBeDefined();
+    expect(confirmPassInput).toBeDefined();
+    expect(passwordNextButton).toBeDefined();
 
-//   //   const errorMessage = wrapper.find(".errorMessage");
+    act(() => {
+      fireEvent(passInput, "onChangeText", "password");
+    });
+    act(() => {
+      fireEvent(confirmPassInput, "onChangeText", "password");
+    });
 
-//   fireEvent(getByText("Save").parent, "onPress");
+    act(() => {
+      fireEvent(passwordNextButton, "onPress");
+    });
 
-//   const text = getByText("Registration Successful!");
+    await waitFor(() => {
+      expect(setFormData).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+describe("should save name to formdata object", () => {
+  it("should save name to formData object", async () => {
+    const setFormData = jest.fn();
+    const { getByText, getByTestId } = render(
+      <FormContext.Provider value={{ setFormData }}>
+        <RegisterName />
+      </FormContext.Provider>
+    );
 
-//   expect(text).toEqual("Registration Successful!");
-// });
+    const name = getByTestId("input");
+    const nameSave = getByText("Save");
 
-//   it("should call handleSubmit after submit", async () => {
-//     const handlePasswordChange = jest.fn();
-//     const setUser = jest.fn();
+    expect(name).toBeDefined();
+    expect(nameSave).toBeDefined();
 
-//     const { getByText, getByPlaceholderText } = render(
-//       <ChangePasswordScreen
-//         handlePasswordChange={handlePasswordChange}
-//         setUser={setUser}
-//       />
-//     );
+    act(() => {
+      fireEvent(name, "onChangeText", "Jaycob");
+    });
 
-//     const currentPassword = getByPlaceholderText("Current Password");
-//     const newPassword = getByPlaceholderText("New Password");
-//     const confirmPassword = getByPlaceholderText("Confirm Password");
+    act(() => {
+      fireEvent(nameSave, "onPress");
+    });
 
-//     act(() => {
-//       fireEvent(currentPassword, "onChangeText", "password");
-//     });
-//     act(() => {
-//       fireEvent(newPassword, "onChangeText", "Peyton12");
-//     });
-//     act(() => {
-//       fireEvent(confirmPassword, "onChangeText", "Peyton12");
-//     });
-
-//     act(() => {
-//       fireEvent(getByText("Save").parent, "press");
-//     });
-
-//     waitFor(() => {
-//       expect(handlePasswordChange).toHaveBeenCalledTimes(1);
-//     });
-//     waitFor(() => {
-//       expect(setUser).toHaveBeenCalledTimes(1);
-//     });
-//   });
-// });
+    await waitFor(() => {
+      expect(setFormData).toHaveBeenCalledTimes(1);
+    });
+  });
+});

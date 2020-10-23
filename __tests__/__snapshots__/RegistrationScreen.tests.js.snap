@@ -18,7 +18,6 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
         "marginTop": 5,
       }
     }
-    testID="title"
   >
     Registration Page
   </Text>

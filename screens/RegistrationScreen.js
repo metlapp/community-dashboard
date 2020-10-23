@@ -28,14 +28,10 @@ export default function RegistrationScreen({ navigation }) {
       <SafeAreaView style={styles.container}>
         {step === 1 ? (
           <>
-            <Text testID="title" style={styles.text}>
-              Registration Page
-            </Text>
+            <Text style={styles.text}>Registration Page</Text>
             <Text testID="emailTitle" style={styles.text}>
               Step 1: Enter your email
             </Text>
-            <Text style={styles.text}>Registration Page</Text>
-            <Text style={styles.text}>Step 1: Enter your email</Text>
             <RegisterEmail email={formData.email} errorTest={true} />
           </>
         ) : step === 2 ? (
