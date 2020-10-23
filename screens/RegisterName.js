@@ -39,8 +39,8 @@ export default function RegisterName({ name }) {
           width="100%"
         />
         <View>
-          <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
           <SubmitButton title="Save" />
+          <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
         </View>
       </Form>
     </View>

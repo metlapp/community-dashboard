@@ -26,13 +26,14 @@ export default function RegistrationScreen({ navigation }) {
   return (
     <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
       <SafeAreaView style={styles.container}>
+        {/* Conditionally rendering each step of the from */}
         {step === 1 ? (
           <>
             <Text style={styles.text}>Registration Page</Text>
             <Text testID="emailTitle" style={styles.text}>
               Step 1: Enter your email
             </Text>
-            <RegisterEmail email={formData.email} errorTest={true} />
+            <RegisterEmail email={formData.email} navigation={navigation} />
           </>
         ) : step === 2 ? (
           <>
@@ -48,6 +49,7 @@ export default function RegistrationScreen({ navigation }) {
           </>
         ) : (
           <>
+            {/* setting user after form is sucessfully submitted */}
             {console.log(formData)}
             {setUser(formData)}
           </>

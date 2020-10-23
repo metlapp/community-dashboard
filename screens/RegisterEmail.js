@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
+import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import { FormContext } from "../auth/Context";
@@ -32,15 +33,14 @@ const fakeApiCall = () => {
   }
 };
 
-export default function RegisterEmail({ email }) {
+export default function RegisterEmail({ email, navigation }) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [error, setError] = useState(false);
   const { setStep, formData, setFormData } = useContext(FormContext);
 
   const handleRegister = () => {
     let status = fakeApiCall();
-    status = 200;
-    // const status = fakeApiCall();
+    status = 200; // comment out this line to test error message
     if (status === 200) {
       setErrorVisible(false);
       return true;
@@ -94,6 +94,7 @@ export default function RegisterEmail({ email }) {
           style={defaultStyles.TextInput}
         />
         <SubmitButton title="Next" />
+        <AppButton title="Back" onPress={() => navigation.navigate("Login")} />
       </View>
     </Form>
   );

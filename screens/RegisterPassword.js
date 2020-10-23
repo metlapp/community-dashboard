@@ -53,8 +53,8 @@ export default function RegisterPassword() {
           testID="confirmPass"
         />
         <ErrorMessage error="Passwords do not match" visible={errorVisible} />
-        <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
         <SubmitButton title="Next" />
+        <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
       </Form>
     </View>
   );
