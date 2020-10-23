@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { TextInput } from "react-native-paper";
 
 export default function AppTextInput({ width = "100%", ...props }) {
   return (

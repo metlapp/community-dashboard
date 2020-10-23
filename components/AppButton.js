@@ -1,17 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
+import { Button } from "react-native-paper";
 
 export default function AppButton({ title, onPress }) {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <Button mode="contained" style={styles.button} onPress={onPress}>
       <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
+    </Button>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "blue",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   title: {
-    color: "white",
     fontSize: 18,
     textTransform: "uppercase",
     fontWeight: "bold",

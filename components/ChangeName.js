@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Title, TextInput } from "react-native-paper";
+import AuthContext from "../auth/Context";
 
 const ChangeName = (props) => {
+  const authContext = useContext(AuthContext);
   var newName = "";
   const [error, setError] = React.useState(false);
   const saveAndClose = () => {
@@ -9,14 +11,14 @@ const ChangeName = (props) => {
       setError(true);
     } else {
       setError(false);
-      props.setUser({ name: newName });
+      authContext.setUser({ name: newName });
       props.hidemodal();
     }
   };
 
   return (
     <>
-      <Title>Hello, {props.user.name}</Title>
+      <Title>Hello, {authContext.user.name}</Title>
       <TextInput
         className="newNameInput"
         placeholder="Change Name"
