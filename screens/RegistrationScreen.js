@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 
 import AuthContext from "../auth/Context";
@@ -23,6 +23,11 @@ export default function RegistrationScreen({ navigation }) {
     name: "",
   });
 
+  useEffect(() => {
+    if (formData.name) {
+      setUser(formData);
+    }
+  }, [formData]);
   return (
     <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
       <SafeAreaView style={styles.container}>
@@ -41,17 +46,11 @@ export default function RegistrationScreen({ navigation }) {
             <Text style={styles.text}>Step 2: Enter your password</Text>
             <RegisterPassword />
           </>
-        ) : step === 3 ? (
+        ) : (
           <>
             <Text style={styles.text}>Registration Page</Text>
             <Text style={styles.text}>Step 3: Enter your name</Text>
             <RegisterName name={formData.name} navigation={navigation} />
-          </>
-        ) : (
-          <>
-            {/* setting user after form is sucessfully submitted */}
-            {console.log(formData)}
-            {setUser(formData)}
           </>
         )}
       </SafeAreaView>
