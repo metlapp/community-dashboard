@@ -16,10 +16,17 @@ export default function LoginScreen({ navigation }) {
   //Grabs user data from the context. witht this you can use setUser and user
   const authContext = useContext(AuthContext);
 
-  let user = { name: "Jaycob", email: "", password: "" };
+  let user = {
+    name: "Jaycob",
+    email: "",
+    password:
+      "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (values) => {
     //Here we need to check API if valid
+    user.email = values["email"];
+    user.password = values["password"];
     authContext.setUser(user);
     authStorage.storeUser(user);
   };

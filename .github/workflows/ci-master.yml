@@ -1,6 +1,9 @@
-name: Community App PR CI
+name: Community App Master CI
 
-on: pull_request
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   community-app-ci:
