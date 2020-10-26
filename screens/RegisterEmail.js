@@ -17,7 +17,6 @@ const validationSchema = Yup.object().shape({
 // Testing random status
 const fakeApiCall = () => {
   const num = Math.floor(Math.random() * Math.floor(4));
-  console.log(num);
   switch (num) {
     case 1:
       return 200;
@@ -36,7 +35,7 @@ const fakeApiCall = () => {
 export default function RegisterEmail({ email, navigation }) {
   const [errorVisible, setErrorVisible] = useState(false);
   const [error, setError] = useState(false);
-  const { setStep, formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData, step, setStep } = useContext(FormContext);
 
   const handleRegister = () => {
     let status = fakeApiCall();
@@ -69,7 +68,8 @@ export default function RegisterEmail({ email, navigation }) {
         if (status) {
           setError(false);
           setErrorVisible(false);
-          setStep((step) => step + 1);
+          setStep(step + 1);
+          // navigation.navigate("Password");
         }
       }}
       validationSchema={validationSchema}

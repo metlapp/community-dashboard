@@ -8,7 +8,7 @@ import renderer from "react-test-renderer";
 // and comes packaged with react-native init project.
 // You do not need this if using Enzyme 'toMatchSnapshot' etc.
 
-import { FormContext } from "../auth/context";
+import { FormContext } from "../auth/Context";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import RegisterEmail from "../screens/RegisterEmail";
 import RegisterPassword from "../screens/RegisterPassword";
@@ -34,8 +34,9 @@ describe("Testing Registraion Page", () => {
 describe("Test register email component", () => {
   it("should save email to formData object", async () => {
     const setFormData = jest.fn();
+    const setStep = jest.fn();
     const { getByText, getByTestId } = render(
-      <FormContext.Provider value={{ setFormData }}>
+      <FormContext.Provider value={{ setFormData, setStep }}>
         <RegisterEmail />
       </FormContext.Provider>
     );
@@ -62,8 +63,10 @@ describe("Test register email component", () => {
 describe("should save password to formdata object", () => {
   it("should save password to formData object", async () => {
     const setFormData = jest.fn();
+    const setStep = jest.fn();
+
     const { getByText, getByTestId } = render(
-      <FormContext.Provider value={{ setFormData }}>
+      <FormContext.Provider value={{ setFormData, setStep }}>
         <RegisterPassword />
       </FormContext.Provider>
     );

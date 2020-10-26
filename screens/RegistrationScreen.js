@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 
 import AuthContext from "../auth/Context";
@@ -9,8 +9,8 @@ import RegisterName from "./RegisterName";
 import RegisterPassword from "./RegisterPassword";
 
 export default function RegistrationScreen({ navigation }) {
-  const [step, setStep] = useState(1);
   const authContext = useContext(AuthContext);
+  const [step, setStep] = useState(1);
 
   const setUser = (user) => {
     authContext.setUser(user);

@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
 
 export default function RegisterPassword() {
   const [errorVisible, setErrorVisible] = useState(false);
-  const { setStep, formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData, step, setStep } = useContext(FormContext);
   return (
     <View style={styles.container}>
       <Form
@@ -34,7 +34,7 @@ export default function RegisterPassword() {
             password: password,
           }));
           setErrorVisible(false);
-          setStep((step) => step + 1);
+          setStep(step + 1);
         }}
         validationSchema={validationSchema}
       >
@@ -54,7 +54,7 @@ export default function RegisterPassword() {
         />
         <ErrorMessage error="Passwords do not match" visible={errorVisible} />
         <SubmitButton title="Next" />
-        <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
+        <AppButton title="Back" onPress={() => setStep(step - 1)} />
       </Form>
     </View>
   );

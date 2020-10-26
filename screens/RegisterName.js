@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function RegisterName({ name }) {
-  const { setStep, formData, setFormData } = useContext(FormContext);
+  const { formData, setFormData, step, setStep } = useContext(FormContext);
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,6 @@ export default function RegisterName({ name }) {
             ...formData,
             name: values.name,
           }));
-          setStep((step) => step + 1);
         }}
         validationSchema={validationSchema}
       >
@@ -40,7 +39,7 @@ export default function RegisterName({ name }) {
         />
         <View>
           <SubmitButton title="Save" />
-          <AppButton title="Back" onPress={() => setStep((step) => step - 1)} />
+          <AppButton title="Back" onPress={() => setStep(step - 1)} />
         </View>
       </Form>
     </View>
