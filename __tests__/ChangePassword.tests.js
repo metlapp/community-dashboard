@@ -2,7 +2,7 @@ import "react-native";
 import React from "react";
 import { mount, shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
-import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import ChangePassword from "../components/ChangePassword";
 
 // Note: this is just for use with Jest snapshot testing
 // and comes packaged with react-native init project.
@@ -10,24 +10,24 @@ import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 import renderer from "react-test-renderer";
 
-describe("Testing ChangePasswordScreen", () => {
+describe("Testing ChangePassword", () => {
   it("renders correctly, test using Jest", () => {
-    renderer.create(<ChangePasswordScreen />);
+    renderer.create(<ChangePassword />);
   });
 
   it("matches the snapshot", () => {
-    const tree = renderer.create(<ChangePasswordScreen />).toJSON();
+    const tree = renderer.create(<ChangePassword />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it("text on change password screen", () => {
-    const wrapper = shallow(<ChangePasswordScreen />);
+    const wrapper = shallow(<ChangePassword />);
     const text = wrapper.find("Text").render().text();
     expect(text).toEqual("Change your password");
   });
 
   it('should say "Please make sure new passwords match!" when the new passwords dont match', () => {
-    const wrapper = mount(<ChangePasswordScreen />);
+    const wrapper = mount(<ChangePassword />);
 
     const errorMessage = wrapper.find(".errorMessage");
 
@@ -44,7 +44,7 @@ describe("Testing ChangePasswordScreen", () => {
     const setUser = jest.fn();
 
     const { getByText, getByPlaceholderText } = render(
-      <ChangePasswordScreen
+      <ChangePassword
         handlePasswordChange={handlePasswordChange}
         setUser={setUser}
       />
