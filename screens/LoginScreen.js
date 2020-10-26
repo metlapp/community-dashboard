@@ -57,7 +57,7 @@ export default function LoginScreen({ navigation }) {
           style={styles.forgotButton}
           color="blue"
           onPress={() => {
-            console.log("Press");
+            navigation.navigate("VerifyEmail");
           }}
         >
           Forgot Password

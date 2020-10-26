@@ -18,7 +18,6 @@ const validationSchema = Yup.object().shape({
 
 export default function RegisterPassword() {
   const [errorVisible, setErrorVisible] = useState(false);
-  // const { formData, setFormData, step, setStep } = useContext(FormContext)
   const { user, setUser } = useContext(AuthContext);
   return (
     <SafeAreaView style={styles.container}>
