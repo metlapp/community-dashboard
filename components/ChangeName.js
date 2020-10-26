@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button, Title, TextInput } from "react-native-paper";
 import AuthContext from "../auth/Context";
+import authStorage from "../auth/Storage";
 
 const ChangeName = (props) => {
   const authContext = useContext(AuthContext);
@@ -11,7 +12,13 @@ const ChangeName = (props) => {
       setError(true);
     } else {
       setError(false);
-      authContext.setUser({ name: newName });
+      let user = {
+        name: newName,
+        email: authContext.user.email,
+        password: authContext.user.password,
+      };
+      authContext.setUser(user);
+      authStorage.storeUser(user);
       props.hidemodal();
     }
   };

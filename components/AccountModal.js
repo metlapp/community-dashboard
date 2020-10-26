@@ -15,7 +15,7 @@ const AccountModal = (props) => {
             {(() => {
               switch (props.form) {
                 case "Email":
-                  return <ChangeEmail />;
+                  return <ChangeEmail hidemodal={props.hidemodal} />;
                 case "Name":
                   return <ChangeName hidemodal={props.hidemodal} />;
                 case "Password":
