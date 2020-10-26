@@ -9,6 +9,7 @@ import AuthContext from "../auth/Context";
 import AsyncStorage from "@react-native-community/async-storage";
 import authStorage from "../auth/Storage";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
+import AuthNavigator from "../navigation/AuthNavigator";
 
 beforeEach(async () => {
   await AsyncStorage.clear();
@@ -29,7 +30,7 @@ describe("<App />", () => {
   });
   it("renders the Login component if user is null", () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.containsMatchingElement(<LoginScreen />)).toEqual(true);
+    expect(wrapper.containsMatchingElement(<AuthNavigator />)).toEqual(true);
   });
 
   it("renders the Account component if user is set", async () => {

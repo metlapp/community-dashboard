@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   //Grabs user data from the context. witht this you can use setUser and user
   const authContext = useContext(AuthContext);
 
@@ -64,8 +64,13 @@ export default function LoginScreen() {
         </Button>
         <View>
           <Title style={styles.registerContainer}>Don't have an account?</Title>
-
-          <Button>Register</Button>
+          <Button
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+          >
+            Register
+          </Button>
         </View>
       </View>
     </SafeAreaView>
