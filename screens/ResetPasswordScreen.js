@@ -37,7 +37,6 @@ export default function RegisterPassword() {
             return;
           }
           const password = await runCrypto(values.password);
-          console.log(password);
 
           setUser({
             email: "email@email.com",
