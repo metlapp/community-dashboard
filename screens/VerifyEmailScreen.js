@@ -42,6 +42,8 @@ export default function RegisterPassword({ navigation }) {
         />
 
         <SuccessMessage
+          testID="success"
+          placeholder="success"
           success="An email will be sent to the provided email address with details on how to reset your password"
           visible={successVisible}
           containerStyles={{
