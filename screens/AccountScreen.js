@@ -15,6 +15,8 @@ const AccountScreen = () => {
   const hideModal = () => setVisible(false);
   const authContext = useContext(AuthContext);
 
+  console.log(authContext.user);
+
   const handleLogout = () => {
     //Both sets the user to null and removes the user from async storage
     authContext.setUser(null);

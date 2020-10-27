@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
@@ -19,6 +19,14 @@ const validationSchema = Yup.object().shape({
 export default function RegisterPassword() {
   const [errorVisible, setErrorVisible] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    let unmounted = false;
+    return () => {
+      unmounted = true;
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Form
@@ -29,12 +37,15 @@ export default function RegisterPassword() {
             return;
           }
           const password = await runCrypto(values.password);
-          setUser(() => ({
-            ...user,
+          console.log(password);
+
+          setUser({
+            email: "email@email.com",
+            name: "Dawson",
             password: password,
-          }));
+          });
+          setMount(!mount);
           setErrorVisible(false);
-          setStep(step + 1);
         }}
         validationSchema={validationSchema}
       >
