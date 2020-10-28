@@ -10,15 +10,20 @@ const ChangeName = (props) => {
   var newName = "";
   const [error, setError] = React.useState(false);
 
-  useEffect(() => {
+  const fetchData = async () => {
     axios
       .get(apiConfig.baseUrl + "/user/5tVxgsqPCjv2Ul5Rc7gw", {
         headers: { "app-id": "5f9897efd637d42b2399ba35" },
       })
-      .then(({ data }) =>
-        authContext.setUser({ ...authContext.user, name: data.firstName })
-      )
+      .then(({ data }) => {
+        authContext.setUser({ ...authContext.user, name: data.firstName }),
+          console.log(data);
+      })
       .catch(console.error);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const saveAndClose = () => {
