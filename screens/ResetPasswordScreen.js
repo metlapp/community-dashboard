@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
-import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
+import authStorage from "../auth/Storage";
 import runCrypto from "../auth/crypto-hashing";
 import defaultStyles from "../config/defaultStyles";
 import ErrorMessage from "../components/ErrorMessage";
@@ -16,9 +16,30 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string().required().min(8).label("Confirm Password"),
 });
 
-export default function RegisterPassword() {
+export default function ResetPasswordScreen() {
   const [errorVisible, setErrorVisible] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+
+  const savePassword = async (values) => {
+    if (values.password !== values.confirmPassword) {
+      setErrorVisible(true);
+      return;
+    }
+    const password = await runCrypto(values.password);
+    authStorage.storeUser({
+      email: "email@email.com",
+      name: "Dawson",
+      password: password,
+    });
+    setUser({
+      // temporary until api is hooked up
+      email: "email@email.com",
+      name: "Dawson",
+      password: password,
+    });
+    setMount(!mount);
+    setErrorVisible(false);
+  };
 
   useEffect(() => {
     let unmounted = false;
@@ -31,21 +52,7 @@ export default function RegisterPassword() {
     <SafeAreaView style={styles.container}>
       <Form
         initialValues={{ password: "", confirmPassword: "" }}
-        onSubmit={async (values) => {
-          if (values.password !== values.confirmPassword) {
-            setErrorVisible(true);
-            return;
-          }
-          const password = await runCrypto(values.password);
-
-          setUser({
-            email: "email@email.com",
-            name: "Dawson",
-            password: password,
-          });
-          setMount(!mount);
-          setErrorVisible(false);
-        }}
+        onSubmit={(values) => savePassword(values)}
         validationSchema={validationSchema}
       >
         <AppFormField

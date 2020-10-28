@@ -12,7 +12,7 @@ export default function RegistrationScreen({ navigation }) {
   const authContext = useContext(AuthContext);
   const [step, setStep] = useState(1);
 
-  const setUser = (user) => {
+  const saveUser = (user) => {
     authContext.setUser(user);
     authStorage.storeUser(user);
   };
@@ -25,7 +25,7 @@ export default function RegistrationScreen({ navigation }) {
 
   useEffect(() => {
     if (formData.name) {
-      setUser(formData);
+      saveUser(formData);
     }
   }, [formData]);
   return (

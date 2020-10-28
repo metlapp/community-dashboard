@@ -1,14 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
-import runCrypto from "../auth/crypto-hashing";
 import defaultStyles from "../config/defaultStyles";
-import ErrorMessage from "../components/ErrorMessage";
 import Form from "../components/Form";
-import AuthContext from "../auth/Context";
 import SubmitButton from "../components/SubmitButton";
 import SuccessMessage from "../components/SuccessMessage";
 
@@ -16,21 +13,24 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
 
-export default function RegisterPassword({ navigation }) {
+export default function VerifyEmailScreen({ navigation }) {
   const [successVisible, setSuccessVisible] = useState(false);
+
+  const sendEmail = async (values) => {
+    setSuccessVisible(true);
+    values["email"] = "";
+    setTimeout(() => {
+      setSuccessVisible(false);
+      navigation.navigate("Login");
+      navigation.navigate("ResetPassword");
+    }, 5000);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Form
         initialValues={{ email: "" }}
-        onSubmit={async (values) => {
-          setSuccessVisible(true);
-          values["email"] = "";
-          setTimeout(() => {
-            setSuccessVisible(false);
-            navigation.navigate("Login");
-            navigation.navigate("ResetPassword");
-          }, 5000);
-        }}
+        onSubmit={(values) => sendEmail(values)}
         validationSchema={validationSchema}
       >
         <AppFormField
