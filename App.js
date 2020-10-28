@@ -6,7 +6,6 @@ import { Provider as PaperProvider } from "react-native-paper";
 import authStorage from "./auth/Storage";
 import AuthNavigator from "./navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeScreen from "./screens/HomeScreen";
 
 export default function App() {
   const [user, setUser] = React.useState();
@@ -31,7 +30,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
         <NavigationContainer>
-          {user ? <AccountScreen /> : <HomeScreen />}
+          {user ? <AccountScreen /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
