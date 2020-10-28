@@ -1,7 +1,7 @@
 import "react-native";
 import React from "react";
 import ChangeName from "../components/ChangeName";
-import { render, fireEvent, cleanup } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
 import AuthContext from "../auth/Context";
 import axios from "../__mocks__/axios";
 jest.mock("axios");
