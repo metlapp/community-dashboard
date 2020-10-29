@@ -15,13 +15,8 @@ const ChangeEmail = (props) => {
   const authContext = useContext(AuthContext);
 
   const handleSubmit = (values) => {
-    let user = {
-      name: authContext.user.name,
-      email: values["email"],
-      password: authContext.user.password,
-    };
-    authContext.setUser(user);
-    authStorage.storeUser(user);
+    authContext.setUser({ ...authContext.user, email: values["email"] });
+    authStorage.storeUser(authContext.user);
     props.hidemodal();
   };
 

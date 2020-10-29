@@ -1,24 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Title, TextInput } from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
+import axios from "axios";
+import { apiConfig } from "../config/config";
 
 const ChangeName = (props) => {
   const authContext = useContext(AuthContext);
   var newName = "";
   const [error, setError] = React.useState(false);
+
+  const fetchData = async () => {
+    axios
+      .get(apiConfig.baseUrl + "/user/5tVxgsqPCjv2Ul5Rc7gw", {
+        headers: { "app-id": "5f9897efd637d42b2399ba35" },
+      })
+      .then(({ data }) =>
+        authContext.setUser({ ...authContext.user, name: data.firstName })
+      )
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const saveAndClose = () => {
     if (newName == "") {
       setError(true);
     } else {
       setError(false);
-      let user = {
-        name: newName,
-        email: authContext.user.email,
-        password: authContext.user.password,
-      };
-      authContext.setUser(user);
-      authStorage.storeUser(user);
+      authContext.setUser({ ...authContext.user, name: newName });
+      authStorage.storeUser(authContext.user);
       props.hidemodal();
     }
   };
