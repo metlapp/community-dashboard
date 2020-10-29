@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-function SuccessMessage({ success, visible }) {
+function SuccessMessage({ success, visible, containerStyles, messageStyles }) {
   if (!visible || !success) return null;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.success}>{success}</Text>
+    <View style={[styles.container, { ...containerStyles }]}>
+      <Text style={[styles.success, { ...messageStyles }]}>{success}</Text>
     </View>
   );
 }

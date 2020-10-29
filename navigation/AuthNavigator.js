@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/LoginScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
-import RegisterPassword from "../screens/RegisterPassword";
-import RegisterName from "../screens/RegisterName";
+import ResetPasswordScreen from "../screens/ResetPasswordScreen";
+import VerifyEmail from "../screens/VerifyEmailScreen";
 
 const Stack = createStackNavigator();
 
@@ -22,13 +22,13 @@ const AuthNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Password"
-        component={RegisterPassword}
+        name="VerifyEmail"
+        component={VerifyEmail}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Name"
-        component={RegisterName}
+        name="ResetPassword"
+        component={ResetPasswordScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
