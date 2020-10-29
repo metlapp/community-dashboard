@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text } from "react-native";
-import axios from "axios";
-import { apiConfig } from "../config/config";
+import React from "react";
+import { View, Text } from "react-native";
 
 export default function HomeScreen() {
-  console.log(data);
   return (
-    <SafeAreaView>
-      <Text>hommepage</Text>
-    </SafeAreaView>
+    <View>
+      <Text>HomeScreen</Text>
+    </View>
   );
 }

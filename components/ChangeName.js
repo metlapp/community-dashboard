@@ -15,10 +15,9 @@ const ChangeName = (props) => {
       .get(apiConfig.baseUrl + "/user/5tVxgsqPCjv2Ul5Rc7gw", {
         headers: { "app-id": "5f9897efd637d42b2399ba35" },
       })
-      .then(({ data }) => {
-        authContext.setUser({ ...authContext.user, name: data.firstName }),
-          console.log(data);
-      })
+      .then(({ data }) =>
+        authContext.setUser({ ...authContext.user, name: data.firstName })
+      )
       .catch(console.error);
   };
 
