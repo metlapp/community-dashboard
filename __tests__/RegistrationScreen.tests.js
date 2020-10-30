@@ -1,6 +1,6 @@
 import "react-native";
-import React from "react";
-import { mount, shallow } from "enzyme";
+import * as React from "react";
+import { shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import renderer from "react-test-renderer";
 
@@ -120,6 +120,34 @@ describe("should save name to formdata object", () => {
 
     await waitFor(() => {
       expect(setFormData).toHaveBeenCalledTimes(1);
+    });
+  });
+});
+
+describe("Test API", () => {
+  it("Calls the Api to post the new User", async () => {
+    const setFormData = jest.fn();
+
+    const setUser = jest.fn();
+    const wrapper = mount(
+      <FormContext.Provider value={{ setUser }}>
+        <RegistrationScreen />
+      </FormContext.Provider>
+    );
+    jest
+      .spyOn(React, "useState")
+      //Simulate that mode state value was set to 'new mode value'
+      .mockImplementation((formData) => [
+        (formData = {
+          email: "dd@gmail.com",
+          name: "Harry",
+          password: "password",
+        }),
+        setFormData,
+      ]);
+
+    await waitFor(() => {
+      expect(setUser).toHaveBeenCalledTimes(1);
     });
   });
 });

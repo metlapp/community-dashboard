@@ -1,6 +1,7 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
-
+import axios from "axios";
+import { apiConfig } from "../config/config";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
 import { FormContext } from "../auth/Context";
@@ -13,8 +14,23 @@ export default function RegistrationScreen({ navigation }) {
   const [step, setStep] = useState(1);
 
   const saveUser = (user) => {
-    authContext.setUser(user);
-    authStorage.storeUser(user);
+    axios
+      .post(
+        apiConfig.baseUrl + "users/",
+        {
+          email: user.email,
+          first_name: user.name,
+          password: user.password,
+        },
+        {
+          auth: apiConfig.auth,
+        }
+      )
+      .then((data) => {
+        authContext.setUser(data.data);
+        authStorage.storeUser(data.data);
+      })
+      .catch(console.error);
   };
 
   const [formData, setFormData] = useState({

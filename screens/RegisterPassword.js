@@ -28,7 +28,7 @@ export default function RegisterPassword() {
             setErrorVisible(true);
             return;
           }
-          const password = await runCrypto(values.password);
+          const password = values.password;
           setFormData(() => ({
             ...formData,
             password: password,
