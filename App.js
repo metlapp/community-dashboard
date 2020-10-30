@@ -6,6 +6,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import authStorage from "./auth/Storage";
 import AuthNavigator from "./navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
+import {decode, encode} from 'base-64'
 
 export default function App() {
   const [user, setUser] = React.useState();
@@ -26,6 +27,14 @@ export default function App() {
     restoreUser();
   }, []);
 
+
+  if (!global.btoa) {
+      global.btoa = encode;
+  }
+  
+  if (!global.atob) {
+      global.atob = decode;
+  } 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>

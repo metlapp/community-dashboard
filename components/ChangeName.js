@@ -10,28 +10,33 @@ const ChangeName = (props) => {
   var newName = "";
   const [error, setError] = React.useState(false);
 
-  const fetchData = async () => {
+  const postName = async () => {
+    newName = newName.trim();
     axios
-      .get(apiConfig.baseUrl + "/user/5tVxgsqPCjv2Ul5Rc7gw", {
-        headers: { "app-id": "5f9897efd637d42b2399ba35" },
+      .patch(apiConfig.baseUrl + "users/"+authContext.user.id, {
+        auth: {
+          username: 'admin@admin.com',
+          password: 'admin'
+        },
+        first_name: newName
       })
-      .then(({ data }) =>
-        authContext.setUser({ ...authContext.user, name: data.firstName })
+      .then(() =>{
+        authContext.setUser({ ...authContext.user, name: newName });
+        authStorage.storeUser(authContext.user);
+      }
       )
       .catch(console.error);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+ 
 
   const saveAndClose = () => {
     if (newName == "") {
       setError(true);
     } else {
+      postName();
       setError(false);
-      authContext.setUser({ ...authContext.user, name: newName });
-      authStorage.storeUser(authContext.user);
+     
       props.hidemodal();
     }
   };
