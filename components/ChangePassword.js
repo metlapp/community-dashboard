@@ -8,9 +8,7 @@ import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/SuccessMessage";
-import runCrypto from "../auth/crypto-hashing";
 import AuthContext from "../auth/Context";
-import authStorage from "../auth/Storage";
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().required().min(8).label("Current Password"),
@@ -52,6 +50,7 @@ export default function ChangePassword(props) {
     // If no error, submit password change
     const currentPassword = values["currentPassword"];
     const newPassword = values["newPassword"];
+
     axios
       .patch(
         apiConfig.baseUrl + "users/" + authContext.user.id + "/",

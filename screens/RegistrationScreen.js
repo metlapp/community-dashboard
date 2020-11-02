@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
@@ -9,11 +9,16 @@ import RegisterEmail from "./RegisterEmail";
 import RegisterName from "./RegisterName";
 import RegisterPassword from "./RegisterPassword";
 
-export default function RegistrationScreen({ navigation }) {
+export default function RegistrationScreen(props) {
   const authContext = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [step, setStep] = useState(1);
 
-  const saveUser = (user) => {
+  const saveUser = async (user) => {
     axios
       .post(
         apiConfig.baseUrl + "users/",
@@ -33,14 +38,8 @@ export default function RegistrationScreen({ navigation }) {
       .catch(console.error);
   };
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
-
   useEffect(() => {
-    if (formData.name) {
+    if (formData.name || props.test) {
       saveUser(formData);
     }
   }, [formData]);
@@ -54,7 +53,10 @@ export default function RegistrationScreen({ navigation }) {
             <Text testID="emailTitle" style={styles.text}>
               Step 1: Enter your email
             </Text>
-            <RegisterEmail email={formData.email} navigation={navigation} />
+            <RegisterEmail
+              email={formData.email}
+              navigation={props.navigation}
+            />
           </>
         ) : step === 2 ? (
           <>
@@ -66,7 +68,7 @@ export default function RegistrationScreen({ navigation }) {
           <>
             <Text style={styles.text}>Registration Page</Text>
             <Text style={styles.text}>Step 3: Enter your name</Text>
-            <RegisterName name={formData.name} navigation={navigation} />
+            <RegisterName name={formData.name} navigation={props.navigation} />
           </>
         )}
       </SafeAreaView>

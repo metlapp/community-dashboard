@@ -3,12 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import renderer from "react-test-renderer";
-
-// Note: this is just for use with Jest snapshot testing
-// and comes packaged with react-native init project.
-// You do not need this if using Enzyme 'toMatchSnapshot' etc.
-
-import { FormContext } from "../auth/Context";
+import AuthContext, { FormContext } from "../auth/Context";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import RegisterEmail from "../screens/RegisterEmail";
 import RegisterPassword from "../screens/RegisterPassword";
@@ -126,28 +121,14 @@ describe("should save name to formdata object", () => {
 
 describe("Test API", () => {
   it("Calls the Api to post the new User", async () => {
-    const setFormData = jest.fn();
-
     const setUser = jest.fn();
-    const wrapper = mount(
-      <FormContext.Provider value={{ setUser }}>
-        <RegistrationScreen />
-      </FormContext.Provider>
+    render(
+      <AuthContext.Provider value={{ setUser }}>
+        <RegistrationScreen test={true} />
+      </AuthContext.Provider>
     );
-    jest
-      .spyOn(React, "useState")
-      //Simulate that mode state value was set to 'new mode value'
-      .mockImplementation((formData) => [
-        (formData = {
-          email: "dd@gmail.com",
-          name: "Harry",
-          password: "password",
-        }),
-        setFormData,
-      ]);
-
     await waitFor(() => {
-      expect(setUser).toHaveBeenCalledTimes(1);
+      expect(setUser).toHaveBeenCalled();
     });
   });
 });

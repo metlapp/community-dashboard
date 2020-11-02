@@ -38,7 +38,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
         <NavigationContainer>
-          {user ? <AccountScreen /> : <AuthNavigator />}
+          {user ? <AccountScreen /> : <AuthNavigator test={false} />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
