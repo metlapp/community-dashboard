@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import AuthContext from "./auth/Context";
-import AccountScreen from "./screens/AccountScreen";
+import * as Linking from "expo-linking";
+import { NavigationContainer, useLinking } from "@react-navigation/native";
 import { Provider as PaperProvider } from "react-native-paper";
-import authStorage from "./auth/Storage";
+
+import AccountScreen from "./screens/AccountScreen";
+import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { decode, encode } from "base-64";
+import authStorage from "./auth/Storage";
 
 export default function App() {
   const [user, setUser] = React.useState();
+  const prefix = Linking.makeUrl("/");
+  console.log(prefix)
 
   const restoreUser = async () => {
     const userData = await authStorage.getUser();
@@ -33,23 +37,40 @@ export default function App() {
 
   if (!global.atob) {
     global.atob = decode;
+  const ref = React.useRef();
+
+  const { getInitialState } = useLinking(ref, {
+    prefixes: [prefix],
+    config: {
+      ResetPassword: "resetPassword/reset/:token"
+    }
+  });
+
+  const [isReady, setIsReady] = React.useState(false);
+  const [initialState, setInitialState] = React.useState();
+
+  React.useEffect(() => {
+    getInitialState()
+      .catch(() => {})
+      .then(state => {
+        if (state !== undefined) {
+          setInitialState(state);
+        }
+
+        setIsReady(true);
+      });
+  }, [getInitialState]);
+
+  if (!isReady) {
+    return null;
   }
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
-        <NavigationContainer>
-          {user ? <AccountScreen /> : <AuthNavigator test={false} />}
+        <NavigationContainer initialState={initialState} ref={ref} >
+          {user ? <AccountScreen /> : <AuthNavigator  />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
