@@ -10,35 +10,38 @@ const ChangeName = (props) => {
   var newName = "";
   const [error, setError] = React.useState(false);
 
-  const fetchData = async () => {
+  // Posts new name to the API
+  const postName = async () => {
     axios
-      .get(apiConfig.baseUrl + "/user/5tVxgsqPCjv2Ul5Rc7gw", {
-        headers: { "app-id": "5f9897efd637d42b2399ba35" },
-      })
-      .then(({ data }) =>
-        authContext.setUser({ ...authContext.user, name: data.firstName })
+      .patch(
+        apiConfig.baseUrl + "users/" + authContext.user.id + "/",
+        { first_name: newName },
+        {
+          auth: apiConfig.auth,
+        }
       )
+      .then((data) => {
+        authContext.setUser({ ...authContext.user, first_name: newName });
+        authStorage.storeUser(authContext.user);
+      })
       .catch(console.error);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const saveAndClose = () => {
+    newName = newName.trim();
     if (newName == "") {
       setError(true);
     } else {
+      postName();
       setError(false);
-      authContext.setUser({ ...authContext.user, name: newName });
-      authStorage.storeUser(authContext.user);
+
       props.hidemodal();
     }
   };
 
   return (
     <>
-      <Title>Hello, {authContext.user.name}</Title>
+      <Title>Hello, {authContext.user.first_name}</Title>
       <TextInput
         className="newNameInput"
         placeholder="Change Name"

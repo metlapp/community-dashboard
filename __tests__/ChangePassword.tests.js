@@ -3,6 +3,9 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import ChangePassword from "../components/ChangePassword";
+import AuthContext from "../auth/Context";
+import axios from "../__mocks__/axios";
+jest.mock("axios");
 
 // Note: this is just for use with Jest snapshot testing
 // and comes packaged with react-native init project.
@@ -40,16 +43,12 @@ describe("Testing ChangePassword", () => {
   });
 
   it("should call handleSubmit after submit", async () => {
-    const handlePasswordChange = jest.fn();
-    const setUser = jest.fn();
-
+    const user = { id: 2 };
     const { getByText, getByPlaceholderText } = render(
-      <ChangePassword
-        handlePasswordChange={handlePasswordChange}
-        setUser={setUser}
-      />
+      <AuthContext.Provider value={{ user }}>
+        <ChangePassword />
+      </AuthContext.Provider>
     );
-
     const currentPassword = getByPlaceholderText("Current Password");
     const newPassword = getByPlaceholderText("New Password");
     const confirmPassword = getByPlaceholderText("Confirm Password");
@@ -57,22 +56,22 @@ describe("Testing ChangePassword", () => {
     act(() => {
       fireEvent(currentPassword, "onChangeText", "password");
     });
+
     act(() => {
       fireEvent(newPassword, "onChangeText", "Peyton12");
     });
+    expect(newPassword.props.value).toEqual("Peyton12");
     act(() => {
       fireEvent(confirmPassword, "onChangeText", "Peyton12");
     });
+    expect(newPassword.props.value).toEqual("Peyton12");
 
     act(() => {
       fireEvent(getByText("Save").parent, "press");
     });
 
-    waitFor(() => {
-      expect(handlePasswordChange).toHaveBeenCalledTimes(1);
-    });
-    waitFor(() => {
-      expect(setUser).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(axios.patch).toHaveBeenCalled();
     });
   });
 });

@@ -17,6 +17,7 @@ export default function LoginScreen({ navigation }) {
   const authContext = useContext(AuthContext);
 
   let user = {
+    id:2,
     name: "Jaycob",
     email: "",
     password:

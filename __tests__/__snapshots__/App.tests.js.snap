@@ -901,7 +901,9 @@ exports[`<App /> renders correctly, test using Jest + Enzyme 1`] = `
 >
   <Provider>
     <ForwardRef(NavigationContainer)>
-      <AuthNavigator />
+      <AuthNavigator
+        test={false}
+      />
     </ForwardRef(NavigationContainer)>
   </Provider>
 </ContextProvider>

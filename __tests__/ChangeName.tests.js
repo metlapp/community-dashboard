@@ -7,7 +7,7 @@ import axios from "../__mocks__/axios";
 jest.mock("axios");
 
 describe("<ChangeName />", () => {
-  it("SetUser has been called", () => {
+  it("SetUser has been called", async () => {
     const setUser = jest.fn();
     const hidemodal = jest.fn();
     const user = { name: "Dawson" };
@@ -19,16 +19,26 @@ describe("<ChangeName />", () => {
     fireEvent(getByPlaceholderText("Change Name"), "onChangeText", "Jerry");
 
     fireEvent(getByText("Save"), "onPress");
+    await expect(axios.patch).toHaveBeenCalled();
     expect(setUser).toHaveBeenCalled();
   });
 
-  it("Calls Api to display name", async () => {
-    axios.get.mockImplementationOnce(() => {
-      Promise.resolve({
-        data: { firstname: "Jerry" },
-      });
+  it("SetUser has not been called due to network Error", async () => {
+    const setUser = jest.fn();
+    const hidemodal = jest.fn();
+    const user = { name: "Dawson" };
+    axios.patch.mockImplementationOnce(() => {
+      Promise.reject();
     });
+    const { getByText, getByPlaceholderText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <ChangeName hidemodal={hidemodal} />
+      </AuthContext.Provider>
+    );
+    fireEvent(getByPlaceholderText("Change Name"), "onChangeText", "Jerry");
 
-    expect(axios.get).toHaveBeenCalled();
+    fireEvent(getByText("Save"), "onPress");
+    await expect(axios.patch).toHaveBeenCalled();
+    expect(setUser).not.toHaveBeenCalled();
   });
 });

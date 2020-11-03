@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import * as Yup from "yup";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
-
+import axios from "axios";
+import { apiConfig } from "../config/config";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/SuccessMessage";
-import runCrypto from "../auth/crypto-hashing";
 import AuthContext from "../auth/Context";
-import authStorage from "../auth/Storage";
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().required().min(8).label("Current Password"),
@@ -48,29 +47,32 @@ export default function ChangePassword(props) {
       return;
     }
     values["newPassword"] === values["confirmNewPassword"];
-    const currentPassword = await runCrypto(values["currentPassword"]);
-    // show error if current password doesnt match password from api
-    if (authContext.user.password !== currentPassword) {
-      setError("Incorrect password");
-      setErrorVisible(true);
-      return;
-    }
     // If no error, submit password change
-    const newPassword = await runCrypto(values["newPassword"]);
-    let user = {
-      name: authContext.user.name,
-      email: authContext.user.email,
-      password: newPassword,
-    };
-    authContext.setUser(user);
-    authStorage.storeUser(user);
-    setErrorVisible(false);
-    setSuccessVisible(true);
-    resetForm(values);
-    setTimeout(() => {
-      setSuccessVisible(false);
-      props.hidemodal();
-    }, 5000);
+    const currentPassword = values["currentPassword"];
+    const newPassword = values["newPassword"];
+
+    axios
+      .patch(
+        apiConfig.baseUrl + "users/" + authContext.user.id + "/",
+        { password: newPassword, current_password: currentPassword },
+        {
+          auth: apiConfig.auth,
+        }
+      )
+      .then(() => {
+        setSuccessVisible(true);
+        setErrorVisible(false);
+        resetForm(values);
+        setTimeout(() => {
+          setSuccessVisible(false);
+          props.hidemodal();
+        }, 5000);
+      })
+      .catch((error) => {
+        setError(error.response.data.password[0]);
+        setErrorVisible(true);
+        return;
+      });
   };
 
   return (
