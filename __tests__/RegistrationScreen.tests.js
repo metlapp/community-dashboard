@@ -1,5 +1,4 @@
 import "react-native";
-import * as React from "react";
 import { shallow } from "enzyme";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import renderer from "react-test-renderer";
