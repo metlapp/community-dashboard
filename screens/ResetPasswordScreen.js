@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { SafeAreaView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 
 import AppFormField from "../components/AppFormField";
-import authStorage from "../auth/Storage";
-import runCrypto from "../auth/crypto-hashing";
 import defaultStyles from "../config/defaultStyles";
 import ErrorMessage from "../components/ErrorMessage";
 import Form from "../components/Form";
@@ -16,29 +15,19 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string().required().min(8).label("Confirm Password"),
 });
 
-export default function ResetPasswordScreen() {
+export default function ResetPasswordScreen({ navigation, route }) {
   const [errorVisible, setErrorVisible] = useState(false);
-  const { user, setUser } = useContext(AuthContext);
 
+  const { token } = route.params;
+  const url = 'http://127.0.0.1:8000/api/password_reset/confirm/'
   const savePassword = async (values) => {
     if (values.password !== values.confirmPassword) {
       setErrorVisible(true);
       return;
     }
-    const password = await runCrypto(values.password);
-    authStorage.storeUser({
-      email: "email@email.com",
-      name: "Dawson",
-      password: password,
-    });
-    setUser({
-      // temporary until api is hooked up
-      email: "email@email.com",
-      name: "Dawson",
-      password: password,
-    });
-    setMount(!mount);
+    await axios.post(url, { token, password: values.password });
     setErrorVisible(false);
+    navigation.navigate('Login')
   };
 
   useEffect(() => {
