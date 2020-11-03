@@ -9,9 +9,10 @@ describe("<VerifyEmailScreen />", () => {
     const setUser = jest.fn();
     const user = { email: "email@email.com" };
     const setSuccessVisible = jest.fn();
+    const route = {}
 
     const { getByText, getByPlaceholderText, getByTestId } = render(
-      <AuthContext.Provider value={{ user, setUser, setSuccessVisible }}>
+      <AuthContext.Provider value={{ user, setUser, setSuccessVisible, route  }}>
         <VerifyEmailScreen />
       </AuthContext.Provider>
     );

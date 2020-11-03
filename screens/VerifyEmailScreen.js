@@ -22,11 +22,10 @@ export default function VerifyEmailScreen({ navigation }) {
   const url = "http://127.0.0.1:8000/api/password_reset/";
 
   const sendEmail = async (values) => {
-    await axios.post(url, { email: values['email'] }).then(() => {
+    await axios.post(url, { email: values["email"] }).then(() => {
       try {
-        setErrorVisible(false)
+        setErrorVisible(false);
         setSuccessVisible(true);
-        values['email'] = "";
         setTimeout(() => {
           setSuccessVisible(false);
         }, 2500);
@@ -35,12 +34,15 @@ export default function VerifyEmailScreen({ navigation }) {
       }
     });
   };
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <Form
         initialValues={{ email: "" }}
-        onSubmit={(values) => sendEmail(values)}
+        onSubmit={(values) => {
+          sendEmail(values);
+          values["email"] = "";
+        }}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -51,7 +53,10 @@ export default function VerifyEmailScreen({ navigation }) {
           keyboardType="email-address"
         />
 
-        <ErrorMessage error="Could not communicate with server, please try again." visible={errorVisible} />
+        <ErrorMessage
+          error="Could not communicate with server, please try again."
+          visible={errorVisible}
+        />
 
         <SuccessMessage
           testID="success"
