@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import { Button, Title, Appbar } from "react-native-paper";
 import AuthContext from "../auth/Context";
@@ -7,6 +7,9 @@ import Form from "../components/Form";
 import AppFormField from "../components/AppFormField";
 import SubmitButton from "../components/SubmitButton";
 import * as Yup from "yup";
+import axios from "axios";
+import { apiConfig } from "../config/config";
+import ErroMessage from "../components/ErrorMessage";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -15,21 +18,28 @@ const validationSchema = Yup.object().shape({
 export default function LoginScreen({ navigation }) {
   //Grabs user data from the context. witht this you can use setUser and user
   const authContext = useContext(AuthContext);
-
-  let user = {
-    id:2,
-    name: "Jaycob",
-    email: "",
-    password:
-      "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-  };
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (values) => {
-    //Here we need to check API if valid
-    user.email = values["email"];
-    user.password = values["password"];
-    authContext.setUser(user);
-    authStorage.storeUser(user);
+    axios
+      .post(
+        apiConfig.baseUrl + "login/",
+        {
+          email: values["email"],
+          password: values["password"],
+        },
+        {
+          auth: apiConfig.auth,
+        }
+      )
+      .then((data) => {
+        setError(false);
+        authContext.setUser(data.data);
+        authStorage.storeUser(data.data);
+      })
+      .catch(() => {
+        setError(true);
+      });
   };
   return (
     <SafeAreaView>
@@ -54,6 +64,11 @@ export default function LoginScreen({ navigation }) {
           />
           <SubmitButton className="submit" title="Login" />
         </Form>
+        <ErroMessage
+          error="Invalid Email password combonation"
+          visible={error}
+          styling={styles.error}
+        />
         <Button
           style={styles.forgotButton}
           color="blue"
@@ -63,6 +78,7 @@ export default function LoginScreen({ navigation }) {
         >
           Forgot Password
         </Button>
+
         <View>
           <Title style={styles.registerContainer}>Don't have an account?</Title>
           <Button
@@ -85,6 +101,15 @@ const styles = StyleSheet.create({
   container: {
     height: "90%",
     justifyContent: "center",
+  },
+  error: {
+    alignItems: "center",
+    backgroundColor: "red",
+    color: "white",
+    fontSize: 15,
+    fontWeight: "600",
+    justifyContent: "center",
+    textAlign: "center",
   },
 
   forgotButton: {
