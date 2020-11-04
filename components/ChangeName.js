@@ -4,6 +4,7 @@ import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
 import axios from "axios";
 import { apiConfig } from "../config/config";
+import PropTypes from "prop-types";
 
 const ChangeName = (props) => {
   const authContext = useContext(AuthContext);
@@ -20,7 +21,7 @@ const ChangeName = (props) => {
           auth: apiConfig.auth,
         }
       )
-      .then((data) => {
+      .then(() => {
         authContext.setUser({ ...authContext.user, first_name: newName });
         authStorage.storeUser(authContext.user);
       })
@@ -53,6 +54,10 @@ const ChangeName = (props) => {
       </Button>
     </>
   );
+};
+
+ChangeName.propTypes = {
+  hidemodal: PropTypes.func,
 };
 
 export default ChangeName;

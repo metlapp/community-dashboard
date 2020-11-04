@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import * as Yup from "yup";
-
 import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
 import defaultStyles from "../config/defaultStyles";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import SuccessMessage from "../components/SuccessMessage";
+import PropTypes from "prop-types";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -61,6 +61,10 @@ export default function VerifyEmailScreen({ navigation }) {
     </SafeAreaView>
   );
 }
+
+VerifyEmailScreen.propTypes = {
+  navigation: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   container: {

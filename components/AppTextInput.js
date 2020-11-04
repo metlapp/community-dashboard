@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-paper";
+import PropTypes from "prop-types";
 
 export default function AppTextInput({
   autoCapitalize,
@@ -17,6 +18,11 @@ export default function AppTextInput({
     </View>
   );
 }
+
+AppTextInput.propTypes = {
+  autoCapitalize: PropTypes.string,
+  width: PropTypes.string,
+};
 
 const styles = StyleSheet.create({
   container: {

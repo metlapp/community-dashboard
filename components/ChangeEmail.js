@@ -8,7 +8,7 @@ import SubmitButton from "../components/SubmitButton";
 import * as Yup from "yup";
 import axios from "axios";
 import { apiConfig } from "../config/config";
-
+import PropTypes from "prop-types";
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
@@ -50,6 +50,10 @@ const ChangeEmail = (props) => {
       </Form>
     </>
   );
+};
+
+ChangeEmail.propTypes = {
+  hidemodal: PropTypes.func,
 };
 
 export default ChangeEmail;
