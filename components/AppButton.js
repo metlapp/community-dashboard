@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { Button } from "react-native-paper";
-
+import PropTypes from "prop-types";
 export default function AppButton({ width = "100%", title, onPress }) {
   return (
     <Button
@@ -13,6 +13,11 @@ export default function AppButton({ width = "100%", title, onPress }) {
     </Button>
   );
 }
+
+AppButton.propTypes = {
+  title: PropTypes.string,
+  onPress: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   button: {

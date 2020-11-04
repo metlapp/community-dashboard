@@ -3,7 +3,8 @@ import { Modal, Portal, Card } from "react-native-paper";
 import ChangeName from "../components/ChangeName";
 import ChangeEmail from "../components/ChangeEmail";
 import ChangePassword from "../components/ChangePassword";
-import { ProgressBarAndroidComponent } from "react-native";
+import PropTypes from "prop-types";
+
 //OpenModal opens the modal and takes in the visibility which either show the modal or hides it
 //It also takes in the state which the button passes to it and will render the correct component
 
@@ -28,6 +29,12 @@ const AccountModal = (props) => {
       </Modal>
     </Portal>
   );
+};
+
+AccountModal.propTypes = {
+  visibility: PropTypes.bool,
+  form: PropTypes.string,
+  hidemodal: PropTypes.func,
 };
 
 export default AccountModal;

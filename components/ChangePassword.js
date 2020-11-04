@@ -9,6 +9,7 @@ import SubmitButton from "../components/SubmitButton";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/SuccessMessage";
 import AuthContext from "../auth/Context";
+import PropTypes from "prop-types";
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().required().min(8).label("Current Password"),
@@ -129,6 +130,9 @@ export default function ChangePassword(props) {
     </SafeAreaView>
   );
 }
+ChangePassword.propTypes = {
+  hidemodal: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   container: {

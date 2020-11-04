@@ -1,8 +1,8 @@
 import React from "react";
 import { useFormikContext } from "formik";
-
 import AppTextInput from "./AppTextInput";
 import ErrorMessage from "./ErrorMessage";
+import PropTypes from "prop-types";
 
 function AppFormField({
   autoCapitalize = "none",
@@ -39,4 +39,9 @@ function AppFormField({
   );
 }
 
+AppFormField.propTypes = {
+  id: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+};
 export default AppFormField;

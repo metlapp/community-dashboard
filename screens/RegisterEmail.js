@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
-
+import PropTypes from "prop-types";
 import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
@@ -99,6 +99,11 @@ export default function RegisterEmail({ email, navigation }) {
     </Form>
   );
 }
+
+RegisterEmail.propTypes = {
+  email: PropTypes.string,
+  navigation: PropTypes.func,
+};
 
 const styles = StyleSheet.create({
   container: {

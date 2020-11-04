@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
-
+import PropTypes from "prop-types";
 import SubmitButton from "../components/SubmitButton";
 import AppFormField from "../components/AppFormField";
 import Form from "../components/Form";
@@ -45,6 +45,10 @@ export default function RegisterName({ name }) {
     </View>
   );
 }
+
+RegisterName.propTypes = {
+  name: PropTypes.string,
+};
 
 const styles = StyleSheet.create({
   container: {

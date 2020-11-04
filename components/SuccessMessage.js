@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import PropTypes from "prop-types";
 
 function SuccessMessage({ success, visible, containerStyles, messageStyles }) {
   if (!visible || !success) return null;
@@ -10,6 +11,13 @@ function SuccessMessage({ success, visible, containerStyles, messageStyles }) {
     </View>
   );
 }
+
+SuccessMessage.propTypes = {
+  success: PropTypes.string,
+  visible: PropTypes.bool,
+  containerStyles: PropTypes.object,
+  messageStyles: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   container: {

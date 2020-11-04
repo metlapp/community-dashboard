@@ -8,6 +8,7 @@ import { FormContext } from "../auth/Context";
 import RegisterEmail from "./RegisterEmail";
 import RegisterName from "./RegisterName";
 import RegisterPassword from "./RegisterPassword";
+import PropTypes from "prop-types";
 
 export default function RegistrationScreen(props) {
   const authContext = useContext(AuthContext);
@@ -75,6 +76,11 @@ export default function RegistrationScreen(props) {
     </FormContext.Provider>
   );
 }
+
+RegistrationScreen.propTypes = {
+  test: PropTypes.bool,
+  navigation: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   container: {
