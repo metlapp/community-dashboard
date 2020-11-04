@@ -21,8 +21,8 @@ export default function VerifyEmailScreen({ navigation }) {
 
   const url = "http://127.0.0.1:8000/api/password_reset/";
 
-  const sendEmail = async (values) => {
-    await axios.post(url, { email: values["email"] }).then(() => {
+  const sendEmail = async (obj) => {
+    await axios.post(url, { email: obj['email'] }).then(() => {
       try {
         setErrorVisible(false);
         setSuccessVisible(true);
