@@ -65,7 +65,7 @@ export default function LoginScreen({ navigation }) {
           <SubmitButton className="submit" title="Login" />
         </Form>
         <ErroMessage
-          error="Invalid Email password combonation"
+          error="Invalid Email password combination"
           visible={error}
           styling={styles.error}
         />
