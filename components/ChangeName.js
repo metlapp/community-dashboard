@@ -21,9 +21,9 @@ const ChangeName = (props) => {
           auth: apiConfig.auth,
         }
       )
-      .then(() => {
-        authContext.setUser({ ...authContext.user, first_name: newName });
-        authStorage.storeUser(authContext.user);
+      .then((data) => {
+        authContext.setUser(data.data);
+        authStorage.storeUser(data.data);
       })
       .catch(console.error);
   };
