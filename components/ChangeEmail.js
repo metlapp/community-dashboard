@@ -27,9 +27,9 @@ const ChangeEmail = (props) => {
           auth: apiConfig.auth,
         }
       )
-      .then(() => {
-        authContext.setUser({ ...authContext.user, email: values["email"] });
-        authStorage.storeUser(authContext.user);
+      .then((data) => {
+        authContext.setUser(data.data);
+        authStorage.storeUser(data.data);
       })
       .catch(console.error);
     props.hidemodal();
