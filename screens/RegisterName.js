@@ -48,7 +48,6 @@ export default function RegisterName({ name }) {
 
 RegisterName.propTypes = {
   name: PropTypes.string,
-  navigatiom: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

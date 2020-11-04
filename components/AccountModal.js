@@ -32,7 +32,7 @@ const AccountModal = (props) => {
 };
 
 AccountModal.propTypes = {
-  visible: PropTypes.bool,
+  visibility: PropTypes.bool,
   form: PropTypes.string,
   hidemodal: PropTypes.func,
 };
