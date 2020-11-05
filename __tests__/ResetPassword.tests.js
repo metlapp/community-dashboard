@@ -3,15 +3,27 @@ import React from "react";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
 import AuthContext from "../auth/Context";
+import axios from "../__mocks__/axios";
+
+jest.mock("axios");
 
 describe("<ResetPasswordScreen />", () => {
-  it("User can change their Email with a valid Email", async () => {
-    const setUser = jest.fn();
-    const user = { email: "email@email.com" };
+  it("Users can reset password after clicking url", async () => {
+    axios.post.mockImplementationOnce(() => {
+      return Promise.resolve({
+        token: "abs239420dnd20",
+        password: "password12"
+      });
+    });
+    const route = {
+      params: { token: "abs239420dnd20" },
+    };
 
-    const { getByText, getByTestId } = render(
-      <AuthContext.Provider value={{ user, setUser }}>
-        <ResetPasswordScreen />
+    const { token } = route.params;
+    console.log(token);
+    const { getByTestId, getByText } = render(
+      <AuthContext.Provider>
+        <ResetPasswordScreen route={route} />
       </AuthContext.Provider>
     );
 
@@ -21,35 +33,46 @@ describe("<ResetPasswordScreen />", () => {
     act(() => {
       fireEvent(getByTestId("confirmPass"), "onChangeText", "password12");
     });
+
     act(() => {
-      fireEvent(getByText("Save"), "onPress");
+      fireEvent(getByText("Save").parent, "onPress");
     });
+
     await waitFor(() => {
-      expect(setUser).toHaveBeenCalled();
+      expect(getByTestId("pass").props.value).toEqual("");
     });
   });
+  it("Users can not reset password after clicking invalid url", async () => {
+    axios.post.mockImplementationOnce(() => {
+      return Promise.reject({
+        token: "abs239420dnd20",
+      });
+    });
+    const route = {
+      params: { token: "abs239420dnd20" },
+    };
 
-  it("User can change their Email with a valid Email", async () => {
-    const setUser = jest.fn();
-    const user = { email: "email@email.com" };
-
-    const { getByText, getByTestId } = render(
-      <AuthContext.Provider value={{ user, setUser }}>
-        <ResetPasswordScreen />
+    const { token } = route.params;
+    console.log(token);
+    const { getByTestId, getByText } = render(
+      <AuthContext.Provider>
+        <ResetPasswordScreen route={route} />
       </AuthContext.Provider>
     );
 
     act(() => {
-      fireEvent(getByTestId("pass"), "onChangeText", "password13");
+      fireEvent(getByTestId("pass"), "onChangeText", "password12");
     });
     act(() => {
       fireEvent(getByTestId("confirmPass"), "onChangeText", "password12");
     });
+
     act(() => {
-      fireEvent(getByText("Save"), "onPress");
+      fireEvent(getByText("Save").parent, "onPress");
     });
+
     await waitFor(() => {
-      expect(setUser).not.toHaveBeenCalled();
+      expect(getByTestId("pass").props.value).toEqual("password12");
     });
   });
 });
