@@ -53,7 +53,7 @@ export default function App() {
   React.useEffect(() => {
     getInitialState()
       .catch(() => {})
-      .then((state) => {
+      .then(state => {
         if (state !== undefined) {
           setInitialState(state);
         }

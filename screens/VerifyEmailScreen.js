@@ -32,7 +32,7 @@ export default function VerifyEmailScreen({ navigation }) {
       }
     });
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Form
