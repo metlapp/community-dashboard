@@ -38,7 +38,7 @@ describe("<VerifyEmailScreen />", () => {
       expect(getByTestId("email").props.value).toEqual("");
     });
   });
-  it("User cannot change Email with an invalid Email", async () => {
+  it("Can not request pass reset with invalid email", async () => {
     const { getByText, getByTestId } = render(
       <AuthContext.Provider>
         <VerifyEmailScreen />
