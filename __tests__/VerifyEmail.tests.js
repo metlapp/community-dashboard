@@ -2,11 +2,17 @@ import "react-native";
 import React from "react";
 import VerifyEmailScreen from "../screens/VerifyEmailScreen";
 import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
+import renderer from "react-test-renderer";
 import AuthContext from "../auth/Context";
 import axios from "../__mocks__/axios";
 jest.mock("axios");
 
 describe("<VerifyEmailScreen />", () => {
+  it("matches the snapshot", () => {
+    const tree = renderer.create(<VerifyEmailScreen />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it("Api will send email to registered emails", async () => {
     axios.post.mockImplementationOnce(() => {
       return Promise.resolve({ email: "user67311@example.com" });

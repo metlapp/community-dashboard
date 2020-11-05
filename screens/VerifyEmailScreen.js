@@ -19,6 +19,7 @@ export default function VerifyEmailScreen({ navigation }) {
   const [successVisible, setSuccessVisible] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
 
+  
   const url = "http://127.0.0.1:8000/api/password_reset/";
 
   const sendEmail = async (obj) => {
@@ -26,9 +27,6 @@ export default function VerifyEmailScreen({ navigation }) {
       try {
         setErrorVisible(false);
         setSuccessVisible(true);
-        setTimeout(() => {
-          setSuccessVisible(false);
-        }, 2500);
       } catch (error) {
         setErrorVisible(true);
       }
