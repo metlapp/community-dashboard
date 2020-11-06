@@ -34,7 +34,7 @@ const fakeApiCall = () => {
 
 export default function RegisterEmail({ email, navigation }) {
   const [errorVisible, setErrorVisible] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const { formData, setFormData, step, setStep } = useContext(FormContext);
 
   const handleRegister = () => {
@@ -66,7 +66,7 @@ export default function RegisterEmail({ email, navigation }) {
 
         const status = handleRegister();
         if (status) {
-          setError(false);
+          setError('');
           setErrorVisible(false);
           setStep(step + 1);
           // navigation.navigate("Password");
