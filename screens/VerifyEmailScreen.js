@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { SafeAreaView, StyleSheet } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
 import defaultStyles from "../config/defaultStyles";
+import ErrorMessage from "../components/ErrorMessage";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import SuccessMessage from "../components/SuccessMessage";
@@ -15,22 +17,30 @@ const validationSchema = Yup.object().shape({
 
 export default function VerifyEmailScreen({ navigation }) {
   const [successVisible, setSuccessVisible] = useState(false);
+  const [errorVisible, setErrorVisible] = useState(false);
 
-  const sendEmail = async (values) => {
-    setSuccessVisible(true);
-    values["email"] = "";
-    setTimeout(() => {
-      setSuccessVisible(false);
-      navigation.navigate("Login");
-      navigation.navigate("ResetPassword");
-    }, 5000);
+  
+  const url = "http://127.0.0.1:8000/api/password_reset/";
+
+  const sendEmail = async (obj) => {
+    await axios.post(url, { email: obj['email'] }).then(() => {
+      try {
+        setErrorVisible(false);
+        setSuccessVisible(true);
+      } catch (error) {
+        setErrorVisible(true);
+      }
+    });
   };
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Form
         initialValues={{ email: "" }}
-        onSubmit={(values) => sendEmail(values)}
+        onSubmit={(values) => {
+          sendEmail(values);
+          values["email"] = "";
+        }}
         validationSchema={validationSchema}
       >
         <AppFormField
@@ -39,6 +49,11 @@ export default function VerifyEmailScreen({ navigation }) {
           style={defaultStyles.TextInput}
           testID="email"
           keyboardType="email-address"
+        />
+
+        <ErrorMessage
+          error="Could not communicate with server, please try again."
+          visible={errorVisible}
         />
 
         <SuccessMessage

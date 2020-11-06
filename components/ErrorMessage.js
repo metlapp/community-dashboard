@@ -7,7 +7,7 @@ function ErrorMessage({ error, styling, visible }) {
   return <Text style={{ ...styles.error, ...styling }}>{error}</Text>;
 }
 ErrorMessage.propTypes = {
-  error: PropTypes.bool,
+  error: PropTypes.string,
   visible: PropTypes.bool,
 };
 const styles = StyleSheet.create({

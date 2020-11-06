@@ -42,7 +42,6 @@ export default function ChangePassword(props) {
     setErrorVisible(false);
     // Show error if new passwords do not match
     if (values["newPassword"] !== values["confirmNewPassword"]) {
-      console.log("passes didnt match");
       setError("Please make sure new passwords match!");
       setErrorVisible(true);
       return;

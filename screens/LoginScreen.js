@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <SafeAreaView>
       <Appbar.Header>
-        <Appbar.Content title="LOGIN" />
+        <Appbar.Content testID='heading' title="LOGIN" />
       </Appbar.Header>
       <View style={styles.container}>
         <Form

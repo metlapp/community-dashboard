@@ -4,7 +4,6 @@ import * as Yup from "yup";
 
 import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
-import runCrypto from "../auth/crypto-hashing";
 import defaultStyles from "../config/defaultStyles";
 import ErrorMessage from "../components/ErrorMessage";
 import Form from "../components/Form";
