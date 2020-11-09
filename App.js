@@ -11,7 +11,7 @@ import authStorage from "./auth/Storage";
 
 export default function App() {
   const [user, setUser] = React.useState();
-  const prefix = makeUrl('/');
+  const prefix = makeUrl("/");
 
   const restoreUser = async () => {
     const userData = await authStorage.getUser();
@@ -38,7 +38,6 @@ export default function App() {
   }
   const ref = React.useRef();
 
-  
   // connecting password reset url to PasswordResetScreen
   const { getInitialState } = useLinking(ref, {
     prefixes: [prefix],
@@ -53,7 +52,7 @@ export default function App() {
   React.useEffect(() => {
     getInitialState()
       .catch(() => {})
-      .then(state => {
+      .then((state) => {
         if (state !== undefined) {
           setInitialState(state);
         }

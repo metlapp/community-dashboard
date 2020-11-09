@@ -1,12 +1,31 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
-import React, { useContext } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Button, Appbar } from "react-native-paper";
-import AuthContext from "../auth/Context";
+import React, { useContext, useEffect } from "react";
 import AccountModal from "../components/AccountModal";
+import { Appbar, Button } from "react-native-paper";
+import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
+import expoPushTokensAPI from "../api/expoPushTokens";
+import * as Notifications from "expo-notifications";
+import * as Permissions from "expo-permissions";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
 const AccountScreen = () => {
+  useEffect(() => {
+    registerForPushNotifications();
+  }, []);
+
+  const registerForPushNotifications = async () => {
+    try {
+      const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      if (!permission.granted) return;
+
+      const token = await Notifications.getExpoPushTokenAsync();
+      console.log(token);
+      expoPushTokensAPI.register(token);
+    } catch (error) {
+      console.log("Error getting token", error);
+    }
+  };
+
   //determines what component the modal will render when a button is clicked
 
   const [form, setForm] = React.useState("");

@@ -10,6 +10,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import { apiConfig } from "../config/config";
 import ErroMessage from "../components/ErrorMessage";
+// need for testing on device
+import { HOST_WITH_PORT } from "../environment";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -23,7 +25,9 @@ export default function LoginScreen({ navigation }) {
   const handleSubmit = async (values) => {
     axios
       .post(
-        apiConfig.baseUrl + "login/",
+        // temporary for testing on device
+        `${HOST_WITH_PORT}login/`,
+        // apiConfig.baseUrl + "login/",
         {
           email: values["email"],
           password: values["password"],
@@ -44,7 +48,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <SafeAreaView>
       <Appbar.Header>
-        <Appbar.Content testID='heading' title="LOGIN" />
+        <Appbar.Content testID="heading" title="LOGIN" />
       </Appbar.Header>
       <View style={styles.container}>
         <Form
