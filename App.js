@@ -4,10 +4,11 @@ import { NavigationContainer, useLinking } from "@react-navigation/native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { decode, encode } from "base-64";
 
-import AccountScreen from "./screens/AccountScreen";
+import AppNavigator from "./navigation/AppNavigator";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";
+import { navigationRef } from "./navigation/rootNavigation";
 
 export default function App() {
   const [user, setUser] = React.useState();
@@ -68,8 +69,11 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
-        <NavigationContainer initialState={initialState} ref={ref}>
-          {user ? <AccountScreen /> : <AuthNavigator />}
+        <NavigationContainer
+          initialState={initialState}
+          ref={(ref, navigationRef)}
+        >
+          {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
