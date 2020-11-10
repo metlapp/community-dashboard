@@ -27,6 +27,8 @@ export default function RegistrationScreen(props) {
           email: user.email,
           first_name: user.name,
           password: user.password,
+          categories: [],
+          organization: null,
         },
         {
           auth: apiConfig.auth,
