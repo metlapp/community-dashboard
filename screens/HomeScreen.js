@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, Text, FlatList } from "react-native";
+import { SafeAreaView, Text, FlatList, StyleSheet } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
-import { Button, Card, Title, Paragraph } from "react-native-paper";
+import { Button, Card, Title, Paragraph, Appbar } from "react-native-paper";
+import { WebView } from "react-native-webview";
+import AuthContext from "../auth/Context";
 
 export default function HomeScreen() {
   const [loading, setloading] = React.useState(true);
@@ -10,16 +12,20 @@ export default function HomeScreen() {
 
   const renderVids = ({ item }) => {
     return (
-      <Card>
+      <Card style={styles.container}>
         <Card.Content>
           <Title>{item.title}</Title>
+          <WebView
+            javaScriptEnabled={true}
+            scrollEnabled={false}
+            allowsFullscreenVideo={true}
+            source={{
+              uri: item.link,
+            }}
+            style={styles.video}
+          />
           <Paragraph>{item.description}</Paragraph>
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-        <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>Ok</Button>
-        </Card.Actions>
       </Card>
     );
   };
@@ -43,6 +49,9 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView>
+      <Appbar.Header>
+        <Appbar.Content title="All Videos" />
+      </Appbar.Header>
       {loading ? (
         <Text>loading</Text>
       ) : (
@@ -55,3 +64,10 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  video: {
+    height: 150,
+    flex: 1,
+  },
+});
