@@ -11,6 +11,9 @@ export default function HomeScreen() {
   const [data, setData] = React.useState([]);
 
   const renderVids = ({ item }) => {
+    if (item.content_type == "Article") {
+      return;
+    }
     return (
       <Card style={styles.container}>
         <Card.Content>
