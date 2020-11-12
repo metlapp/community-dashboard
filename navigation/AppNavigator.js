@@ -8,9 +8,7 @@ import navigation from "./rootNavigation";
 
 const Stack = createStackNavigator();
 
-const AuthNavigator = () => {
-  // will be moved to homepage when its implemented
-
+const AppNavigator = () => {
   useNotifications((notification) => {
     console.log(notification);
     navigation.navigate("Notification", {
@@ -35,4 +33,4 @@ const AuthNavigator = () => {
   );
 };
 
-export default AuthNavigator;
+export default AppNavigator;
