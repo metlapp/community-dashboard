@@ -5,6 +5,7 @@ import { Provider as PaperProvider } from "react-native-paper";
 import { decode, encode } from "base-64";
 import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
+import AllVideosScreen from "./screens/AllVideosScreen";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";
@@ -69,7 +70,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
         <NavigationContainer initialState={initialState} ref={ref}>
-          {user ? <HomeScreen /> : <AuthNavigator />}
+          {user ? <AllVideosScreen /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
