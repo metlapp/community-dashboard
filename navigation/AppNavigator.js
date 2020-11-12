@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import AccountScreen from "../screens/AccountScreen";
 import NotificationScreen from "../screens/NotificationScreen";
-import useNavigation from "../hooks/useNavigation";
+import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
 
 const Stack = createStackNavigator();
@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 const AuthNavigator = () => {
   // will be moved to homepage when its implemented
 
-  useNavigation((notification) => {
+  useNotifications((notification) => {
     console.log(notification);
     navigation.navigate("Notification", {
       title: notification.notification.request.content.title,
