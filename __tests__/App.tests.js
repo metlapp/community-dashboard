@@ -3,7 +3,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import App from "../App";
 import renderer from "react-test-renderer";
-import AccountScreen from "../screens/AccountScreen";
+import AppNavigator from "../navigation/AppNavigator";
 import AsyncStorage from "@react-native-community/async-storage";
 import { render, waitFor } from "@testing-library/react-native";
 
@@ -26,12 +26,11 @@ describe("<App />", () => {
   });
 
   it("renders the Login component if user is null", async () => {
-    const { getByPlaceholderText} = render(<App />)
+    const { getByPlaceholderText } = render(<App />);
     await waitFor(() => {
-      expect(getByPlaceholderText('Email').props.value).toEqual('')
-    })
-  })
-
+      expect(getByPlaceholderText("Email").props.value).toEqual("");
+    });
+  });
 
   it("renders the Account component if user is set", async () => {
     const setUser = jest.fn();
@@ -42,7 +41,7 @@ describe("<App />", () => {
     ]);
     const wrapper = shallow(<App />);
     await waitFor(() =>
-      expect(wrapper.containsMatchingElement(<AccountScreen />)).toEqual(true)
+      expect(wrapper.containsMatchingElement(<AppNavigator />)).toEqual(true)
     );
   });
 });
