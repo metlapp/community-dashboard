@@ -70,7 +70,7 @@ export default function App() {
     <AuthContext.Provider value={{ user, setUser }}>
       <PaperProvider>
         <NavigationContainer initialState={initialState} ref={ref}>
-          {user ? <AllVideosScreen /> : <AuthNavigator />}
+          {user ? <AccountScreen /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
