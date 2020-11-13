@@ -1,10 +1,9 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
-import React, { useContext } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { Button, Appbar } from "react-native-paper";
-import AuthContext from "../auth/Context";
+import React, { useContext, useEffect } from "react";
 import AccountModal from "../components/AccountModal";
+import { Appbar, Button } from "react-native-paper";
+import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
 const AccountScreen = () => {
   //determines what component the modal will render when a button is clicked
