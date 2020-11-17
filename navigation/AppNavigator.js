@@ -10,11 +10,17 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   useNotifications((notification) => {
-    console.log(notification);
-    navigation.navigate("Notification", {
-      title: notification.notification.request.content.title,
-      body: notification.notification.request.content.body,
-    });
+    console.log(notification.actionIdentifier);
+    if (
+      notification.actionIdentifier ===
+      "expo.modules.notifications.actions.DEFAULT"
+    ) {
+      console.log(notification);
+      navigation.navigate("Notification", {
+        title: notification.notification.request.content.title,
+        body: notification.notification.request.content.body,
+      });
+    }
   });
 
   return (

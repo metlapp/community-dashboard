@@ -7,13 +7,39 @@ import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 
 export default useNotifications = (listener) => {
+  async function schedulePushNotification(categoryIdentifier) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Let us know how you're feeling.",
+        body: "neother should this",
+        categoryIdentifier: categoryIdentifier[0],
+      },
+      trigger: { seconds: 15 },
+    });
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "How are you feeling today?",
+        body: "this one shouldnt ",
+        data: { data: "goes here" },
+        categoryIdentifier: categoryIdentifier[1],
+      },
+      trigger: { seconds: 10 },
+    });
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "How are you feeling today?",
+        body: "this should open app to noti screen",
+      },
+      trigger: { seconds: 1 },
+    });
+  }
   async function sendPushNotification(expoPushToken) {
+    console.log(expoPushToken);
     const message = {
       to: expoPushToken,
       sound: "default",
-      title: "Original Title",
-      body: "And here is the body!",
-      data: { data: "goes here" },
+      title: "How are you feeling?",
+      body: "Let us know!",
     };
 
     await fetch("https://exp.host/--/api/v2/push/send", {
@@ -37,18 +63,48 @@ export default useNotifications = (listener) => {
 
   Notifications.setNotificationCategoryAsync("happy_sad", [
     {
-      actionId: "happy",
+      identifier: "happy",
       buttonTitle: "Happy",
+      options: {
+        opensAppToForeground: false,
+      },
     },
     {
-      actionId: "sad",
+      identifier: "sad",
       buttonTitle: "Sad",
+      options: {
+        opensAppToForeground: false,
+      },
+    },
+  ]);
+
+  Notifications.setNotificationCategoryAsync("feeling_today", [
+    {
+      identifier: "1",
+      buttonTitle: "1",
+    },
+    {
+      identifier: "2",
+      buttonTitle: "2",
+    },
+    {
+      identifier: "3",
+      buttonTitle: "3",
+    },
+    {
+      identifier: "4",
+      buttonTitle: "4",
+    },
+    {
+      identifier: "5",
+      buttonTitle: "5",
     },
   ]);
 
   useEffect(() => {
-    const token = registerForPushNotifications();
-    sendPushNotification(token);
+    registerForPushNotifications();
+
+    schedulePushNotification(["happy_sad", "feeling_today"]);
 
     Notifications.addNotificationResponseReceivedListener(listener);
   }, []);
@@ -60,7 +116,8 @@ export default useNotifications = (listener) => {
 
       const token = await Notifications.getExpoPushTokenAsync();
       console.log(token);
-      // await sendPushNotification(token.data);
+      // return token;
+      await sendPushNotification(token);
       //for when backend is complete
       // expoPushTokensAPI.register(token);
     } catch (error) {

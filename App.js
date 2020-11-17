@@ -9,6 +9,7 @@ import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";
 import { navigationRef } from "./navigation/rootNavigation";
+import useNotifications from "./hooks/useNotifications";
 
 export default function App() {
   const [user, setUser] = React.useState();
@@ -72,8 +73,10 @@ export default function App() {
         <NavigationContainer
           initialState={initialState}
           ref={(ref, navigationRef)}
+          useNotifications={useNotifications}
         >
-          {user ? <AppNavigator /> : <AuthNavigator />}
+          <AppNavigator />
+          {/* {user ? <AppNavigator /> : <AuthNavigator />} */}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
