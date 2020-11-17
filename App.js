@@ -7,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
 import AllVideosScreen from "./screens/AllVideosScreen";
 import AppNavigator from "./navigation/AppNavigator";
+import QuestionScreen from "./screens/QuestionScreen";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";
@@ -75,7 +76,7 @@ export default function App() {
           initialState={initialState}
           ref={(ref, navigationRef)}
         >
-          {user ? <AppNavigator /> : <AuthNavigator />}
+          {user ? <QuestionScreen /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
