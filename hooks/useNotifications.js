@@ -68,6 +68,7 @@ export default useNotifications = (listener) => {
       _category: "feeling_today",
     };
 
+    // Calls expo push notification service, will call our backend later
     await fetch("https://exp.host/--/api/v2/push/send", {
       method: "POST",
       headers: {
@@ -92,6 +93,7 @@ export default useNotifications = (listener) => {
 
       const token = await Notifications.getExpoPushTokenAsync();
       return token;
+
       //for when backend is complete
       // expoPushTokensAPI.register(token);
     } catch (error) {

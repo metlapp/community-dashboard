@@ -1,4 +1,5 @@
-// only for testing on device
+// only for testing on device, enter your machinces ip for the host
+// will be trashed after testing
 
 const HOST = "192.168.1.82";
 

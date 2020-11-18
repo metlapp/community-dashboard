@@ -12,6 +12,7 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   useNotifications((notification) => {
     if (
+      // This will most likely need to be changed once our backend is sending the notifications
       notification.actionIdentifier ===
       "expo.modules.notifications.actions.DEFAULT"
     ) {
