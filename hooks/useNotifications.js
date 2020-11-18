@@ -4,54 +4,12 @@ import { useEffect } from "react";
 import expoPushTokensAPI from "../api/expoPushTokens";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
-import Constants from "expo-constants";
 
 export default useNotifications = (listener) => {
-  async function schedulePushNotification(categoryIdentifier) {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Let us know how you're feeling.",
-        body: "neother should this",
-        categoryIdentifier: categoryIdentifier[0],
-      },
-      trigger: { seconds: 15 },
-    });
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "How are you feeling today?",
-        body: "this one shouldnt ",
-        data: { data: "goes here" },
-        categoryIdentifier: categoryIdentifier[1],
-      },
-      trigger: { seconds: 10 },
-    });
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "How are you feeling today?",
-        body: "this should open app to noti screen",
-      },
-      trigger: { seconds: 1 },
-    });
-  }
-  async function sendPushNotification(expoPushToken) {
-    console.log(expoPushToken);
-    const message = {
-      to: expoPushToken,
-      sound: "default",
-      title: "How are you feeling?",
-      body: "Let us know!",
-    };
-
-    await fetch("https://exp.host/--/api/v2/push/send", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-encoding": "gzip, deflate",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-  }
+  useEffect(() => {
+    sendNotification();
+    Notifications.addNotificationResponseReceivedListener(listener);
+  }, []);
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -101,27 +59,43 @@ export default useNotifications = (listener) => {
     },
   ]);
 
-  useEffect(() => {
-    registerForPushNotifications();
+  async function sendPushNotification(expoPushToken) {
+    const message = {
+      to: expoPushToken,
+      title: "How are you feeling today?",
+      body: "happy or sad?",
+      categoryIdentifier: "happy_sad",
+      _category: "feeling_today",
+    };
 
-    schedulePushNotification(["happy_sad", "feeling_today"]);
+    await fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+  }
 
-    Notifications.addNotificationResponseReceivedListener(listener);
-  }, []);
+  async function sendNotification() {
+    const token = await registerForPushNotifications();
 
-  const registerForPushNotifications = async () => {
+    await sendPushNotification(token.data);
+  }
+
+  async function registerForPushNotifications() {
     try {
       const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       if (!permission.granted) return;
 
       const token = await Notifications.getExpoPushTokenAsync();
-      console.log(token);
-      // return token;
-      await sendPushNotification(token);
+      return token;
       //for when backend is complete
       // expoPushTokensAPI.register(token);
     } catch (error) {
       console.log("Error getting token", error);
     }
-  };
+  }
 };
