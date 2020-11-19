@@ -7,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
 import AllVideosScreen from "./screens/AllVideosScreen";
 import AppNavigator from "./navigation/AppNavigator";
+import QuestionScreen from "./screens/QuestionScreen";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";

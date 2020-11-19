@@ -5,6 +5,7 @@ import AccountScreen from "../screens/AccountScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
+import QuestionScreen from "../screens/QuestionScreen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,11 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Question"
+        component={QuestionScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

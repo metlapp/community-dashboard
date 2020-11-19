@@ -11,7 +11,6 @@ export default function AllVideosScreen() {
 
   // Here we render the videos for the flatlist to diplay on the screen
   const renderVids = ({ item }) => {
-    console.log("rendering Videos");
     //Article types will not be displayed
     if (item.content_type == "Article") {
       return;
@@ -44,10 +43,8 @@ export default function AllVideosScreen() {
           auth: apiConfig.auth,
         })
         .then((data) => {
-          console.log(data.data.results);
           setData(data.data.results);
           setLoading(false);
-          console.log(loading);
         })
         .catch((error) => {
           console.log(error);
