@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, Image, StyleSheet, View } from "react-native";
-import { Surface, TextInput, Button } from "react-native-paper";
+import {
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  View,
+  TextInput as BlockText,
+} from "react-native";
+import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 import Slider from "@react-native-community/slider";
+import PropTypes from "prop-types";
 
 const Question = (props) => {
-  const [answer, setAnswer] = React.useState("");
-  const [sliderValue, setSliderValue] = React.useState(1);
+  const [answer, setAnswer] = useState("");
+  const [sliderValue, setSliderValue] = useState(1);
+  const [error, setError] = useState(false);
 
   //Renders the right type of componets depending on question type
   switch (props.question.question_type) {
@@ -55,19 +64,32 @@ const Question = (props) => {
       return (
         <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
-          <TextInput
-            style={styles.textInput}
+          <BlockText
+            style={{
+              textAlignVertical: "top",
+              height: 100,
+              borderColor: "gray",
+              borderWidth: 1,
+            }}
+            error={error}
             placeholder="Answer"
             multiline={true}
             onChangeText={(value) => {
               setAnswer(value);
             }}
-          ></TextInput>
+          ></BlockText>
+          <HelperText type="error" visible={error}>
+            Answer is required
+          </HelperText>
 
           <Button
             mode="contained"
             onPress={() => {
-              props.answerCallBack(answer);
+              if (answer == "") {
+                setError(true);
+              } else {
+                props.answerCallBack(answer);
+              }
             }}
           >
             Submit
@@ -83,6 +105,7 @@ const Question = (props) => {
         rows.push(
           <TextInput
             key={i}
+            error={error}
             style={styles.textInput}
             placeholder="Answer"
             onChangeText={(value) => {
@@ -96,11 +119,18 @@ const Question = (props) => {
         <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           {rows}
+          <HelperText type="error" visible={error}>
+            Answer is required
+          </HelperText>
           <Button
             mode="contained"
             onPress={() => {
-              input = input.join(" || ");
-              props.answerCallBack(input);
+              if (input.length == 0) {
+                setError(true);
+              } else {
+                input = input.join(" || ");
+                props.answerCallBack(input);
+              }
             }}
           >
             Submit
@@ -161,5 +191,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+Question.propTypes = {
+  question: PropTypes.object,
+};
 
 export default Question;
