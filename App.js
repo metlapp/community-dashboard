@@ -6,6 +6,7 @@ import { decode, encode } from "base-64";
 import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
 import AllVideosScreen from "./screens/AllVideosScreen";
+import Articles from "./screens/Articles";
 import AppNavigator from "./navigation/AppNavigator";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
@@ -75,7 +76,7 @@ export default function App() {
           initialState={initialState}
           ref={(ref, navigationRef)}
         >
-          {user ? <AppNavigator /> : <AuthNavigator />}
+          {user ? <Articles /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
