@@ -1,7 +1,6 @@
 import "react-native";
 import React from "react";
 import Question from "../components/Question";
-import Button from "react-native-paper";
 import { fireEvent, render } from "@testing-library/react-native";
 
 describe("<Question />", () => {
