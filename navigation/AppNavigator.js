@@ -21,7 +21,7 @@ const AuthNavigator = () => {
   });
 
   return (
-    <Stack.Navigator initialRouteName="Question">
+    <Stack.Navigator initialRouteName="Account">
       <Stack.Screen
         name="Account"
         component={AccountScreen}
