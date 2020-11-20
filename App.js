@@ -6,7 +6,6 @@ import { decode, encode } from "base-64";
 import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
 import AllVideosScreen from "./screens/AllVideosScreen";
-import Articles from "./screens/Articles";
 import AppNavigator from "./navigation/AppNavigator";
 import QuestionScreen from "./screens/QuestionScreen";
 import AuthContext from "./auth/Context";
