@@ -77,7 +77,7 @@ export default function App() {
           initialState={initialState}
           ref={(ref, navigationRef)}
         >
-          {user ? <Articles /> : <AuthNavigator />}
+          {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>
