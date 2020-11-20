@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { SafeAreaView, Linking } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 
 export default function HomeScreen() {
   const [loading, setLoading] = useState(true);
@@ -9,7 +10,6 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const fetchData = async () => {
-      //
       axios
         .get(apiConfig.baseUrl + "content/", {
           auth: apiConfig.auth,
@@ -25,11 +25,21 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  console.log(data);
-
   return (
     <SafeAreaView>
-      <Text></Text>
+      <Card>
+        <Card.Content>
+          <Title>{loading ? "Loading" : data[0].title}</Title>
+          <Paragraph></Paragraph>
+        </Card.Content>
+      </Card>
+      <Button
+        onPress={() => {
+          Linking.openURL(data[0].link);
+        }}
+      >
+        heloooooo
+      </Button>
     </SafeAreaView>
   );
 }
