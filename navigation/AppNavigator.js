@@ -6,6 +6,7 @@ import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
 import * as Notifications from "expo-notifications";
+import QuestionScreen from "../screens/QuestionScreen";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,11 @@ const AppNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Question"
+        component={QuestionScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
