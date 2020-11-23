@@ -5,19 +5,30 @@ import AccountScreen from "../screens/AccountScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
+import * as Notifications from "expo-notifications";
 import QuestionScreen from "../screens/QuestionScreen";
 
 const Stack = createStackNavigator();
 
-const AuthNavigator = () => {
-  // will be moved to homepage when its implemented
-
+const AppNavigator = () => {
   useNotifications((notification) => {
-    console.log(notification);
-    navigation.navigate("Notification", {
-      title: notification.notification.request.content.title,
-      body: notification.notification.request.content.body,
-    });
+    if (
+      // This will most likely need to be changed once our backend is sending the notifications
+      notification.actionIdentifier ===
+      "expo.modules.notifications.actions.DEFAULT"
+    ) {
+      navigation.navigate("Notification", {
+        title: notification.notification.request.content.title,
+        body: notification.notification.request.content.body,
+      });
+    } else {
+      //Will record answer in future
+      Notifications.dismissNotificationAsync(
+        notification.notification.request.identifier
+      );
+      console.log(notification.notification.request.identifier);
+      console.log(notification.actionIdentifier);
+    }
   });
 
   return (
@@ -41,4 +52,4 @@ const AuthNavigator = () => {
   );
 };
 
-export default AuthNavigator;
+export default AppNavigator;
