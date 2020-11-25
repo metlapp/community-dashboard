@@ -66,7 +66,7 @@ export default function RegisterEmail({ email, navigation }) {
 
         const status = handleRegister();
         if (status) {
-          setError('');
+          setError("");
           setErrorVisible(false);
           setStep(step + 1);
           // navigation.navigate("Password");
@@ -102,7 +102,7 @@ export default function RegisterEmail({ email, navigation }) {
 
 RegisterEmail.propTypes = {
   email: PropTypes.string,
-  navigation: PropTypes.func,
+  navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
