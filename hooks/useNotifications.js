@@ -7,10 +7,10 @@ import * as Permissions from "expo-permissions";
 // will need this for when backend is complete
 import expoPushTokensAPI from "../api/expoPushTokens";
 
-export default useNotifications = (listener) => {
+export default useNotifications = (listener, testToken) => {
   const authContext = useContext(AuthContext);
   useEffect(() => {
-    registerForPushNotifications(authContext.user.id);
+    registerForPushNotifications(authContext.user.id, testToken);
     Notifications.addNotificationResponseReceivedListener(listener);
   }, []);
 
@@ -62,8 +62,19 @@ export default useNotifications = (listener) => {
     },
   ]);
 
-  async function registerForPushNotifications(userId) {
-    const token = await Notifications.getExpoPushTokenAsync();
+  async function registerForPushNotifications(userId, testToken) {
+    let token;
+    if (testToken) {
+      token = testToken;
+      authContext.setUser({
+        ...authContext.user,
+        notification_token: token.testToken,
+      });
+      return;
+    } else {
+      token = await Notifications.getExpoPushTokenAsync();
+    }
+    // Check if token is null or outdated
     if (
       !authContext.user.notification_token ||
       authContext.user.notification_token !== token
