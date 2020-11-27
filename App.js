@@ -4,7 +4,11 @@ import { NavigationContainer, useLinking } from "@react-navigation/native";
 import { Provider as PaperProvider } from "react-native-paper";
 import { decode, encode } from "base-64";
 
+import HomeScreen from "./screens/HomeScreen";
+import AccountScreen from "./screens/AccountScreen";
+import AllVideosScreen from "./screens/AllVideosScreen";
 import AppNavigator from "./navigation/AppNavigator";
+import QuestionScreen from "./screens/QuestionScreen";
 import AuthContext from "./auth/Context";
 import AuthNavigator from "./navigation/AuthNavigator";
 import authStorage from "./auth/Storage";
