@@ -10,7 +10,7 @@ import QuestionScreen from "../screens/QuestionScreen";
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator = ({ testToken }) => {
   useNotifications((notification) => {
     if (
       // This will most likely need to be changed once our backend is sending the notifications
@@ -29,7 +29,7 @@ const AppNavigator = () => {
       console.log(notification.notification.request.identifier);
       console.log(notification.actionIdentifier);
     }
-  });
+  }, testToken);
 
   return (
     <Stack.Navigator initialRouteName="Account">

@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
-// will need this for when backend is complete
-import expoPushTokensAPI from "../api/expoPushTokens";
+import AuthContext from "../auth/Context";
+import authStorage from "../auth/Storage";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
+// will need this for when backend is complete
+import expoPushTokensAPI from "../api/expoPushTokens";
 
-export default useNotifications = (listener) => {
+export default useNotifications = (listener, testToken) => {
+  const authContext = useContext(AuthContext);
   useEffect(() => {
-    sendNotification();
+    registerForPushNotifications(authContext.user.id, testToken);
     Notifications.addNotificationResponseReceivedListener(listener);
   }, []);
 
@@ -59,44 +62,42 @@ export default useNotifications = (listener) => {
     },
   ]);
 
-  async function sendPushNotification(expoPushToken) {
-    const message = {
-      to: expoPushToken,
-      title: "How are you feeling today?",
-      body: "happy or sad?",
-      categoryIdentifier: "happy_sad",
-      _category: "feeling_today",
-    };
+  async function registerForPushNotifications(userId, testToken) {
+    let token;
+    if (testToken) {
+      token = testToken;
+      authContext.setUser({
+        ...authContext.user,
+        notification_token: token.testToken,
+      });
+      return;
+    } else {
+      token = await Notifications.getExpoPushTokenAsync();
+    }
+    // Check if token is null or outdated
+    if (
+      !authContext.user.notification_token ||
+      authContext.user.notification_token !== token
+    ) {
+      try {
+        const permission = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        if (!permission.granted) return;
 
-    // Calls expo push notification service, will call our backend later
-    await fetch("https://exp.host/--/api/v2/push/send", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-encoding": "gzip, deflate",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(message),
-    });
-  }
-
-  async function sendNotification() {
-    const token = await registerForPushNotifications();
-
-    await sendPushNotification(token.data);
-  }
-
-  async function registerForPushNotifications() {
-    try {
-      const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (!permission.granted) return;
-
-      const token = await Notifications.getExpoPushTokenAsync();
-      //for when backend is complete
-      // expoPushTokensAPI.register(token);
-      return token;
-    } catch (error) {
-      console.log("Error getting token", error);
+        //for when backend is complete
+        await expoPushTokensAPI.register(token.data, userId);
+        authContext.setUser({
+          ...authContext.user,
+          notification_token: token.data,
+        });
+        authStorage.storeUser({
+          ...authContext.user,
+          notification_token: token.data,
+        });
+      } catch (error) {
+        console.log("Error getting token", error);
+      }
     }
   }
 };
