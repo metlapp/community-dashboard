@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, Text, FlatList, StyleSheet } from "react-native";
+import { SafeAreaView, Text, FlatList } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
-import { Card, Title, Paragraph, Appbar } from "react-native-paper";
-import { WebView } from "react-native-webview";
+import { Appbar } from "react-native-paper";
+import ContentCard from "../components/ContentCard";
 
 export default function AllVideosScreen() {
   const [loading, setLoading] = React.useState(true);
@@ -16,21 +16,7 @@ export default function AllVideosScreen() {
       return;
     }
     return (
-      <Card style={styles.container} data-testid="video">
-        <Card.Content>
-          <Title>{item.title}</Title>
-          <WebView
-            javaScriptEnabled={true}
-            scrollEnabled={false}
-            allowsFullscreenVideo={true}
-            source={{
-              uri: item.link,
-            }}
-            style={styles.video}
-          />
-          <Paragraph>{item.description}</Paragraph>
-        </Card.Content>
-      </Card>
+        <ContentCard item={item} contentType={"video"} />
     );
   };
 
@@ -70,10 +56,3 @@ export default function AllVideosScreen() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  video: {
-    height: 150,
-    flex: 1,
-  },
-});
