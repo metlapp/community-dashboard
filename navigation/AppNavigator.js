@@ -1,5 +1,6 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from "react-native-paper";
 import { primaryColor, textColor } from "../config/defaultStyles";
@@ -13,6 +14,16 @@ import QuestionScreen from "../screens/QuestionScreen";
 import AllVideosScreen from "../screens/AllVideosScreen";
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={AllVideosScreen} />
+      <HomeStack.Screen name="Notification" component={NotificationScreen} />
+    </HomeStack.Navigator>
+  );
+}
 
 const AppNavigator = ({ testToken }) => {
   useNotifications((notification) => {
@@ -58,7 +69,7 @@ const AppNavigator = ({ testToken }) => {
               inactiveTintColor: textColor,
             }}
       >
-          <Tab.Screen name="Home" component={AllVideosScreen} />
+          <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Profile" component={AccountScreen} />
       </Tab.Navigator>
 
