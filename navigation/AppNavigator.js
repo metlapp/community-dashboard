@@ -1,5 +1,9 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { IconButton } from "react-native-paper";
+import { primaryColor, textColor } from "../config/defaultStyles";
 
 import AccountScreen from "../screens/AccountScreen";
 import NotificationScreen from "../screens/NotificationScreen";
@@ -7,8 +11,19 @@ import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
 import * as Notifications from "expo-notifications";
 import QuestionScreen from "../screens/QuestionScreen";
+import AllVideosScreen from "../screens/AllVideosScreen";
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={AllVideosScreen} />
+      <HomeStack.Screen name="Notification" component={NotificationScreen} />
+    </HomeStack.Navigator>
+  );
+}
 
 const AppNavigator = ({ testToken }) => {
   useNotifications((notification) => {
@@ -32,23 +47,32 @@ const AppNavigator = ({ testToken }) => {
   }, testToken);
 
   return (
-    <Stack.Navigator initialRouteName="Account">
-      <Stack.Screen
-        name="Account"
-        component={AccountScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Notification"
-        component={NotificationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Question"
-        component={QuestionScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+      <Tab.Navigator
+          screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
+
+                if (route.name === 'Home') {
+                  iconName = focused
+                    ? 'home'
+                    : 'home-outline';
+                } else if (route.name === 'Profile') {
+                  iconName = focused ? 'account-circle' : 'account-circle-outline';
+                }
+
+                // You can return any component that you like here!
+                return <IconButton icon={iconName} size={size} color={color} />;
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: primaryColor,
+              inactiveTintColor: textColor,
+            }}
+      >
+          <Tab.Screen name="Home" component={HomeStackScreen} />
+          <Tab.Screen name="Profile" component={AccountScreen} />
+      </Tab.Navigator>
+
   );
 };
 
