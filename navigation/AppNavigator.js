@@ -6,6 +6,7 @@ import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
 import QuestionScreen from "../screens/QuestionScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,10 +22,15 @@ const AuthNavigator = () => {
   });
 
   return (
-    <Stack.Navigator initialRouteName="Account">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Account"
         component={AccountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
