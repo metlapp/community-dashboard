@@ -20,7 +20,7 @@ const Question = (props) => {
   switch (props.question.question_type) {
     case "YES_NO":
       return (
-        <Surface>
+        <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => props.answerCallBack(true)}>
@@ -36,12 +36,12 @@ const Question = (props) => {
               />
             </TouchableOpacity>
           </View>
-        </Surface>
+        </View>
       );
 
     case "HAPPY_SAD":
       return (
-        <Surface>
+        <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => props.answerCallBack(true)}>
@@ -57,12 +57,12 @@ const Question = (props) => {
               />
             </TouchableOpacity>
           </View>
-        </Surface>
+        </View>
       );
 
     case "BLOCK":
       return (
-        <Surface>
+        <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <BlockText
             style={{
@@ -94,7 +94,7 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </Surface>
+        </View>
       );
 
     case "MULTILINE":
@@ -116,7 +116,7 @@ const Question = (props) => {
       }
 
       return (
-        <Surface>
+        <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           {rows}
           <HelperText type="error" visible={error}>
@@ -135,12 +135,12 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </Surface>
+        </View>
       );
 
     case "SCALE":
       return (
-        <Surface>
+        <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <Text style={styles.sliderValue}>{sliderValue}</Text>
           <Slider
@@ -161,7 +161,7 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </Surface>
+        </View>
       );
   }
 };
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
 
 Question.propTypes = {
   question: PropTypes.object,
+  answerCallBack: PropTypes.func,
 };
 
 export default Question;
