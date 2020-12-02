@@ -1,9 +1,8 @@
 import "react-native";
-import {shallow} from "enzyme";
 import React from "react";
 import renderer from "react-test-renderer";
 import PersonalInfoScreen from "../screens/PersonalInfoScreen";
-import {render, fireEvent} from "@testing-library/react-native";
+import {render} from "@testing-library/react-native";
 import AuthContext from "../auth/Context";
 import {Provider as PaperProvider} from "react-native-paper";
 
