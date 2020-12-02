@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
 
 Question.propTypes = {
   question: PropTypes.object,
+  answerCallBack: PropTypes.func,
 };
 
 export default Question;
