@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
 import AppTextInput from "./AppTextInput";
-import ErrorMessage from "./ErrorMessage";
 import PropTypes from "prop-types";
 
 function AppFormField({
@@ -16,14 +15,17 @@ function AppFormField({
   const {
     setFieldTouched,
     setFieldValue,
-    errors,
     values,
     touched,
+    getFieldMeta,
   } = useFormikContext();
+
+  const hasError = !!getFieldMeta(name).error && !!touched[name];
 
   return (
     <>
       <AppTextInput
+        error={hasError}
         autoCapitalize={autoCapitalize}
         onBlur={() => setFieldTouched(name)}
         onFocus={onFocus}
@@ -34,14 +36,16 @@ function AppFormField({
         width={width}
         {...otherProps}
       />
-      <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   );
 }
 
 AppFormField.propTypes = {
-  id: PropTypes.string,
-  placeholder: PropTypes.string,
-  name: PropTypes.string,
+    autoCapitalize: PropTypes.string,
+    autoCorrect: PropTypes.bool,
+    onFocus: PropTypes.func,
+    name: PropTypes.string,
+    width: PropTypes.string,
+    value: PropTypes.string,
 };
 export default AppFormField;

@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import PropTypes from "prop-types";
+import defaultStyles, {mediumGrey} from "../config/defaultStyles";
 
 export default function AppTextInput({
   autoCapitalize,
@@ -9,10 +10,11 @@ export default function AppTextInput({
   ...props
 }) {
   return (
-    <View style={[styles.container, { width }]}>
+    <View style={{ width }}>
       <TextInput
         autoCapitalize={autoCapitalize}
-        style={[styles.TextInput]}
+        placeholderTextColor={mediumGrey}
+        style={[defaultStyles.TextInput]}
         {...props}
       />
     </View>
@@ -23,13 +25,3 @@ AppTextInput.propTypes = {
   autoCapitalize: PropTypes.string,
   width: PropTypes.string,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#f2f2f2",
-    borderRadius: 25,
-    justifyContent: "center",
-    marginVertical: 15,
-    height: 55,
-  },
-});

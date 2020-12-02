@@ -12,7 +12,7 @@ import PopupForm from "../components/PopupForm";
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().trim().required().label("Current Password"),
   newPassword: Yup.string().trim().required().min(8).label("New Password"),
-  confirmNewPassword: Yup.string().trim().required().min(8).label("Confirm Password"),
+  confirmNewPassword: Yup.string().trim().oneOf([Yup.ref('newPassword'), null]).required().min(8).label("Confirm Password"),
 });
 
 export default function ChangePassword(props) {
@@ -74,7 +74,7 @@ export default function ChangePassword(props) {
   };
   const fields = [
       {label: 'Current Password', fieldName: 'currentPassword', placeholder: 'Current password', secure: true,},
-      {label: 'New Password', fieldName: 'newPassword', placeholder: 'New password', secure: true,},
+      {label: 'New Password (8 characters minimum)', fieldName: 'newPassword', placeholder: 'New password', secure: true,},
       {label: '', fieldName: 'confirmNewPassword', placeholder: 'Confirm new password', secure: true,},
   ]
 

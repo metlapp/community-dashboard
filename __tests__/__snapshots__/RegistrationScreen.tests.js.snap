@@ -52,18 +52,9 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
     />
     <View
       style={
-        Array [
-          Object {
-            "backgroundColor": "#f2f2f2",
-            "borderRadius": 25,
-            "height": 55,
-            "justifyContent": "center",
-            "marginVertical": 15,
-          },
-          Object {
-            "width": "100%",
-          },
-        ]
+        Object {
+          "width": "100%",
+        }
       }
     >
       <View
@@ -75,8 +66,8 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
               "borderTopRightRadius": 4,
             },
             Object {
-              "lineHeight": 25,
-              "paddingLeft": 10,
+              "backgroundColor": "#fff",
+              "marginBottom": 20,
             },
           ]
         }
@@ -101,7 +92,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
         <View
           style={
             Object {
-              "minHeight": 64,
+              "minHeight": 45,
               "paddingBottom": 0,
               "paddingTop": 0,
             }
@@ -116,7 +107,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
             onChangeText={[Function]}
             onFocus={[Function]}
             placeholder="Enter your email"
-            placeholderTextColor="rgba(0, 0, 0, 0.54)"
+            placeholderTextColor="#ccc"
             rejectResponderTermination={true}
             selectionColor="#6200ee"
             style={
@@ -128,11 +119,11 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
                   "zIndex": 1,
                 },
                 Object {
-                  "paddingLeft": 12,
-                  "paddingRight": 12,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
                 },
                 Object {
-                  "height": 64,
+                  "height": 45,
                 },
                 Object {
                   "paddingBottom": 0,
@@ -141,7 +132,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
                 Object {
                   "color": "#000000",
                   "fontFamily": "System",
-                  "fontSize": 20,
+                  "fontSize": 16,
                   "fontWeight": undefined,
                   "textAlignVertical": "center",
                 },
@@ -160,24 +151,14 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
     <View
       style={
         Object {
-          "alignItems": "center",
-          "backgroundColor": "#6200ee",
+          "backgroundColor": "rgba(0, 0, 0, 0.12)",
           "borderColor": "transparent",
-          "borderRadius": 25,
+          "borderRadius": 6,
           "borderStyle": "solid",
           "borderWidth": 0,
-          "elevation": 2,
-          "justifyContent": "center",
-          "marginVertical": 5,
+          "elevation": 0,
           "minWidth": 64,
-          "padding": 15,
-          "shadowColor": "#000000",
-          "shadowOffset": Object {
-            "height": 0.75,
-            "width": 0,
-          },
-          "shadowOpacity": 0.24,
-          "shadowRadius": 1.5,
+          "padding": 10,
           "width": "100%",
         }
       }
@@ -186,7 +167,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
         accessibilityRole="button"
         accessibilityState={
           Object {
-            "disabled": undefined,
+            "disabled": true,
           }
         }
         accessible={true}
@@ -204,7 +185,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 25,
+              "borderRadius": 6,
             },
           ]
         }
@@ -243,7 +224,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
                     "textTransform": "uppercase",
                   },
                   Object {
-                    "color": "#ffffff",
+                    "color": "rgba(0, 0, 0, 0.32)",
                     "fontFamily": "System",
                     "fontWeight": "500",
                   },
@@ -259,9 +240,9 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
             <Text
               style={
                 Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textTransform": "uppercase",
+                  "color": "#fff",
+                  "fontSize": 16,
+                  "textTransform": "none",
                 }
               }
             >
@@ -274,17 +255,14 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
     <View
       style={
         Object {
-          "alignItems": "center",
           "backgroundColor": "#6200ee",
           "borderColor": "transparent",
-          "borderRadius": 25,
+          "borderRadius": 6,
           "borderStyle": "solid",
           "borderWidth": 0,
           "elevation": 2,
-          "justifyContent": "center",
-          "marginVertical": 5,
           "minWidth": 64,
-          "padding": 15,
+          "padding": 10,
           "shadowColor": "#000000",
           "shadowOffset": Object {
             "height": 0.75,
@@ -318,7 +296,7 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 25,
+              "borderRadius": 6,
             },
           ]
         }
@@ -373,9 +351,9 @@ exports[`Testing Registraion Page matches the snapshot 1`] = `
             <Text
               style={
                 Object {
-                  "fontSize": 18,
-                  "fontWeight": "bold",
-                  "textTransform": "uppercase",
+                  "color": "#fff",
+                  "fontSize": 16,
+                  "textTransform": "none",
                 }
               }
             >

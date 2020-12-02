@@ -3,6 +3,7 @@ import {DefaultTheme} from "react-native-paper";
 /* COLOR CONSTANTS */
 export const primaryColor = "#32b1e0"; // light blue
 export const accentColor = "#f85f6a"; // coral
+export const mediumGrey = "#ccc";
 export const textColor = "#606060";
 export const backgroundColor = "#fff";
 export const feedBackgroundColor = "#e8ecf1";
@@ -25,7 +26,7 @@ export const theme = {
 
 /* STYLES */
 
-const commonMargins = {
+export const commonMargins = {
     marginLeft: 20,
     marginRight: 20,
     paddingLeft: 0,
@@ -60,6 +61,17 @@ export default {
     SafeAreaView: {
         flex: 1,  // this keeps the content inside scrollable
     },
+
+    button: {
+        borderRadius: 6,
+        padding: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        textTransform: "none",
+    },
+
 
     /* LIST ITEM */
     ListItem: {
@@ -97,8 +109,9 @@ export default {
         ...formHeaderText,
     },
     TextInput: {
-        lineHeight: 25,
-        fontSize: 20,
-        paddingLeft: 10,
+        backgroundColor: '#fff',
+        height: 45,
+        paddingHorizontal: 0,
+        marginBottom: 20,
     },
 };
