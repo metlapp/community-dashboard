@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  Linking,
-  StyleSheet,
-  View,
-  FlatList,
-} from "react-native";
-import { WebView } from "react-native-webview";
+import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { apiConfig } from "../config/config";
 import axios from "axios";
+import Video from "../components/Video";
+import Article from "../components/Article";
 
 export default function HomeScreen() {
+  //content from the API
   const [content, setContent] = useState([]);
+  //What page we are currently on
   const [page, setPage] = useState(1);
+  //Displays the loadmore button or not
   const [loadMore, setLoadMore] = useState(true);
 
+  //
+  //ChangePage will update the page so we can grab more content
+  //when requested
+  //
   const changePage = () => {
     setPage(page + 1);
   };
 
+  //
+  //useEffect gets data from api when homepage is rendered and when
+  //a change happens to the page state
+  //
   useEffect(() => {
     const fetchData = () => {
       axios
@@ -33,20 +39,24 @@ export default function HomeScreen() {
             : setContent([...content, ...data.data.results]);
         })
         .catch((err) => {
+          //Will not display button when a 404 is recievced from the server
           err.response.status == 404 ? setLoadMore(false) : console.warn(err);
         });
     };
     fetchData();
   }, [page]);
 
+  //
+  //When a user answers a question the deleteItem is called and excludes the answered quetion from
+  //the flatlist
+  //
   const deleteItem = (id) => {
-    console.log(id);
     let filteredData = content.filter((item) => item.id !== id);
-    console.log(filteredData);
     setContent(filteredData);
   };
 
   //Determines the content to be displayed to the homescreen
+  //depends on the content type
   const DetermineContent = (props) => {
     //Posts the answer to the API
     const postData = async (payLoad) => {
@@ -54,9 +64,7 @@ export default function HomeScreen() {
         .post(apiConfig.baseUrl + "answers/", payLoad, {
           auth: apiConfig.auth,
         })
-        .then(() => {
-          deleteItem(props.content.id);
-        })
+        .then(() => {})
         .catch((error) => {
           console.log(error);
         });
@@ -85,6 +93,7 @@ export default function HomeScreen() {
           payLoad = { ...payLoad, number_answer: answer };
           break;
       }
+      deleteItem(props.content.id);
       postData(payLoad);
     };
 
@@ -98,31 +107,10 @@ export default function HomeScreen() {
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {
-        return (
-          <View style={styles.container}>
-            <Title>{props.content.content.item_object.title}</Title>
-            <WebView
-              javaScriptEnabled={true}
-              scrollEnabled={false}
-              allowsFullscreenVideo={true}
-              source={{
-                uri: props.content.content.item_object.link,
-              }}
-            />
-          </View>
-        );
+        return <Video video={props.content.content} />;
       }
       case "Article": {
-        return (
-          <Button
-            mode="outlined"
-            onPress={() => {
-              Linking.openURL(props.content.content.item_object.link);
-            }}
-          >
-            GO TO ARTICLE
-          </Button>
-        );
+        return <Article article={props.content.content} />;
       }
     }
   };
@@ -131,12 +119,9 @@ export default function HomeScreen() {
   const renderFeed = ({ item }) => {
     return (
       <View style={styles.card}>
-        <Card style={styles.c}>
-          <Card.Content>
-            <DetermineContent content={item} />
-            <Paragraph>{item.content.item_object.description}</Paragraph>
-          </Card.Content>
-        </Card>
+        <View style={styles.c}>
+          <DetermineContent content={item} />
+        </View>
       </View>
     );
   };

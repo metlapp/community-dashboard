@@ -20,7 +20,7 @@ const Question = (props) => {
   switch (props.question.question_type) {
     case "YES_NO":
       return (
-        <View>
+        <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => props.answerCallBack(true)}>
@@ -36,12 +36,12 @@ const Question = (props) => {
               />
             </TouchableOpacity>
           </View>
-        </View>
+        </Surface>
       );
 
     case "HAPPY_SAD":
       return (
-        <View>
+        <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
             <TouchableOpacity onPress={() => props.answerCallBack(true)}>
@@ -57,12 +57,12 @@ const Question = (props) => {
               />
             </TouchableOpacity>
           </View>
-        </View>
+        </Surface>
       );
 
     case "BLOCK":
       return (
-        <View>
+        <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <BlockText
             style={{
@@ -94,7 +94,7 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </View>
+        </Surface>
       );
 
     case "MULTILINE":
@@ -116,7 +116,7 @@ const Question = (props) => {
       }
 
       return (
-        <View>
+        <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           {rows}
           <HelperText type="error" visible={error}>
@@ -135,12 +135,12 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </View>
+        </Surface>
       );
 
     case "SCALE":
       return (
-        <View>
+        <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <Text style={styles.sliderValue}>{sliderValue}</Text>
           <Slider
@@ -161,7 +161,7 @@ const Question = (props) => {
           >
             Submit
           </Button>
-        </View>
+        </Surface>
       );
   }
 };
