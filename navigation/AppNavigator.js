@@ -73,6 +73,7 @@ const AppNavigator = ({ testToken }) => {
             iconName = focused ? "account-circle" : "account-circle-outline";
           }
 
+          // You can return any component that you like here!
           return <IconButton icon={iconName} size={size} color={color} />;
         },
       })}
