@@ -6,6 +6,7 @@ import { IconButton } from "react-native-paper";
 import { primaryColor, textColor } from "../config/defaultStyles";
 
 import AccountScreen from "../screens/AccountScreen";
+import PersonalInfoScreen from "../screens/PersonalInfoScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
@@ -15,6 +16,7 @@ import AllVideosScreen from "../screens/AllVideosScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
@@ -22,6 +24,15 @@ function HomeStackScreen() {
       <HomeStack.Screen name="Home" component={AllVideosScreen} />
       <HomeStack.Screen name="Notification" component={NotificationScreen} />
     </HomeStack.Navigator>
+  );
+}
+
+function ProfileStackScreen() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="Profile" component={AccountScreen} />
+      <ProfileStack.Screen name="PersonalInfo" component={PersonalInfoScreen} options={{ title: 'Personal Info' }} />
+    </ProfileStack.Navigator>
   );
 }
 
@@ -46,6 +57,8 @@ const AppNavigator = ({ testToken }) => {
     }
   }, testToken);
 
+
+
   return (
       <Tab.Navigator
           screenOptions={({ route }) => ({
@@ -53,14 +66,11 @@ const AppNavigator = ({ testToken }) => {
                 let iconName;
 
                 if (route.name === 'Home') {
-                  iconName = focused
-                    ? 'home'
-                    : 'home-outline';
+                  iconName = focused ? 'home' : 'home-outline';
                 } else if (route.name === 'Profile') {
                   iconName = focused ? 'account-circle' : 'account-circle-outline';
                 }
 
-                // You can return any component that you like here!
                 return <IconButton icon={iconName} size={size} color={color} />;
               },
             })}
@@ -70,7 +80,7 @@ const AppNavigator = ({ testToken }) => {
             }}
       >
           <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Profile" component={AccountScreen} />
+          <Tab.Screen name="Profile" component={ProfileStackScreen} />
       </Tab.Navigator>
 
   );

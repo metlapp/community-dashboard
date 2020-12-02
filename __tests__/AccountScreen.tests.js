@@ -22,11 +22,18 @@ describe("<AccountScreen />", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("Should have four buttons", () => {
-    const component = shallow(<AccountScreen />);
-    const wrapper = component.find(".button");
-    expect(wrapper.getElements()).toHaveLength(4);
+  it("Should have correct menu items", () => {
+    const { getByText } = render(
+        <PaperProvider>
+          <AccountScreen />
+        </PaperProvider>
+    );
+    expect(getByText('Personal Information')).toBeTruthy();
+    expect(getByText('Change Password')).toBeTruthy();
+    expect(getByText('Terms of Service / Privacy Policy')).toBeTruthy();
+    expect(getByText('Log out')).toBeTruthy();
   });
+
   it("User can logout", () => {
     setUser = jest.fn();
     const { getByText } = render(
@@ -37,9 +44,7 @@ describe("<AccountScreen />", () => {
       </AuthContext.Provider>
     );
 
-    fireEvent(getByText("Log Out"), "onPress");
+    fireEvent(getByText("Log out"), "onPress");
     expect(setUser).toBeCalledWith(null);
   });
-
-  // User can log out
 });

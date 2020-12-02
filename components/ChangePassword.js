@@ -1,20 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import * as Yup from "yup";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
-import AppFormField from "../components/AppFormField";
-import Form from "../components/Form";
-import SubmitButton from "../components/SubmitButton";
-import ErrorMessage from "../components/ErrorMessage";
-import SuccessMessage from "../components/SuccessMessage";
 import AuthContext from "../auth/Context";
 import PropTypes from "prop-types";
 
+import ErrorMessage from "../components/ErrorMessage";
+import SuccessMessage from "../components/SuccessMessage";
+import PopupForm from "../components/PopupForm";
+
 const validationSchema = Yup.object().shape({
-  currentPassword: Yup.string().required().min(8).label("Current Password"),
-  newPassword: Yup.string().required().min(8).label("New Password"),
-  confirmNewPassword: Yup.string().required().min(8).label("Confirm Password"),
+  currentPassword: Yup.string().trim().required().label("Current Password"),
+  newPassword: Yup.string().trim().required().min(8).label("New Password"),
+  confirmNewPassword: Yup.string().trim().required().min(8).label("Confirm Password"),
 });
 
 export default function ChangePassword(props) {
@@ -74,81 +72,31 @@ export default function ChangePassword(props) {
         return;
       });
   };
+  const fields = [
+      {label: 'Current Password', fieldName: 'currentPassword', placeholder: 'Current password', secure: true,},
+      {label: 'New Password', fieldName: 'newPassword', placeholder: 'New password', secure: true,},
+      {label: '', fieldName: 'confirmNewPassword', placeholder: 'Confirm new password', secure: true,},
+  ]
+
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Change your password</Text>
-      <Form
-        className="form"
-        initialValues={{
-          currentPassword: "",
-          newPassword: "",
-          confirmNewPassword: "",
-        }}
-        onSubmit={handleSubmit}
-        style={styles.form}
-        testID="form"
-        validationSchema={validationSchema}
-      >
-        <AppFormField
-          id="currentPassword"
-          autoFocus
-          onFocus={() => setErrorVisible(false)}
-          secureTextEntry
-          placeholder="Current Password"
-          name="currentPassword"
-          style={styles.TextInput}
-        />
-        <AppFormField
-          id="newPassword"
-          secureTextEntry
-          placeholder="New Password"
-          name="newPassword"
-          style={styles.TextInput}
-        />
-        <AppFormField
-          id="confirmPassword"
-          secureTextEntry
-          placeholder="Confirm Password"
-          name="confirmNewPassword"
-          style={styles.TextInput}
-        />
-        <ErrorMessage
-          error={error}
-          visible={errorVisible}
-          className="errorMessage"
-        />
-        <SubmitButton className="submit" title="Save">
-          Save
-        </SubmitButton>
-        <SuccessMessage
-          success="Password changed successfully"
-          visible={successVisible}
-        />
-      </Form>
-    </SafeAreaView>
+      <>
+          <PopupForm fields={fields} initialValues={{currentPassword: "", newPassword: "", confirmNewPassword: ""}}
+                     submitButtonText="Change Password" submitHandler={handleSubmit}
+                     validationSchema={validationSchema} />
+          <SuccessMessage
+              success="Password changed successfully"
+              visible={successVisible}
+          />
+          <ErrorMessage
+              error={error}
+              visible={errorVisible}
+              className="errorMessage"
+          />
+      </>
   );
 }
 ChangePassword.propTypes = {
   hidemodal: PropTypes.func,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
-  form: {
-    width: "70%",
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: "600",
-    marginBottom: 30,
-    marginTop: 5,
-  },
-  TextInput: {
-    lineHeight: 25,
-    fontSize: 20,
-    paddingLeft: 10,
-  },
-});

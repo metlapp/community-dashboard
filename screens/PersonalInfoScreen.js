@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import AccountModal from "../components/AccountModal";
-import { Appbar, Button, List } from "react-native-paper";
+import { Appbar, Button } from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import ListItem from "../components/ListItem";
+import ListItemWithHeader from "../components/ListItemWithHeader";
 
-const AccountScreen = ({navigation}) => {
+const PersonalInfoScreen = () => {
   //determines what component the modal will render when a button is clicked
 
   const [form, setForm] = React.useState("");
@@ -21,21 +21,24 @@ const AccountScreen = ({navigation}) => {
     authStorage.removeUser();
   };
   return (
-    <SafeAreaView style={{height: '100%'}}>
+    <SafeAreaView>
       {/* Opens model and takes in the visible state with what component to render */}
+      {/* When ListItem is clicked it changes the state of the visibility and tells the modal what component to render
+      inside the modal */}
       <AccountModal visibility={visible} hidemodal={hideModal} form={form} />
 
-        <ListItem title="Personal Information" onPress={() => navigation.navigate('PersonalInfo')} />
-        <ListItem title="Change Password"
+        <ListItemWithHeader header="Name" content={authContext.user.first_name}
                   onPress={() => {
-                    setForm("Password");
+                    setForm("Name");
                     showModal();
                   }}/>
-        <ListItem title="Terms of Service / Privacy Policy" bottom={true} />
-        <ListItem title="Log out" onPress={handleLogout} />
-
+        <ListItemWithHeader header="Email" content={authContext.user.email}
+                  onPress={() => {
+                    setForm("Email");
+                    showModal();
+                  }}/>
     </SafeAreaView>
   );
 };
 
-export default AccountScreen;
+export default PersonalInfoScreen;

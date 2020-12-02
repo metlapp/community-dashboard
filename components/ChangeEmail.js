@@ -1,14 +1,13 @@
 import React, { useContext } from "react";
-import { Title } from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
-import Form from "../components/Form";
-import AppFormField from "../components/AppFormField";
-import SubmitButton from "../components/SubmitButton";
 import * as Yup from "yup";
 import axios from "axios";
 import { apiConfig } from "../config/config";
 import PropTypes from "prop-types";
+
+import PopupForm from "../components/PopupForm";
+
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
@@ -35,20 +34,14 @@ const ChangeEmail = (props) => {
     props.hidemodal();
   };
 
+    const fields = [
+        {label: 'Email', fieldName: 'email', placeholder: 'New email address'},
+    ]
+
+
   return (
-    <>
-      <Title>Current Email : {authContext.user.email}</Title>
-      <Form
-        initialValues={{
-          email: "",
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <AppFormField id="email" placeholder="New Email" name="email" />
-        <SubmitButton className="submit" title="Change Email" />
-      </Form>
-    </>
+    <PopupForm fields={fields} initialValues={{email: authContext.user.email}} submitButtonText="Save"
+               submitHandler={handleSubmit} validationSchema={validationSchema} />
   );
 };
 
