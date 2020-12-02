@@ -1,22 +1,27 @@
-import React, { useContext, useEffect } from "react";
-import { Button, Title, TextInput } from "react-native-paper";
+import React, { useContext } from "react";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
+import * as Yup from "yup";
 import axios from "axios";
 import { apiConfig } from "../config/config";
 import PropTypes from "prop-types";
 
+import PopupForm from "../components/PopupForm";
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().trim().required().label("Name"),
+});
+
 const ChangeName = (props) => {
   const authContext = useContext(AuthContext);
-  var newName = "";
-  const [error, setError] = React.useState(false);
 
-  // Posts new name to the API
-  const postName = async () => {
+  const handleSubmit = (values) => {
     axios
       .patch(
         apiConfig.baseUrl + "users/" + authContext.user.id + "/",
-        { first_name: newName },
+        {
+          first_name: values["name"],
+        },
         {
           auth: apiConfig.auth,
         }
@@ -26,33 +31,17 @@ const ChangeName = (props) => {
         authStorage.storeUser(data.data);
       })
       .catch(console.error);
+    props.hidemodal();
   };
 
-  const saveAndClose = () => {
-    newName = newName.trim();
-    if (newName == "") {
-      setError(true);
-    } else {
-      postName();
-      setError(false);
+  const fields = [
+      {label: 'Name', fieldName: 'name', placeholder: 'New name'},
+  ]
 
-      props.hidemodal();
-    }
-  };
 
   return (
-    <>
-      <Title>Hello, {authContext.user.first_name}</Title>
-      <TextInput
-        className="newNameInput"
-        placeholder="Change Name"
-        onChangeText={(text) => (newName = text)}
-        error={error}
-      />
-      <Button className="save" onPress={saveAndClose}>
-        Save
-      </Button>
-    </>
+    <PopupForm fields={fields} initialValues={{name: authContext.user.first_name}} submitButtonText="Save"
+               submitHandler={handleSubmit} validationSchema={validationSchema} />
   );
 };
 

@@ -1,10 +1,13 @@
 import "react-native";
 import React from "react";
 import ChangeName from "../components/ChangeName";
-import { render, fireEvent } from "@testing-library/react-native";
+import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
 import AuthContext from "../auth/Context";
 import axios from "../__mocks__/axios";
 jest.mock("axios");
+
+const placeholderText = "New name";
+const saveButtonText = "Save";
 
 describe("<ChangeName />", () => {
   it("SetUser has been called", async () => {
@@ -16,11 +19,20 @@ describe("<ChangeName />", () => {
         <ChangeName hidemodal={hidemodal} />
       </AuthContext.Provider>
     );
-    fireEvent(getByPlaceholderText("Change Name"), "onChangeText", "Jerry");
 
-    fireEvent(getByText("Save"), "onPress");
-    await expect(axios.patch).toHaveBeenCalled();
-    expect(setUser).toHaveBeenCalled();
+    act(() => {
+      fireEvent(
+        getByPlaceholderText(placeholderText),
+        "onChangeText",
+        "Jerry"
+      );
+    });
+    act(() => {
+      fireEvent.press(getByText(saveButtonText).parent);
+    });
+    await waitFor(() => {
+      expect(setUser).toHaveBeenCalled();
+    });
   });
 
   it("SetUser has not been called due to network Error", async () => {
@@ -35,9 +47,9 @@ describe("<ChangeName />", () => {
         <ChangeName hidemodal={hidemodal} />
       </AuthContext.Provider>
     );
-    fireEvent(getByPlaceholderText("Change Name"), "onChangeText", "Jerry");
+    fireEvent(getByPlaceholderText(placeholderText), "onChangeText", "Jerry");
 
-    fireEvent(getByText("Save"), "onPress");
+    fireEvent(getByText(saveButtonText), "onPress");
     await expect(axios.patch).toHaveBeenCalled();
     expect(setUser).not.toHaveBeenCalled();
   });

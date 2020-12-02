@@ -26,8 +26,8 @@ export default function LoginScreen({ navigation }) {
     axios
       .post(
         // temporary for testing on device
-        `${HOST_WITH_PORT}login/`,
-        // apiConfig.baseUrl + "login/",
+        // `${HOST_WITH_PORT}login/`,
+        apiConfig.baseUrl + "login/",
         {
           email: values["email"],
           password: values["password"],

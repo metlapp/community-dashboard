@@ -23,12 +23,6 @@ describe("Testing ChangePassword", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it("text on change password screen", () => {
-    const wrapper = shallow(<ChangePassword />);
-    const text = wrapper.find("Text").render().text();
-    expect(text).toEqual("Change your password");
-  });
-
   it('should say "Please make sure new passwords match!" when the new passwords dont match', () => {
     const wrapper = mount(<ChangePassword />);
 
@@ -49,9 +43,9 @@ describe("Testing ChangePassword", () => {
         <ChangePassword />
       </AuthContext.Provider>
     );
-    const currentPassword = getByPlaceholderText("Current Password");
-    const newPassword = getByPlaceholderText("New Password");
-    const confirmPassword = getByPlaceholderText("Confirm Password");
+    const currentPassword = getByPlaceholderText("Current password");
+    const newPassword = getByPlaceholderText("New password");
+    const confirmPassword = getByPlaceholderText("Confirm new password");
 
     act(() => {
       fireEvent(currentPassword, "onChangeText", "password");
@@ -67,7 +61,7 @@ describe("Testing ChangePassword", () => {
     expect(newPassword.props.value).toEqual("Peyton12");
 
     act(() => {
-      fireEvent(getByText("Save").parent, "press");
+      fireEvent(getByText("Change Password").parent, "press");
     });
 
     await waitFor(() => {

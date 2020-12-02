@@ -6,6 +6,9 @@ import AuthContext from "../auth/Context";
 import axios from "../__mocks__/axios";
 jest.mock("axios");
 
+const placeholderText = "New email address";
+const saveButtonText = "Save";
+
 describe("<ChangeEmail />", () => {
   it("User can change their Email with a valid Email", async () => {
     const setUser = jest.fn();
@@ -19,13 +22,13 @@ describe("<ChangeEmail />", () => {
 
     act(() => {
       fireEvent(
-        getByPlaceholderText("New Email"),
+        getByPlaceholderText(placeholderText),
         "onChangeText",
         "Jerry@gmail.com"
       );
     });
     act(() => {
-      fireEvent.press(getByText("Change Email").parent);
+      fireEvent.press(getByText(saveButtonText).parent);
     });
     await waitFor(() => {
       expect(setUser).toHaveBeenCalled();
@@ -43,10 +46,10 @@ describe("<ChangeEmail />", () => {
     );
 
     act(() => {
-      fireEvent(getByPlaceholderText("New Email"), "onChangeText", "Jerry.com");
+      fireEvent(getByPlaceholderText(placeholderText), "onChangeText", "Jerry.com");
     });
     act(() => {
-      fireEvent(getByText("Change Email").parent, "onPress");
+      fireEvent(getByText(saveButtonText).parent, "onPress");
     });
     await waitFor(() => {
       expect(setUser).not.toHaveBeenCalled();
@@ -65,13 +68,13 @@ describe("<ChangeEmail />", () => {
 
     act(() => {
       fireEvent(
-        getByPlaceholderText("New Email"),
+        getByPlaceholderText(placeholderText),
         "onChangeText",
         "Jerry@mail.com"
       );
     });
     act(() => {
-      fireEvent(getByText("Change Email").parent, "onPress");
+      fireEvent(getByText(saveButtonText).parent, "onPress");
     });
     await waitFor(() => {
       expect(axios.patch).toHaveBeenCalled();
@@ -92,13 +95,13 @@ describe("<ChangeEmail />", () => {
 
     act(() => {
       fireEvent(
-        getByPlaceholderText("New Email"),
+        getByPlaceholderText(placeholderText),
         "onChangeText",
         "Jerry@mail.com"
       );
     });
     act(() => {
-      fireEvent(getByText("Change Email").parent, "onPress");
+      fireEvent(getByText(saveButtonText).parent, "onPress");
     });
     await waitFor(() => {
       expect(setUser).not.toHaveBeenCalled();

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView, Text, FlatList } from "react-native";
 import axios from "axios";
 import { apiConfig } from "../config/config";
+import defaultStyles, {feedBackgroundColor} from "../config/defaultStyles";
 import { Appbar } from "react-native-paper";
 import ContentCard from "../components/ContentCard";
 
@@ -40,7 +41,7 @@ export default function AllVideosScreen() {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[...[defaultStyles.SafeAreaView], ...[{backgroundColor: feedBackgroundColor}]]}>
       <Appbar.Header>
         <Appbar.Content title="All Videos" />
       </Appbar.Header>
@@ -50,7 +51,7 @@ export default function AllVideosScreen() {
         <FlatList
           data={data}
           renderItem={renderVids}
-          keyExtractor={(item) => item.link}
+          keyExtractor={(item) => item.id}
         />
       )}
     </SafeAreaView>
