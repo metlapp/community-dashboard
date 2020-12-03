@@ -1,9 +1,11 @@
 import React from "react";
-import { Modal, Portal, Card } from "react-native-paper";
+import { Modal, Portal, Card, IconButton } from "react-native-paper";
 import ChangeName from "../components/ChangeName";
 import ChangeEmail from "../components/ChangeEmail";
 import ChangePassword from "../components/ChangePassword";
 import PropTypes from "prop-types";
+import {commonMargins, mediumGrey} from "../config/defaultStyles";
+
 
 //OpenModal opens the modal and takes in the visibility which either show the modal or hides it
 //It also takes in the state which the button passes to it and will render the correct component
@@ -13,7 +15,14 @@ const AccountModal = (props) => {
     <Portal>
       <Modal visible={props.visibility} onDismiss={props.hidemodal}>
         <Card>
-          <Card.Content>
+          <IconButton
+              icon="close"
+              color={mediumGrey}
+              size={20}
+              onPress={props.hidemodal}
+              style={{marginLeft: 'auto'}}
+          />
+          <Card.Content style={commonMargins}>
             {(() => {
               switch (props.form) {
                 case "Email":

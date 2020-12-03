@@ -28,7 +28,8 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
           },
           Array [
             Object {
-              "borderBottom": "1px solid #ddd",
+              "borderBottomColor": "#ddd",
+              "borderBottomWidth": 1,
               "marginLeft": 20,
               "marginRight": 20,
               "paddingLeft": 0,
@@ -77,10 +78,11 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
                 Object {
                   "color": "rgba(0, 0, 0, 0.87)",
                 },
-                Object {
-                  "left": -8,
-                  "position": "relative",
-                },
+                Array [
+                  Object {
+                    "left": -8,
+                  },
+                ],
               ],
             ]
           }
@@ -109,7 +111,8 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
           },
           Array [
             Object {
-              "borderBottom": "1px solid #ddd",
+              "borderBottomColor": "#ddd",
+              "borderBottomWidth": 1,
               "marginLeft": 20,
               "marginRight": 20,
               "paddingLeft": 0,
@@ -158,10 +161,11 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
                 Object {
                   "color": "rgba(0, 0, 0, 0.87)",
                 },
-                Object {
-                  "left": -8,
-                  "position": "relative",
-                },
+                Array [
+                  Object {
+                    "left": -8,
+                  },
+                ],
               ],
             ]
           }
@@ -191,7 +195,8 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
           Array [
             Array [
               Object {
-                "borderBottom": "1px solid #ddd",
+                "borderBottomColor": "#ddd",
+                "borderBottomWidth": 1,
                 "marginLeft": 20,
                 "marginRight": 20,
                 "paddingLeft": 0,
@@ -199,7 +204,8 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
               },
             ],
             Object {
-              "borderTop": "1px solid #ddd",
+              "borderTopColor": "#ddd",
+              "borderTopWidth": 1,
               "marginTop": "auto",
             },
           ],
@@ -245,10 +251,11 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
                 Object {
                   "color": "rgba(0, 0, 0, 0.87)",
                 },
-                Object {
-                  "left": -8,
-                  "position": "relative",
-                },
+                Array [
+                  Object {
+                    "left": -8,
+                  },
+                ],
               ],
             ]
           }
@@ -277,7 +284,8 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
           },
           Array [
             Object {
-              "borderBottom": "1px solid #ddd",
+              "borderBottomColor": "#ddd",
+              "borderBottomWidth": 1,
               "marginLeft": 20,
               "marginRight": 20,
               "paddingLeft": 0,
@@ -326,10 +334,11 @@ exports[`<AccountScreen /> matches the snapshot 1`] = `
                 Object {
                   "color": "rgba(0, 0, 0, 0.87)",
                 },
-                Object {
-                  "left": -8,
-                  "position": "relative",
-                },
+                Array [
+                  Object {
+                    "left": -8,
+                  },
+                ],
               ],
             ]
           }

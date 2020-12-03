@@ -22,6 +22,7 @@ export default function PopupForm({fields, submitButtonText, initialValues, subm
                 initialValues={initialValues}
                 onSubmit={submitHandler}
                 validationSchema={validationSchema}
+                key={JSON.stringify(fields)}  // need unique key for react
             >
                 {formFields}
 

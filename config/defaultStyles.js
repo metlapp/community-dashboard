@@ -1,15 +1,17 @@
 import {DefaultTheme} from "react-native-paper";
+import { DefaultTheme as DefaultNavTheme } from '@react-navigation/native';
 
 /* COLOR CONSTANTS */
 export const primaryColor = "#32b1e0"; // light blue
 export const accentColor = "#f85f6a"; // coral
+export const mediumGrey = "#ccc";
 export const textColor = "#606060";
 export const backgroundColor = "#fff";
 export const feedBackgroundColor = "#e8ecf1";
 export const borderColor = "#ddd";
 
 
-/* THEME for react-native-paper and react-navigation components */
+/* THEME for react-native-paper components */
 export const theme = {
     ...DefaultTheme,
     roundness: 0,
@@ -22,10 +24,23 @@ export const theme = {
     },
 };
 
+/* THEME for react-navigation components */
+export const navigationTheme = {
+    ...DefaultNavTheme,
+    colors: {
+        primary: primaryColor,
+        background: backgroundColor,
+        card: DefaultNavTheme.colors.card,
+        text: DefaultNavTheme.colors.text,
+        border: DefaultNavTheme.colors.border,
+        notification: DefaultNavTheme.colors.notification,
+    },
+};
+
 
 /* STYLES */
 
-const commonMargins = {
+export const commonMargins = {
     marginLeft: 20,
     marginRight: 20,
     paddingLeft: 0,
@@ -37,16 +52,6 @@ const headerTextStyle = {
     fontWeight: 'bold',
 };
 
-const headerText = {
-    ...headerTextStyle,
-};
-
-const formHeaderText = {
-    ...headerTextStyle,
-    color: accentColor,
-};
-
-
 export default {
     contentCard: {
         marginBottom: 5,
@@ -57,13 +62,21 @@ export default {
         height: 150,
         flex: 1,
     },
-    SafeAreaView: {
-        flex: 1,  // this keeps the content inside scrollable
+
+    button: {
+        borderRadius: 6,
+        padding: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        textTransform: "none",
     },
 
     /* LIST ITEM */
     ListItem: {
-        borderBottom: '1px solid ' + borderColor,
+        borderBottomColor: borderColor,
+        borderBottomWidth: 1,
         ...commonMargins,
     },
     ListItemWithHeader: {
@@ -72,33 +85,35 @@ export default {
         ...commonMargins,
     },
     ListItemBottom: {
-        borderTop: '1px solid ' + borderColor,
+        borderTopColor: borderColor,
+        borderTopWidth: 1,
         marginTop: 'auto',
+    },
+    ListItemNoBorder: {
+        borderBottomWidth: 0,
+        borderTopWidth: 0,
     },
     ListItemTitle: {
         // left and position are to reverse the 8px padding on a parent div that we cannot pinpoint using this style of stylesheet
         left: -8,
-        position: 'relative',
     },
-    ListItemContent: {
-        fontSize: 14,
-        color: textColor,
-        opacity: 0.87,
+    ListItemTitleWithDescription: {
+        ...headerTextStyle,
     },
-    ListItemHeader: {
-        paddingBottom: 5,
-        // display: 'block',
-        ...headerText,
+    ListItemDescription: {
+        // left and position are to reverse the 8px padding on a parent div that we cannot pinpoint using this style of stylesheet
+        left: -8,
     },
 
     /* FORMS */
     formFieldTitle: {
-        // display: 'block',
-        ...formHeaderText,
+        ...headerTextStyle,
+        color: accentColor,
     },
     TextInput: {
-        lineHeight: 25,
-        fontSize: 20,
-        paddingLeft: 10,
+        backgroundColor: '#fff',
+        height: 45,
+        paddingHorizontal: 0,
+        marginBottom: 20,
     },
 };

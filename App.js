@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { makeUrl } from "expo-linking";
 import { NavigationContainer, useLinking } from "@react-navigation/native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { theme } from "./config/defaultStyles";
+import { theme, navigationTheme } from "./config/defaultStyles";
 import { decode, encode } from "base-64";
 import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
@@ -76,7 +76,7 @@ export default function App() {
         <NavigationContainer
           initialState={initialState}
           ref={(ref, navigationRef)}
-          theme={theme}
+          theme={navigationTheme}
         >
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
