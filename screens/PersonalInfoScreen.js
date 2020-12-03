@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import AccountModal from "../components/AccountModal";
-import { Appbar, Button } from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import ListItemWithHeader from "../components/ListItemWithHeader";
+import { SafeAreaView } from "react-native";
+import ListItem from "../components/ListItem";
 
 const PersonalInfoScreen = () => {
   //determines what component the modal will render when a button is clicked
@@ -27,12 +26,12 @@ const PersonalInfoScreen = () => {
       inside the modal */}
       <AccountModal visibility={visible} hidemodal={hideModal} form={form} />
 
-        <ListItemWithHeader header="Name" content={authContext.user.first_name}
+        <ListItem title="Name" description={authContext.user.first_name} withBorder={false}
                   onPress={() => {
                     setForm("Name");
                     showModal();
                   }}/>
-        <ListItemWithHeader header="Email" content={authContext.user.email}
+        <ListItem title="Email" description={authContext.user.email} withBorder={false}
                   onPress={() => {
                     setForm("Email");
                     showModal();

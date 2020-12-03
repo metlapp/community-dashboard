@@ -41,7 +41,7 @@ export default function AllVideosScreen() {
   }, []);
 
   return (
-    <SafeAreaView style={[...[defaultStyles.SafeAreaView], ...[{backgroundColor: feedBackgroundColor}]]}>
+    <SafeAreaView style={{backgroundColor: feedBackgroundColor}}>
       <Appbar.Header>
         <Appbar.Content title="All Videos" />
       </Appbar.Header>
