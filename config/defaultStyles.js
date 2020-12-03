@@ -82,18 +82,18 @@ export default {
     },
     ListItemContent: {
         fontSize: 14,
-        textColor: textColor,
+        color: textColor,
         opacity: 0.87,
     },
     ListItemHeader: {
         paddingBottom: 5,
-        display: 'block',
+        // display: 'block',
         ...headerText,
     },
 
     /* FORMS */
     formFieldTitle: {
-        display: 'block',
+        // display: 'block',
         ...formHeaderText,
     },
     TextInput: {
