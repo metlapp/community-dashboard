@@ -26,97 +26,81 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
       style={
         Array [
           false,
-          Object {
-            "marginBottom": 20,
-            "marginLeft": 20,
-            "marginRight": 20,
-            "marginTop": 20,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-          },
+          Array [
+            Object {
+              "padding": 8,
+            },
+            Array [
+              Array [
+                Object {
+                  "borderBottomColor": "#ddd",
+                  "borderBottomWidth": 1,
+                  "marginLeft": 20,
+                  "marginRight": 20,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                },
+              ],
+              Object {
+                "borderBottomWidth": 0,
+                "borderTopWidth": 0,
+              },
+            ],
+          ],
         ]
       }
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontWeight": "400",
-              "textAlign": "left",
-            },
-            undefined,
-          ]
+          Object {
+            "flexDirection": "row",
+          }
         }
       >
-        <Text
+        <View
           style={
             Array [
               Object {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontWeight": "400",
-                "textAlign": "left",
+                "marginVertical": 6,
+                "paddingLeft": 8,
               },
-              Array [
-                Object {
-                  "color": "rgba(0, 0, 0, 0.87)",
-                  "fontFamily": "System",
-                  "fontWeight": "500",
-                  "textAlign": "left",
-                  "writingDirection": "ltr",
-                },
-                Array [
-                  Object {
-                    "fontSize": 20,
-                    "letterSpacing": 0.15,
-                    "lineHeight": 30,
-                    "marginVertical": 2,
-                  },
-                  Object {
-                    "fontSize": 14,
-                    "fontWeight": "bold",
-                    "paddingBottom": 5,
-                  },
-                ],
-                Array [
-                  Object {
-                    "fontSize": 20,
-                    "letterSpacing": 0.15,
-                    "lineHeight": 30,
-                    "marginVertical": 2,
-                  },
-                  Object {
-                    "fontSize": 14,
-                    "fontWeight": "bold",
-                    "paddingBottom": 5,
-                  },
-                ],
-              ],
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+              },
             ]
           }
         >
-          Name
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontWeight": "400",
-                "textAlign": "left",
-              },
-              Object {
-                "color": "#606060",
-                "fontSize": 14,
-                "opacity": 0.87,
-              },
-            ]
-          }
-        />
-      </Text>
+          <Text
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "textAlign": "left",
+                },
+                Array [
+                  Object {
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "rgba(0, 0, 0, 0.87)",
+                  },
+                  Array [
+                    Object {
+                      "left": -8,
+                    },
+                  ],
+                ],
+              ]
+            }
+          >
+            Name
+          </Text>
+        </View>
+      </View>
     </View>
     <View
       accessible={true}
@@ -131,99 +115,113 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
       style={
         Array [
           false,
-          Object {
-            "marginBottom": 20,
-            "marginLeft": 20,
-            "marginRight": 20,
-            "marginTop": 20,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-          },
+          Array [
+            Object {
+              "padding": 8,
+            },
+            Array [
+              Array [
+                Object {
+                  "borderBottomColor": "#ddd",
+                  "borderBottomWidth": 1,
+                  "marginLeft": 20,
+                  "marginRight": 20,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                },
+              ],
+              Object {
+                "borderBottomWidth": 0,
+                "borderTopWidth": 0,
+              },
+            ],
+          ],
         ]
       }
     >
-      <Text
+      <View
         style={
-          Array [
-            Object {
-              "color": "#000000",
-              "fontFamily": "System",
-              "fontWeight": "400",
-              "textAlign": "left",
-            },
-            undefined,
-          ]
+          Object {
+            "flexDirection": "row",
+          }
         }
       >
-        <Text
+        <View
           style={
             Array [
               Object {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontWeight": "400",
-                "textAlign": "left",
+                "marginVertical": 6,
+                "paddingLeft": 8,
               },
+              Object {
+                "flex": 1,
+                "justifyContent": "center",
+              },
+            ]
+          }
+        >
+          <Text
+            numberOfLines={1}
+            style={
               Array [
                 Object {
-                  "color": "rgba(0, 0, 0, 0.87)",
+                  "color": "#000000",
                   "fontFamily": "System",
-                  "fontWeight": "500",
+                  "fontWeight": "400",
                   "textAlign": "left",
-                  "writingDirection": "ltr",
                 },
                 Array [
                   Object {
-                    "fontSize": 20,
-                    "letterSpacing": 0.15,
-                    "lineHeight": 30,
-                    "marginVertical": 2,
+                    "fontSize": 16,
                   },
                   Object {
-                    "fontSize": 14,
-                    "fontWeight": "bold",
-                    "paddingBottom": 5,
+                    "color": "rgba(0, 0, 0, 0.87)",
                   },
+                  Array [
+                    Array [
+                      Object {
+                        "left": -8,
+                      },
+                    ],
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "bold",
+                    },
+                  ],
                 ],
+              ]
+            }
+          >
+            Email
+          </Text>
+          <Text
+            numberOfLines={2}
+            style={
+              Array [
+                Object {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "textAlign": "left",
+                },
                 Array [
                   Object {
-                    "fontSize": 20,
-                    "letterSpacing": 0.15,
-                    "lineHeight": 30,
-                    "marginVertical": 2,
+                    "fontSize": 14,
                   },
                   Object {
-                    "fontSize": 14,
-                    "fontWeight": "bold",
-                    "paddingBottom": 5,
+                    "color": "rgba(0, 0, 0, 0.54)",
+                  },
+                  Object {
+                    "left": -8,
                   },
                 ],
-              ],
-            ]
-          }
-        >
-          Email
-        </Text>
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#000000",
-                "fontFamily": "System",
-                "fontWeight": "400",
-                "textAlign": "left",
-              },
-              Object {
-                "color": "#606060",
-                "fontSize": 14,
-                "opacity": 0.87,
-              },
-            ]
-          }
-        >
-          email@email.com
-        </Text>
-      </Text>
+              ]
+            }
+          >
+            email@email.com
+          </Text>
+        </View>
+      </View>
     </View>
   </RCTSafeAreaView>
 </View>
