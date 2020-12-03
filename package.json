@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --silent",
+    "update-snapshots": "jest --updateSnapshot",
     "test-with-console-logs": "jest"
   },
   "dependencies": {

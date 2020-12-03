@@ -75,7 +75,6 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                     "marginVertical": 2,
                   },
                   Object {
-                    "display": "block",
                     "fontSize": 14,
                     "fontWeight": "bold",
                     "paddingBottom": 5,
@@ -89,7 +88,6 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                     "marginVertical": 2,
                   },
                   Object {
-                    "display": "block",
                     "fontSize": 14,
                     "fontWeight": "bold",
                     "paddingBottom": 5,
@@ -111,9 +109,9 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                 "textAlign": "left",
               },
               Object {
+                "color": "#606060",
                 "fontSize": 14,
                 "opacity": 0.87,
-                "textColor": "#606060",
               },
             ]
           }
@@ -182,7 +180,6 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                     "marginVertical": 2,
                   },
                   Object {
-                    "display": "block",
                     "fontSize": 14,
                     "fontWeight": "bold",
                     "paddingBottom": 5,
@@ -196,7 +193,6 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                     "marginVertical": 2,
                   },
                   Object {
-                    "display": "block",
                     "fontSize": 14,
                     "fontWeight": "bold",
                     "paddingBottom": 5,
@@ -218,9 +214,9 @@ exports[`<PersonalInfoScreen /> matches the snapshot 1`] = `
                 "textAlign": "left",
               },
               Object {
+                "color": "#606060",
                 "fontSize": 14,
                 "opacity": 0.87,
-                "textColor": "#606060",
               },
             ]
           }
