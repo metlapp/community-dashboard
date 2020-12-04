@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
 import { Button } from "react-native-paper";
@@ -6,8 +6,13 @@ import { apiConfig } from "../config/config";
 import axios from "axios";
 import Video from "../components/Video";
 import Article from "../components/Article";
+import AuthContext from "../auth/Context";
+import {feedBackgroundColor} from "../config/defaultStyles";
+import AppButton from "../components/AppButton";
 
 export default function HomeScreen() {
+  const authContext = useContext(AuthContext);
+
   //content from the API
   const [content, setContent] = useState([]);
   //What page we are currently on
@@ -30,7 +35,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(apiConfig.baseUrl + `users/3/feed/?page=${page}`, {
+        .get(apiConfig.baseUrl + `users/${authContext.user.id}/feed/?page=${page}`, {
           auth: apiConfig.auth,
         })
         .then((data) => {
@@ -40,7 +45,7 @@ export default function HomeScreen() {
         })
         .catch((err) => {
           //Will not display button when a 404 is recievced from the server
-          err.response.status == 404 ? setLoadMore(false) : console.warn(err);
+          err.response.status == 404 ? setLoadMore(true) : console.warn(err);
         });
     };
     fetchData();
@@ -118,16 +123,12 @@ export default function HomeScreen() {
   //Renders the data in a pretty way to the flatlist
   const renderFeed = ({ item }) => {
     return (
-      <View style={styles.card}>
-        <View style={styles.c}>
           <DetermineContent content={item} />
-        </View>
-      </View>
     );
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: feedBackgroundColor}}>
       <View>
         <FlatList
           data={content}
@@ -136,7 +137,7 @@ export default function HomeScreen() {
           ListFooterComponent={
             <View style={styles.footer}>
               {loadMore ? (
-                <Button onPress={changePage}>Load more</Button>
+                <AppButton onPress={changePage} title="Load More" width="80%" compact={true} />
               ) : null}
             </View>
           }
@@ -149,17 +150,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   footer: {
     justifyContent: "center",
-    marginTop: 6,
-  },
-  container: {
-    height: 250,
-  },
-  card: {
-    marginTop: 7,
+    marginVertical: 6,
     alignItems: "center",
-    width: "100%",
-  },
-  c: {
-    width: "95%",
   },
 });

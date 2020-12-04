@@ -9,7 +9,9 @@ function flushPromises() {
   return new Promise(resolve => setImmediate(resolve));
 }
 
-describe("<AllVideosScreen />", () => {
+/* THESE TESTS ARE CURRENTLY BEING SKIPPED, AS THIS SCREEN IS NOT CURRENTLY BEING USED */
+
+describe.skip("<AllVideosScreen />", () => {
   it("Renders two videos to the screen ", async () => {
     axios.get.mockImplementationOnce(() => {
       return Promise.resolve({

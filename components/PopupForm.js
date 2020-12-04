@@ -9,11 +9,11 @@ import SubmitButton from "./SubmitButton";
 export default function PopupForm({fields, submitButtonText, initialValues, submitHandler, validationSchema}) {
 
     const formFields = fields.map((field) =>
-        <>
+        <React.Fragment key={field.label}>
             <Title style={defaultStyles.formFieldTitle}>{field.label}</Title>
             <AppFormField id={field.fieldName} placeholder={field.placeholder} name={field.fieldName}
                           secureTextEntry={field.secure}/>
-        </>
+        </React.Fragment>
     );
 
     return (

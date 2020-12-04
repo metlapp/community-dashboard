@@ -14,7 +14,7 @@ export default function AppTextInput({
       <TextInput
         autoCapitalize={autoCapitalize}
         placeholderTextColor={mediumGrey}
-        style={[defaultStyles.TextInput]}
+        style={defaultStyles.TextInput}
         {...props}
       />
     </View>

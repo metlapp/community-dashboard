@@ -3,8 +3,9 @@ import { DefaultTheme as DefaultNavTheme } from '@react-navigation/native';
 
 /* COLOR CONSTANTS */
 export const primaryColor = "#32b1e0"; // light blue
-export const accentColor = "#f85f6a"; // coral
+export const accentColor = "#f89232"; // orange
 export const mediumGrey = "#ccc";
+export const lightGrey = "#eee";
 export const textColor = "#606060";
 export const backgroundColor = "#fff";
 export const feedBackgroundColor = "#e8ecf1";
@@ -19,8 +20,12 @@ export const theme = {
         ...DefaultTheme.colors,
         primary: primaryColor,
         accent: accentColor,
-        text: textColor,
         background: backgroundColor,
+        surface: DefaultTheme.colors.surface,
+        text: textColor,
+        disabled: DefaultTheme.colors.disabled,
+        placeholder: DefaultTheme.colors.placeholder,
+        backdrop: DefaultTheme.colors.backdrop,
     },
 };
 
@@ -66,6 +71,10 @@ export default {
     button: {
         borderRadius: 6,
         padding: 10,
+    },
+    compactButton: {
+        borderRadius: 6,
+        padding: 2,
     },
     buttonText: {
         color: '#fff',
@@ -116,4 +125,11 @@ export default {
         paddingHorizontal: 0,
         marginBottom: 20,
     },
+    BlockText: {
+        backgroundColor: '#fff',
+        borderColor: borderColor,
+        borderWidth: 1,
+        borderBottomWidth: 0,
+        borderRadius: theme.roundness,
+    }
 };

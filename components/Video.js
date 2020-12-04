@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
-import { Card, Title, Paragraph } from "react-native-paper";
+import { Title, Paragraph } from "react-native-paper";
+import PropTypes from "prop-types";
+import ContentCard from "./ContentCard";
 
 const Video = (props) => {
   return (
-    <Card>
-      <Card.Content>
+      <ContentCard>
         <View style={styles.container}>
           <Title>{props.video.item_object.title}</Title>
           <WebView
@@ -19,8 +20,7 @@ const Video = (props) => {
           />
           <Paragraph>{props.video.item_object.description}</Paragraph>
         </View>
-      </Card.Content>
-    </Card>
+      </ContentCard>
   );
 };
 
@@ -30,3 +30,13 @@ const styles = StyleSheet.create({
   },
 });
 export default Video;
+
+Video.propTypes = {
+    video: PropTypes.shape({
+        item_object: PropTypes.shape({
+            title: PropTypes.string,
+            description: PropTypes.string,
+            link: PropTypes.string,
+        }),
+    })
+};

@@ -3,6 +3,7 @@ import React from "react";
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import axios from "../__mocks__/axios";
 import HomeScreen from "../screens/HomeScreen";
+import AuthContext from "../auth/Context";
 jest.mock("axios");
 
 function flushPromises() {
@@ -75,13 +76,25 @@ beforeEach(() => {
 
 describe("<HomeScreen />", () => {
   it("displays the userFeed to the User", async () => {
-    const { getAllByText } = render(<HomeScreen />);
+    const user = { id: 3 };
+    const setUser = jest.fn();
+    const { getAllByText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
     const wrapper = getAllByText("Test Feed");
     expect(wrapper).toHaveLength(2);
   });
   it("Question is gone when answered", async () => {
-    const { getByText } = render(<HomeScreen />);
+    const user = { id: 3 };
+    const setUser = jest.fn();
+    const { getByText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
     const question = getByText("Test Question");
     expect(question).toBeTruthy();
@@ -91,9 +104,15 @@ describe("<HomeScreen />", () => {
     expect(axios.post).toHaveBeenCalled();
   });
   it("Article are displayed correctly", async () => {
-    const { getByText } = render(<HomeScreen />);
+    const user = { id: 3 };
+    const setUser = jest.fn();
+    const { getByText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
-    const Article = getByText("GO TO ARTICLE");
+    const Article = getByText("Test Article");
     expect(Article).toBeTruthy();
   });
 });
