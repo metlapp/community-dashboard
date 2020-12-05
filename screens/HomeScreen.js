@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
+import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import Question from "../components/Question";
 import { Button } from "react-native-paper";
 import { apiConfig } from "../config/config";
 import axios from "axios";
 import Video from "../components/Video";
 import Article from "../components/Article";
+import FixedText from "../components/FixedText";
 
 export default function HomeScreen() {
   //content from the API
@@ -30,7 +31,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(apiConfig.baseUrl + `users/3/feed/?page=${page}`, {
+        .get(apiConfig.baseUrl + `users/5/feed/?page=${page}`, {
           auth: apiConfig.auth,
         })
         .then((data) => {
@@ -104,6 +105,8 @@ export default function HomeScreen() {
           answerCallBack={answerCallBack}
         />
       );
+    } else if (props.content.content.item_type === "Static") {
+      return <FixedText data={props.content.content.item_object} />;
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {
