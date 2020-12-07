@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -10,12 +10,23 @@ import {
 import { Surface, TextInput, Button, HelperText } from "react-native-paper";
 import Slider from "@react-native-community/slider";
 import PropTypes from "prop-types";
+import { trackClick } from "./TrackClick";
+import AuthContext from "../auth/Context";
 
 const Question = (props) => {
+  const authContext = useContext(AuthContext);
   const [answer, setAnswer] = useState("");
   const [sliderValue, setSliderValue] = useState(1);
   const [error, setError] = useState(false);
 
+  function click(questionID) {
+    trackClick(
+      (user = authContext.user.id),
+      (content = questionID),
+      (action = "ANSWERED"),
+      (location = "APP")
+    );
+  }
   //Renders the right type of componets depending on question type
   switch (props.question.question_type) {
     case "YES_NO":
@@ -23,13 +34,23 @@ const Question = (props) => {
         <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
-            <TouchableOpacity onPress={() => props.answerCallBack(true)}>
+            <TouchableOpacity
+              onPress={() => {
+                click(props.question.id);
+                props.answerCallBack(true);
+              }}
+            >
               <Image
                 style={styles.image}
                 source={require("../images/check.png")}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.answerCallBack(false)}>
+            <TouchableOpacity
+              onPress={() => {
+                click(props.question.id);
+                props.answerCallBack(false);
+              }}
+            >
               <Image
                 style={styles.image}
                 source={require("../images/x_mark.png")}
@@ -44,13 +65,23 @@ const Question = (props) => {
         <Surface>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
-            <TouchableOpacity onPress={() => props.answerCallBack(true)}>
+            <TouchableOpacity
+              onPress={() => {
+                click(props.question.id);
+                props.answerCallBack(true);
+              }}
+            >
               <Image
                 style={styles.image}
                 source={require("../images/happy.png")}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.answerCallBack(false)}>
+            <TouchableOpacity
+              onPress={() => {
+                click(props.question.id);
+                props.answerCallBack(false);
+              }}
+            >
               <Image
                 style={styles.image}
                 source={require("../images/sad.png")}
@@ -88,6 +119,7 @@ const Question = (props) => {
               if (answer == "") {
                 setError(true);
               } else {
+                click(props.question.id);
                 props.answerCallBack(answer);
               }
             }}
@@ -128,6 +160,7 @@ const Question = (props) => {
               if (input.length == 0) {
                 setError(true);
               } else {
+                click(props.question.id);
                 input = input.join(" || ");
                 props.answerCallBack(input);
               }
@@ -156,6 +189,7 @@ const Question = (props) => {
           <Button
             mode="contained"
             onPress={() => {
+              click(props.question.id);
               props.answerCallBack(sliderValue);
             }}
           >
