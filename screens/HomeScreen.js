@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
 import { Button } from "react-native-paper";
@@ -7,7 +7,7 @@ import axios from "axios";
 import Video from "../components/Video";
 import Article from "../components/Article";
 import AuthContext from "../auth/Context";
-import {feedBackgroundColor} from "../config/defaultStyles";
+import { feedBackgroundColor } from "../config/defaultStyles";
 import AppButton from "../components/AppButton";
 
 export default function HomeScreen() {
@@ -35,9 +35,12 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(apiConfig.baseUrl + `users/${authContext.user.id}/feed/?page=${page}`, {
-          auth: apiConfig.auth,
-        })
+        .get(
+          apiConfig.baseUrl + `users/${authContext.user.id}/feed/?page=${page}`,
+          {
+            auth: apiConfig.auth,
+          }
+        )
         .then((data) => {
           page === 1
             ? setContent(data.data.results)
@@ -45,7 +48,7 @@ export default function HomeScreen() {
         })
         .catch((err) => {
           //Will not display button when a 404 is recievced from the server
-          err.response.status == 404 ? setLoadMore(true) : console.warn(err);
+          err.response.status == 404 ? setLoadMore(false) : console.warn(err);
         });
     };
     fetchData();
@@ -122,13 +125,11 @@ export default function HomeScreen() {
 
   //Renders the data in a pretty way to the flatlist
   const renderFeed = ({ item }) => {
-    return (
-          <DetermineContent content={item} />
-    );
+    return <DetermineContent content={item} />;
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: feedBackgroundColor}}>
+    <SafeAreaView style={{ backgroundColor: feedBackgroundColor }}>
       <View>
         <FlatList
           data={content}
@@ -137,7 +138,12 @@ export default function HomeScreen() {
           ListFooterComponent={
             <View style={styles.footer}>
               {loadMore ? (
-                <AppButton onPress={changePage} title="Load More" width="80%" compact={true} />
+                <AppButton
+                  onPress={changePage}
+                  title="Load More"
+                  width="80%"
+                  compact={true}
+                />
               ) : null}
             </View>
           }

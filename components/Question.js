@@ -16,7 +16,7 @@ import defaultStyles, {
   theme,
 } from "../config/defaultStyles";
 import AppTextInput from "./AppTextInput";
-import { trackClick } from "./TrackClick";
+import { trackClick } from "../components/trackClick";
 import AuthContext from "../auth/Context";
 const sliderLabelContainerWidth = 40;
 

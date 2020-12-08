@@ -21,7 +21,7 @@ describe("Tracking Clicks", () => {
       id: 1,
       item_object: {
         title: "article",
-        link: "link",
+        link: "http://asdf.com",
         description: "description",
       },
     };
@@ -31,7 +31,7 @@ describe("Tracking Clicks", () => {
         <Article article={data} />
       </AuthContext.Provider>
     );
-    fireEvent(getByText("GO TO ARTICLE"), "onPress");
+    fireEvent(getByText("http://asdf.com"), "onPress");
     expect(TrackClick.trackClick).toBeCalled();
     expect(TrackClick.trackClick).toBeCalledWith(1, 1, "VIEWED", "APP");
   });

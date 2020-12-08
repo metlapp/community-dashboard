@@ -5,7 +5,7 @@ import { apiConfig } from "../config/config";
 import axios from "axios";
 import Question from "../components/Question";
 import AuthContext from "../auth/Context";
-import { trackClick } from "../components/TrackClick";
+import { trackClick } from "../components/trackClick";
 
 const QuestionScreen = ({ navigation }) => {
   const [loading, setLoading] = React.useState(true);
