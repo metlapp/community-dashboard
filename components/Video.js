@@ -16,7 +16,11 @@ const Video = (props) => {
     <ContentCard>
       <View style={styles.container}>
         <Title>{props.video.item_object.title}</Title>
-        <TouchableOpacity style={styles.container} onPress={click}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={click}
+          testID="video"
+        >
           <WebView
             javaScriptEnabled={true}
             scrollEnabled={false}
