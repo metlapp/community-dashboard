@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -13,6 +13,8 @@ import navigation from "./rootNavigation";
 import * as Notifications from "expo-notifications";
 import QuestionScreen from "../screens/QuestionScreen";
 import HomeScreen from "../screens/HomeScreen";
+import AuthContext from "../auth/Context";
+import { trackClick } from "../components/TrackClick";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -41,7 +43,9 @@ function ProfileStackScreen() {
 }
 
 const AppNavigator = ({ testToken }) => {
+  const authContext = useContext(AuthContext);
   useNotifications((notification) => {
+    trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
     if (
       // This will most likely need to be changed once our backend is sending the notifications
       notification.actionIdentifier ===
@@ -79,7 +83,7 @@ const AppNavigator = ({ testToken }) => {
       tabBarOptions={{
         activeTintColor: primaryColor,
         inactiveTintColor: textColor,
-          labelStyle: {marginBottom: 4, marginTop: -4,},
+        labelStyle: { marginBottom: 4, marginTop: -4 },
       }}
     >
       <Tab.Screen name="Home" component={HomeStackScreen} />

@@ -45,12 +45,7 @@ const Question = (props) => {
   }, [sliderValue]);
 
   function click(questionID) {
-    trackClick(
-      (user = authContext.user.id),
-      (content = questionID),
-      (action = "ANSWERED"),
-      (location = "APP")
-    );
+    trackClick(authContext.user.id, questionID, "ANSWERED", "APP");
   }
   //Renders the right type of componets depending on question type
   switch (props.question.question_type) {
