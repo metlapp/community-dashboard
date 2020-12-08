@@ -5,11 +5,15 @@ import PropTypes from "prop-types";
 import defaultStyles from "../config/defaultStyles";
 
 
-export default function AppButton({ width = "100%", title, onPress, ...props }) {
+export default function AppButton({ width = "100%", title, onPress, compact = false, ...props }) {
+
+  let style = defaultStyles.button;
+  if (compact) style = [style, defaultStyles.compactButton];
+
   return (
     <Button
       mode="contained"
-      style={[defaultStyles.button, { width }]}
+      style={[style, { width }]}
       onPress={onPress}
       {...props}
 
@@ -23,4 +27,5 @@ AppButton.propTypes = {
   width: PropTypes.string,
   title: PropTypes.string,
   onPress: PropTypes.func,
+  compact: PropTypes.bool,
 };

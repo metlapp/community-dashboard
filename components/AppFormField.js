@@ -23,7 +23,6 @@ function AppFormField({
   const hasError = !!getFieldMeta(name).error && !!touched[name];
 
   return (
-    <>
       <AppTextInput
         error={hasError}
         autoCapitalize={autoCapitalize}
@@ -36,7 +35,6 @@ function AppFormField({
         width={width}
         {...otherProps}
       />
-    </>
   );
 }
 

@@ -1,79 +1,87 @@
-import React, { useState } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  View,
-  TextInput as BlockText,
-} from "react-native";
-import { Surface, TextInput, Button, HelperText } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { HelperText, IconButton, Text, TextInput as BlockText} from "react-native-paper";
 import Slider from "@react-native-community/slider";
 import PropTypes from "prop-types";
+import ContentCard from "./ContentCard";
+import AppButton from "./AppButton";
+import defaultStyles, {accentColor, mediumGrey, theme} from "../config/defaultStyles";
+import AppTextInput from "./AppTextInput";
+
+const sliderLabelContainerWidth = 40;
 
 const Question = (props) => {
   const [answer, setAnswer] = useState("");
   const [sliderValue, setSliderValue] = useState(1);
   const [error, setError] = useState(false);
 
+  /** slider label positioning **/
+  const [sliderLayout, setSliderLayout] = useState({});
+  const [sliderLabelLeft, setSliderLabelLeft] = useState(0);
+  useEffect(() => {
+      if (sliderLayout.x) setSliderLabelLeft(sliderLayout.x - sliderLabelContainerWidth/2);
+  }, [sliderLayout])
+  useEffect(() => {
+      if (sliderLayout.x) {
+          let sliderWidth = sliderLayout.width - sliderLayout.x*2;
+          setSliderLabelLeft((sliderWidth / 4) * (sliderValue-1) + sliderLayout.x - sliderLabelContainerWidth/2);
+      }
+  }, [sliderValue]);
+
+
   //Renders the right type of componets depending on question type
   switch (props.question.question_type) {
     case "YES_NO":
       return (
-        <Surface>
+        <ContentCard>
+            <View>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
-            <TouchableOpacity onPress={() => props.answerCallBack(true)}>
-              <Image
-                style={styles.image}
-                source={require("../images/check.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.answerCallBack(false)}>
-              <Image
-                style={styles.image}
-                source={require("../images/x_mark.png")}
-              />
-            </TouchableOpacity>
+            <IconButton
+                onPress={() => props.answerCallBack(true)}
+                icon="thumb-up-outline"
+                size={50}
+            />
+            <IconButton
+                onPress={() => props.answerCallBack(false)}
+                icon="thumb-down-outline"
+                size={50}
+            />
           </View>
-        </Surface>
+            </View>
+        </ContentCard>
       );
 
     case "HAPPY_SAD":
       return (
-        <Surface>
+        <ContentCard>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <View style={styles.container}>
-            <TouchableOpacity onPress={() => props.answerCallBack(true)}>
-              <Image
-                style={styles.image}
-                source={require("../images/happy.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.answerCallBack(false)}>
-              <Image
-                style={styles.image}
-                source={require("../images/sad.png")}
-              />
-            </TouchableOpacity>
+            <IconButton
+                onPress={() => props.answerCallBack(true)}
+                icon="emoticon-happy-outline"
+                size={50}
+            />
+            <IconButton
+                onPress={() => props.answerCallBack(false)}
+                icon="emoticon-sad-outline"
+                size={50}
+            />
           </View>
-        </Surface>
+        </ContentCard>
       );
 
     case "BLOCK":
       return (
-        <Surface>
+        <ContentCard>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           <BlockText
-            style={{
-              textAlignVertical: "top",
-              height: 100,
-              borderColor: "gray",
-              borderWidth: 1,
-            }}
+            style={defaultStyles.BlockText}
             error={error}
-            placeholder="Answer"
+            placeholder="Answer..."
+            placeholderTextColor={theme.colors.placeholder}
             multiline={true}
+            numberOfLines={8}
             onChangeText={(value) => {
               setAnswer(value);
             }}
@@ -82,8 +90,7 @@ const Question = (props) => {
             Answer is required
           </HelperText>
 
-          <Button
-            mode="contained"
+          <QuestionSubmitButton
             onPress={() => {
               if (answer == "") {
                 setError(true);
@@ -91,10 +98,8 @@ const Question = (props) => {
                 props.answerCallBack(answer);
               }
             }}
-          >
-            Submit
-          </Button>
-        </Surface>
+          />
+        </ContentCard>
       );
 
     case "MULTILINE":
@@ -103,27 +108,25 @@ const Question = (props) => {
 
       for (let i = 0; i < props.question.number_of_lines; i++) {
         rows.push(
-          <TextInput
+          <AppTextInput
             key={i}
             error={error}
-            style={styles.textInput}
             placeholder="Answer"
             onChangeText={(value) => {
               input[i] = value;
             }}
-          ></TextInput>
+          ></AppTextInput>
         );
       }
 
       return (
-        <Surface>
+        <ContentCard>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
           {rows}
           <HelperText type="error" visible={error}>
             Answer is required
           </HelperText>
-          <Button
-            mode="contained"
+          <QuestionSubmitButton
             onPress={() => {
               if (input.length == 0) {
                 setError(true);
@@ -132,63 +135,72 @@ const Question = (props) => {
                 props.answerCallBack(input);
               }
             }}
-          >
-            Submit
-          </Button>
-        </Surface>
+          />
+        </ContentCard>
       );
 
     case "SCALE":
       return (
-        <Surface>
+        <ContentCard>
           <Text style={styles.questionTitle}>{props.question.title}</Text>
-          <Text style={styles.sliderValue}>{sliderValue}</Text>
+          <Text style={[styles.sliderValue, {left: sliderLabelLeft}]}>{sliderValue}</Text>
           <Slider
-            style={{ width: "100%", height: 40 }}
+              onLayout={(event)=>{setSliderLayout(event.nativeEvent.layout)}}
+            style={{ width: "100%", height: 30, marginBottom: 10 }}
             minimumValue={1}
             maximumValue={5}
             step={1}
-            thumbTintColor="purple"
+            thumbTintColor={accentColor}
+            minimumTrackTintColor={accentColor}
+            maximumTrackTintColor={mediumGrey}
+            tapToSeek={true}
             onValueChange={(value) => {
               setSliderValue(value);
             }}
           />
-          <Button
-            mode="contained"
+          <QuestionSubmitButton
             onPress={() => {
               props.answerCallBack(sliderValue);
             }}
-          >
-            Submit
-          </Button>
-        </Surface>
+          />
+        </ContentCard>
       );
   }
 };
 
+function QuestionSubmitButton({onPress}) {
+    return (
+        <View style={{alignItems: "center"}}>
+          <AppButton
+            title="Submit"
+            compact={true}
+            width="50%"
+            onPress={onPress}
+          />
+        </View>
+    )
+}
+
+QuestionSubmitButton.propTypes = {
+  onPress: PropTypes.func,
+};
+
 const styles = StyleSheet.create({
-  image: {
-    height: 50,
-    width: 50,
-    margin: 10,
-  },
   questionTitle: {
     fontSize: 20,
     textAlign: "center",
+    marginBottom: 10,
   },
   container: {
     flexDirection: "row",
     justifyContent: "center",
   },
-  textInput: {
-    width: "90%",
-    margin: 15,
-  },
   sliderValue: {
     textAlign: "center",
-    fontSize: 25,
+    width: sliderLabelContainerWidth,
+    color: accentColor,
     fontWeight: "bold",
-    marginTop: 10,
+    position: 'relative',
   },
 });
 

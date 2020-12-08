@@ -1,34 +1,16 @@
 import React from "react";
-import {Card, Title, Paragraph} from "react-native-paper";
+import {Card} from "react-native-paper";
 import PropTypes from "prop-types";
 import defaultStyles from "../config/defaultStyles";
-import {WebView} from "react-native-webview";
 
-export default function ContentCard({item, contentType}) {
-
-    let testId = "card";
-    if (contentType === "video") testId = "video";
+function ContentCard({ children }) {
 
     return (
-        <>
-            {contentType === "video" && <Card style={defaultStyles.contentCard} data-testid={testId}>
-                <Card.Content>
-                    <Title>{item.title}</Title>
-                    <WebView
-                        javaScriptEnabled={true}
-                        scrollEnabled={false}
-                        allowsFullscreenVideo={true}
-                        source={{
-                            uri: item.link,
-                        }}
-                        style={defaultStyles.video}
-                    />
-                    <Paragraph>{item.description}</Paragraph>
-                </Card.Content>
-            </Card>
-            }
-
-        </>
+        <Card style={defaultStyles.contentCard}>
+            <Card.Content>
+                <>{children}</>
+            </Card.Content>
+        </Card>
     );
 }
 
@@ -36,3 +18,5 @@ ContentCard.propTypes = {
     item: PropTypes.object,
     contentType: PropTypes.string,
 };
+
+export default ContentCard;

@@ -20,7 +20,7 @@ export default function ChangePassword(props) {
   // Temporary user data
 
   const [errorVisible, setErrorVisible] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [successVisible, setSuccessVisible] = useState(false);
 
   // Reset errors upon page render
