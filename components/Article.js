@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Linking } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import AuthContext from "../auth/Context";
-import { trackClick } from "./TrackClick";
+import { trackClick } from "./trackClick";
 
 const Article = (props) => {
   const authContext = useContext(AuthContext);

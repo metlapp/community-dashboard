@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { WebView } from "react-native-webview";
 import { Card, Title, Paragraph } from "react-native-paper";
 import AuthContext from "../auth/Context";
-import { trackClick } from "./TrackClick";
+import { trackClick } from "./trackClick";
 
 const Video = (props) => {
   const authContext = useContext(AuthContext);
@@ -15,7 +15,11 @@ const Video = (props) => {
       <Card.Content>
         <View>
           <Title>{props.video.item_object.title}</Title>
-          <TouchableOpacity style={styles.container} onPress={click}>
+          <TouchableOpacity
+            style={styles.container}
+            onPress={click}
+            testID="video"
+          >
             <WebView
               javaScriptEnabled={true}
               scrollEnabled={false}

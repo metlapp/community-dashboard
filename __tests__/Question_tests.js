@@ -2,6 +2,7 @@ import "react-native";
 import React from "react";
 import Question from "../components/Question";
 import { fireEvent, render } from "@testing-library/react-native";
+import AuthContext from "../auth/Context";
 
 describe("<Question />", () => {
   it("Question will render and Call the parent when answer is submitted", () => {
@@ -13,8 +14,11 @@ describe("<Question />", () => {
       title: "What is your top 2 advice for young CEO'S?",
     };
     const answerCallBack = jest.fn();
+    const user = { id: 1 };
     const { getByText } = render(
-      <Question question={data} answerCallBack={answerCallBack} />
+      <AuthContext.Provider value={{ user }}>
+        <Question question={data} answerCallBack={answerCallBack} />
+      </AuthContext.Provider>
     );
     const button = getByText("Submit");
 
