@@ -8,7 +8,7 @@ import AuthContext from "../auth/Context";
 import QuestionScreen from "../screens/QuestionScreen";
 import Question from "../components/Question";
 
-const TrackClick = require("../components/trackClick");
+const TrackClick = require("../components/TrackClick");
 TrackClick.trackClick = jest.fn();
 
 function flushPromises() {
