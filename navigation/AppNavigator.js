@@ -14,7 +14,7 @@ import * as Notifications from "expo-notifications";
 import QuestionScreen from "../screens/QuestionScreen";
 import HomeScreen from "../screens/HomeScreen";
 import AuthContext from "../auth/Context";
-import { trackClick } from "../components/trackClick";
+import { trackClick } from "../components/TrackClick";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
