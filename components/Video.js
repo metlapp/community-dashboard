@@ -5,7 +5,7 @@ import { Title, Paragraph } from "react-native-paper";
 import PropTypes from "prop-types";
 import ContentCard from "./ContentCard";
 import AuthContext from "../auth/Context";
-import { trackClick } from "./TrackClick";
+import { trackClick } from "./trackClick";
 
 const Video = (props) => {
   const authContext = useContext(AuthContext);

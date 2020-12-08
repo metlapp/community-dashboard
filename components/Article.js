@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import ContentCard from "./ContentCard";
 import { accentColor } from "../config/defaultStyles";
 import AuthContext from "../auth/Context";
-import { trackClick } from "./TrackClick";
+import { trackClick } from "./trackClick";
 
 const Article = (props) => {
   const authContext = useContext(AuthContext);
