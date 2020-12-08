@@ -1,22 +1,30 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { WebView } from "react-native-webview";
 import { Card, Title, Paragraph } from "react-native-paper";
+import AuthContext from "../auth/Context";
+import { trackClick } from "./TrackClick";
 
 const Video = (props) => {
+  const authContext = useContext(AuthContext);
+  function click() {
+    trackClick(authContext.user.id, props.video.id, "VIEWED", "APP");
+  }
   return (
     <Card>
       <Card.Content>
-        <View style={styles.container}>
+        <View>
           <Title>{props.video.item_object.title}</Title>
-          <WebView
-            javaScriptEnabled={true}
-            scrollEnabled={false}
-            allowsFullscreenVideo={true}
-            source={{
-              uri: props.video.item_object.link,
-            }}
-          />
+          <TouchableOpacity style={styles.container} onPress={click}>
+            <WebView
+              javaScriptEnabled={true}
+              scrollEnabled={false}
+              allowsFullscreenVideo={true}
+              source={{
+                uri: props.video.item_object.link,
+              }}
+            />
+          </TouchableOpacity>
           <Paragraph>{props.video.item_object.description}</Paragraph>
         </View>
       </Card.Content>
