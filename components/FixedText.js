@@ -1,18 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Card } from "react-native-paper";
+import { StyleSheet, Text } from "react-native";
+import ContentCard from "./ContentCard";
 
 export default function FixedText({ data }) {
   return (
-    <Card>
-      <Card.Content>
-        <View style={styles.container}>
-          <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.text}>{data.text}</Text>
-          <Text style={styles.author}>{data.author && `- ${data.author}`}</Text>
-        </View>
-      </Card.Content>
-    </Card>
+    <ContentCard>
+      <Text style={styles.title}>{data.title}</Text>
+      <Text style={styles.text}>{data.text}</Text>
+      <Text style={styles.author}>{data.author && `- ${data.author}`}</Text>
+    </ContentCard>
   );
 }
 
