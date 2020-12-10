@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
 import { Button } from "react-native-paper";
@@ -7,8 +7,9 @@ import axios from "axios";
 import Video from "../components/Video";
 import Article from "../components/Article";
 import AuthContext from "../auth/Context";
-import {feedBackgroundColor} from "../config/defaultStyles";
+import { feedBackgroundColor } from "../config/defaultStyles";
 import AppButton from "../components/AppButton";
+import FixedText from "../components/FixedText";
 
 export default function HomeScreen() {
   const authContext = useContext(AuthContext);
@@ -35,9 +36,12 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(apiConfig.baseUrl + `users/${authContext.user.id}/feed/?page=${page}`, {
-          auth: apiConfig.auth,
-        })
+        .get(
+          apiConfig.baseUrl + `users/${authContext.user.id}/feed/?page=${page}`,
+          {
+            auth: apiConfig.auth,
+          }
+        )
         .then((data) => {
           page === 1
             ? setContent(data.data.results)
@@ -109,6 +113,8 @@ export default function HomeScreen() {
           answerCallBack={answerCallBack}
         />
       );
+    } else if (props.content.content.item_type === "Static") {
+      return <FixedText data={props.content.content.item_object} />;
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {
@@ -122,13 +128,11 @@ export default function HomeScreen() {
 
   //Renders the data in a pretty way to the flatlist
   const renderFeed = ({ item }) => {
-    return (
-          <DetermineContent content={item} />
-    );
+    return <DetermineContent content={item} />;
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: feedBackgroundColor}}>
+    <SafeAreaView style={{ backgroundColor: feedBackgroundColor }}>
       <View>
         <FlatList
           data={content}
@@ -137,7 +141,12 @@ export default function HomeScreen() {
           ListFooterComponent={
             <View style={styles.footer}>
               {loadMore ? (
-                <AppButton onPress={changePage} title="Load More" width="80%" compact={true} />
+                <AppButton
+                  onPress={changePage}
+                  title="Load More"
+                  width="80%"
+                  compact={true}
+                />
               ) : null}
             </View>
           }
