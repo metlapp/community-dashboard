@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Appbar } from "react-native-paper";
 import { SafeAreaView, Text } from "react-native";
 import { apiConfig } from "../config/config";
 import axios from "axios";
 import Question from "../components/Question";
+import AuthContext from "../auth/Context";
+import { trackClick } from "../components/TrackClick";
 
 const QuestionScreen = ({ navigation }) => {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState();
+  const authContext = useContext(AuthContext);
 
   const postData = async (payLoad) => {
     axios
@@ -51,12 +54,13 @@ const QuestionScreen = ({ navigation }) => {
     //Grabs the specific question from api
     const fetchData = async () => {
       axios
-        .get(apiConfig.baseUrl + "questions/1", {
+        .get(apiConfig.baseUrl + "questions/1/", {
           //This is hard coded until we get a solution later
           auth: apiConfig.auth,
         })
         .then((data) => {
           setData(data.data);
+          trackClick(authContext.user.id, data.data.id, "VIEWED", "APP");
           setLoading(false);
         })
         .catch((error) => {
