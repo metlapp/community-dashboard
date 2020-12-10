@@ -2,7 +2,7 @@ import "react-native";
 import React from "react";
 import { render } from "@testing-library/react-native";
 import axios from "../__mocks__/axios";
-import HomeScreen from "../screens/HomeScreen";
+import FixedText from "../components/FixedText";
 import AuthContext from "../auth/Context";
 jest.mock("axios");
 
@@ -76,7 +76,12 @@ describe("Displpaying different FixedTexts on the <HomeScreen />", () => {
     };
     const { getAllByText } = render(
       <AuthContext.Provider value={{ user }}>
-        <HomeScreen />
+        <FixedText
+          data={{
+            title: "Test Greeting",
+            text: "Test Greeting",
+          }}
+        />
       </AuthContext.Provider>
     );
     await flushPromises();
@@ -88,7 +93,13 @@ describe("Displpaying different FixedTexts on the <HomeScreen />", () => {
     };
     const { getAllByText } = render(
       <AuthContext.Provider value={{ user }}>
-        <HomeScreen />
+        <FixedText
+          data={{
+            title: "Greeting Title",
+            text: "Good morning!",
+            author: "Jaycob",
+          }}
+        />
       </AuthContext.Provider>
     );
     await flushPromises();
@@ -100,7 +111,12 @@ describe("Displpaying different FixedTexts on the <HomeScreen />", () => {
     };
     const { getAllByText } = render(
       <AuthContext.Provider value={{ user }}>
-        <HomeScreen />
+        <FixedText
+          data={{
+            title: "Test Theme",
+            text: "Test Theme",
+          }}
+        />
       </AuthContext.Provider>
     );
     await flushPromises();
