@@ -3,6 +3,7 @@ import React from "react";
 import { render } from "@testing-library/react-native";
 import axios from "../__mocks__/axios";
 import HomeScreen from "../screens/HomeScreen";
+import AuthContext from "../auth/Context";
 jest.mock("axios");
 
 function flushPromises() {
@@ -70,17 +71,38 @@ beforeEach(() => {
 
 describe("Displpaying different FixedTexts on the <HomeScreen />", () => {
   it("displays a GREETING to the User", async () => {
-    const { getAllByText } = render(<HomeScreen />);
+    user = {
+      id: 5,
+    };
+    const { getAllByText } = render(
+      <AuthContext.Provider value={{ user }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
     expect(getAllByText("Test Greeting")).toHaveLength(2);
   });
   it("displays a QUOTE to the User", async () => {
-    const { getAllByText } = render(<HomeScreen />);
+    user = {
+      id: 5,
+    };
+    const { getAllByText } = render(
+      <AuthContext.Provider value={{ user }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
     expect(getAllByText("- Jaycob")).toBeTruthy();
   });
   it("displays a THEME to the User", async () => {
-    const { getAllByText } = render(<HomeScreen />);
+    user = {
+      id: 5,
+    };
+    const { getAllByText } = render(
+      <AuthContext.Provider value={{ user }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
     await flushPromises();
     expect(getAllByText("Test Theme")).toHaveLength(2);
   });

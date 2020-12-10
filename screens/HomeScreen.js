@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
-import { Button } from "react-native-paper";
 import { apiConfig } from "../config/config";
 import axios from "axios";
 import Video from "../components/Video";
