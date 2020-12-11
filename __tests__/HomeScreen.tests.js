@@ -1,6 +1,6 @@
 import "react-native";
 import React from "react";
-import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import axios from "../__mocks__/axios";
 import HomeScreen from "../screens/HomeScreen";
 import AuthContext from "../auth/Context";
@@ -50,6 +50,21 @@ beforeEach(() => {
             },
           },
           {
+            id: 19,
+            publication_date_time: "2020-11-04T00:01:00Z",
+            notification_date_time: "2020-11-04T12:00:00Z",
+            content: {
+              id: 25,
+              item_object: {
+                id: 17,
+                title: "Test Feed",
+                text: "Test Static",
+                organization: 1,
+              },
+              item_type: "Static",
+            },
+          },
+          {
             id: 3,
             publication_date_time: "2020-11-03T00:01:00Z",
             notification_date_time: "2020-11-03T12:00:00Z",
@@ -85,7 +100,7 @@ describe("<HomeScreen />", () => {
     );
     await flushPromises();
     const wrapper = getAllByText("Test Feed");
-    expect(wrapper).toHaveLength(2);
+    expect(wrapper).toHaveLength(3);
   });
   it("Question is gone when answered", async () => {
     const user = { id: 3 };
@@ -114,5 +129,17 @@ describe("<HomeScreen />", () => {
     await flushPromises();
     const Article = getByText("Test Article");
     expect(Article).toBeTruthy();
+  });
+  it("Statics are displayed correctly", async () => {
+    const user = { id: 3 };
+    const setUser = jest.fn();
+    const { getByText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
+    await flushPromises();
+    const Static = getByText("Test Static");
+    expect(Static).toBeTruthy();
   });
 });

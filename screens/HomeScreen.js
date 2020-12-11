@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
 import Question from "../components/Question";
-import { Button } from "react-native-paper";
 import { apiConfig } from "../config/config";
 import axios from "axios";
 import Video from "../components/Video";
@@ -9,6 +8,7 @@ import Article from "../components/Article";
 import AuthContext from "../auth/Context";
 import { feedBackgroundColor } from "../config/defaultStyles";
 import AppButton from "../components/AppButton";
+import FixedText from "../components/FixedText";
 
 export default function HomeScreen() {
   const authContext = useContext(AuthContext);
@@ -112,6 +112,8 @@ export default function HomeScreen() {
           answerCallBack={answerCallBack}
         />
       );
+    } else if (props.content.content.item_type === "Static") {
+      return <FixedText data={props.content.content.item_object} />;
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {
