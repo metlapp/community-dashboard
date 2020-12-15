@@ -5,6 +5,8 @@ import LoginScreen from "../screens/LoginScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import VerifyEmail from "../screens/VerifyEmailScreen";
+import TermsOfService from "../screens/TermsOfService";
+import PrivacyPolicy from "../screens/PrivacyPolicy";
 
 const Stack = createStackNavigator();
 
@@ -24,12 +26,22 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="VerifyEmail"
         component={VerifyEmail}
-        options={{ headerShown: false }}
+        options={{ title: "Forgot your password?" }}
       />
       <Stack.Screen
         name="ResetPassword"
         component={ResetPasswordScreen}
-        options={{ headerShown: false }}
+        options={{ title: "Set new password" }}
+      />
+      <Stack.Screen
+        name="TermsOfService"
+        component={TermsOfService}
+        options={{ title: "Terms of Service" }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{ title: "Privacy Policy" }}
       />
     </Stack.Navigator>
   );

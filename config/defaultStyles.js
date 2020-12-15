@@ -1,5 +1,5 @@
 import {DefaultTheme} from "react-native-paper";
-import { DefaultTheme as DefaultNavTheme } from '@react-navigation/native';
+import {DefaultTheme as DefaultNavTheme} from '@react-navigation/native';
 
 /* COLOR CONSTANTS */
 export const primaryColor = "#32b1e0"; // light blue
@@ -10,6 +10,8 @@ export const textColor = "#606060";
 export const backgroundColor = "#fff";
 export const feedBackgroundColor = "#e8ecf1";
 export const borderColor = "#ddd";
+export const linkColor = accentColor;
+export const subtleLinkColor = mediumGrey;
 
 
 /* THEME for react-native-paper components */
@@ -58,6 +60,17 @@ const headerTextStyle = {
 };
 
 export default {
+  mainContainer: {
+    height: "100%",
+    alignItems: 'center',
+    marginHorizontal: 40,
+  },
+  formContainer: {
+    alignItems: 'flex-start',
+    width: '100%',
+    marginTop: 40,
+  },
+
     contentCard: {
         marginBottom: 5,
         marginTop: 5,
@@ -71,10 +84,12 @@ export default {
     button: {
         borderRadius: 6,
         padding: 10,
+        marginTop: 20,
     },
     compactButton: {
         borderRadius: 6,
         padding: 2,
+        marginTop: 0,
     },
     buttonText: {
         color: '#fff',

@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { SafeAreaView, StyleSheet } from "react-native";
+import {SafeAreaView, View} from "react-native";
+import {Title} from "react-native-paper";
+
 import * as Yup from "yup";
-import AppButton from "../components/AppButton";
 import AppFormField from "../components/AppFormField";
-import defaultStyles from "../config/defaultStyles";
 import ErrorMessage from "../components/ErrorMessage";
 import Form from "../components/Form";
 import SubmitButton from "../components/SubmitButton";
 import SuccessMessage from "../components/SuccessMessage";
 import PropTypes from "prop-types";
 
+import {apiConfig} from "../config/config";
+import defaultStyles from "../config/defaultStyles";
+
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
 
-export default function VerifyEmailScreen({ navigation }) {
+export default function VerifyEmailScreen({navigation}) {
   const [successVisible, setSuccessVisible] = useState(false);
   const [errorVisible, setErrorVisible] = useState(false);
 
-  
-  const url = "http://127.0.0.1:8000/api/password_reset/";
-
   const sendEmail = async (obj) => {
-    await axios.post(url, { email: obj['email'] }).then(() => {
+    await axios.post(apiConfig.baseUrl + 'api/password_reset/', {email: obj['email']}).then(() => {
       try {
         setErrorVisible(false);
         setSuccessVisible(true);
@@ -32,47 +32,51 @@ export default function VerifyEmailScreen({ navigation }) {
       }
     });
   };
-  
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Form
-        initialValues={{ email: "" }}
-        onSubmit={(values) => {
-          sendEmail(values);
-          values["email"] = "";
-        }}
-        validationSchema={validationSchema}
-      >
-        <AppFormField
-          name="email"
-          placeholder="Enter your email"
-          style={defaultStyles.TextInput}
-          testID="email"
-          keyboardType="email-address"
-        />
+    <SafeAreaView>
+      <View style={defaultStyles.mainContainer}>
 
-        <ErrorMessage
-          error="Could not communicate with server, please try again."
-          visible={errorVisible}
-        />
+        <View style={defaultStyles.formContainer}>
+          <Form
+            initialValues={{email: ""}}
+            onSubmit={(values) => {
+              sendEmail(values);
+              values["email"] = "";
+            }}
+            validationSchema={validationSchema}
+          >
+            <Title style={defaultStyles.formFieldTitle}>Email</Title>
+            <AppFormField
+              name="email"
+              placeholder="Your email address"
+              testID="email"
+              keyboardType="email-address"
+            />
 
-        <SuccessMessage
-          testID="success"
-          placeholder="success"
-          success="An email will be sent to the provided email address with details on how to reset your password"
-          visible={successVisible}
-          containerStyles={{
-            height: 100,
-            textAlign: "center",
-            width: "100%",
-          }}
-          messageStyles={{ height: 100, fontWeight: "600", padding: 10 }}
-        />
+            <SubmitButton title="Continue"/>
 
-        <SubmitButton title="Submit" />
+            <ErrorMessage
+              error="Could not communicate with server, please try again."
+              visible={errorVisible}
+            />
 
-        <AppButton title="Back" onPress={() => navigation.navigate("Login")} />
-      </Form>
+            <SuccessMessage
+              testID="success"
+              placeholder="success"
+              success="An email will be sent to the provided email address with details on how to reset your password"
+              visible={successVisible}
+              containerStyles={{
+                height: 100,
+                textAlign: "center",
+                width: "100%",
+              }}
+              messageStyles={{height: 100, fontWeight: "600", padding: 10}}
+            />
+
+          </Form>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -81,9 +85,3 @@ VerifyEmailScreen.propTypes = {
   navigation: PropTypes.object,
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    width: "100%",
-  },
-});

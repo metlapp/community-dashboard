@@ -29,7 +29,7 @@ describe("<VerifyEmailScreen />", () => {
     expect(getByTestId("email").props.value).toEqual("user67311@example.com");
 
     act(() => {
-      fireEvent(getByText("Submit").parent, "onPress");
+      fireEvent(getByText("Continue").parent, "onPress");
     });
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe("<VerifyEmailScreen />", () => {
       fireEvent(getByTestId("email"), "onChangeText", "Jerry.com");
     });
     act(() => {
-      fireEvent(getByText("Submit"), "onPress");
+      fireEvent(getByText("Continue"), "onPress");
     });
     await waitFor(() => {
       expect(getByTestId("email").props.value).toEqual("Jerry.com");
