@@ -11,7 +11,6 @@ import Question from "../components/Question";
 export default function NotificationScreen({ navigation, route }) {
   const authContext = useContext(AuthContext);
   const [data, setData] = useState();
-  const { notification, body, title } = route.params;
 
   const contentType =
     notification.notification.request.content.data.extra.content_type;
