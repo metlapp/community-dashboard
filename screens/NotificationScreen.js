@@ -4,7 +4,6 @@ import axios from "axios";
 
 import AuthContext from "../auth/Context";
 import { apiConfig } from "../config/config";
-import { HOST_WITH_PORT } from "../environment";
 import FixedText from "../components/FixedText";
 import Question from "../components/Question";
 
@@ -24,7 +23,7 @@ export default function NotificationScreen({ navigation, route }) {
   const getContentInfo = async () => {
     if (contentType === "Static") {
       const contentInfo = await axios
-        .get(HOST_WITH_PORT + `${apiConfig.urls.static}/${itemId}/`, {
+        .get(apiConfig.baseUrl + `${apiConfig.urls.static}/${itemId}/`, {
           auth: apiConfig.auth,
         })
         .catch((err) => {
@@ -33,7 +32,7 @@ export default function NotificationScreen({ navigation, route }) {
       setData(contentInfo);
     } else if (contentType === "Question") {
       const contentInfo = await axios
-        .get(HOST_WITH_PORT + `${apiConfig.urls.question}/${itemId}/`, {
+        .get(apiConfig.baseUrl + `${apiConfig.urls.question}/${itemId}/`, {
           auth: apiConfig.auth,
         })
         .catch((err) => {
@@ -46,7 +45,7 @@ export default function NotificationScreen({ navigation, route }) {
   //Posts the answer to the API
   const postData = async (payLoad) => {
     axios
-      .post(HOST_WITH_PORT + "answers/", payLoad, {
+      .post(apiConfig.baseUrl + "answers/", payLoad, {
         auth: apiConfig.auth,
       })
       .catch((error) => {
@@ -55,7 +54,6 @@ export default function NotificationScreen({ navigation, route }) {
   };
 
   const answerCallBack = (answer) => {
-    //will need to change these values later to fit specific users and questions
     let payLoad = { user: authContext.user.id, question: itemId };
 
     //detrmines what data type was answered
