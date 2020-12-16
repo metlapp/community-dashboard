@@ -47,12 +47,18 @@ const AppNavigator = ({ testToken }) => {
   const authContext = useContext(AuthContext);
   useNotifications((notification) => {
     trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
+    // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
+      notification.notification.request.content.data.content_type === "Content"
+    ) {
+      navigation.navigate("Home");
+    } else if (
       // This will most likely need to be changed once our backend is sending the notifications
       notification.actionIdentifier ===
       "expo.modules.notifications.actions.DEFAULT"
     ) {
       navigation.navigate("Notification", {
+        notification,
         title: notification.notification.request.content.title,
         body: notification.notification.request.content.body,
       });
