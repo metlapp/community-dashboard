@@ -11,6 +11,7 @@ import Question from "../components/Question";
 export default function NotificationScreen({ navigation, route }) {
   const authContext = useContext(AuthContext);
   const [data, setData] = useState();
+  const { notification } = route.params;
 
   const contentType =
     notification.notification.request.content.data.extra.content_type;
@@ -79,7 +80,6 @@ export default function NotificationScreen({ navigation, route }) {
     navigation.navigate("Home");
   };
 
-  // console.log(contentType);
   if (contentType === "Static") {
     return <View>{!!data && <FixedText data={data.data} />}</View>;
   }
