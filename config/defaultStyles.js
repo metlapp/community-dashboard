@@ -12,6 +12,8 @@ export const feedBackgroundColor = "#e8ecf1";
 export const borderColor = "#ddd";
 export const linkColor = accentColor;
 export const subtleLinkColor = mediumGrey;
+export const headerBackgroundColor = backgroundColor;
+export const headerTextColor = textColor;
 
 
 /* THEME for react-native-paper components */

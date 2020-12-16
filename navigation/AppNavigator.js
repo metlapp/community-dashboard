@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { IconButton } from "react-native-paper";
@@ -11,32 +10,34 @@ import NotificationScreen from "../screens/NotificationScreen";
 import useNotifications from "../hooks/useNotifications";
 import navigation from "./rootNavigation";
 import * as Notifications from "expo-notifications";
-import QuestionScreen from "../screens/QuestionScreen";
 import HomeScreen from "../screens/HomeScreen";
 import AuthContext from "../auth/Context";
 import { trackClick } from "../components/TrackClick";
+import { screenOptions } from "../components/Header";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
 function HomeStackScreen() {
+  const authContext = useContext(AuthContext);
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+    <HomeStack.Navigator screenOptions={screenOptions}>
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: authContext.user.organization_data.name }} />
       <HomeStack.Screen name="Notification" component={NotificationScreen} />
     </HomeStack.Navigator>
   );
 }
 
 function ProfileStackScreen() {
+  const authContext = useContext(AuthContext);
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={AccountScreen} />
+    <ProfileStack.Navigator screenOptions={screenOptions}>
+      <ProfileStack.Screen name="Profile" component={AccountScreen} options={{title: authContext.user.first_name}}/>
       <ProfileStack.Screen
         name="PersonalInfo"
         component={PersonalInfoScreen}
-        options={{ title: "Personal Info" }}
+        options={{title: "Edit personal info"}}
       />
     </ProfileStack.Navigator>
   );
