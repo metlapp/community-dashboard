@@ -47,8 +47,7 @@ const AppNavigator = ({ testToken }) => {
     trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
     // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
-      notification.notification.request.content.data.extra.content_type ===
-      "Content"
+      notification.notification.request.content.data.content_type === "Content"
     ) {
       navigation.navigate("Home");
     } else if (

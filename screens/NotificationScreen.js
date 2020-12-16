@@ -14,8 +14,8 @@ export default function NotificationScreen({ navigation, route }) {
   const { notification } = route.params;
 
   const contentType =
-    notification.notification.request.content.data.extra.content_type;
-  const itemId = notification.notification.request.content.data.extra.item_id;
+    notification.notification.request.content.data.content_type;
+  const itemId = notification.notification.request.content.data.item_id;
 
   useEffect(() => {
     getContentInfo();
