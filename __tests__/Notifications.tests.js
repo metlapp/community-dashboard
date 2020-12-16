@@ -12,6 +12,9 @@ describe("useNotifications Hook", () => {
       id: 9,
       name: "Bob",
       email: "bob@bobmail.com",
+      organization_data: {
+        name: 'Org'
+      }
     };
     const setUser = jest.fn();
 

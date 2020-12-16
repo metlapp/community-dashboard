@@ -81,7 +81,7 @@ export default function App() {
         >
           {/* StatusBar is necessary to force the color of the status bar text, which is a problem on iOS with white
           text on white header background. */}
-          <StatusBar barStyle={'dark-content'} backgroundColor={headerBackgroundColor} translucent={true} />
+          <StatusBar barStyle={'light-content'} backgroundColor={headerBackgroundColor} translucent={true} />
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>

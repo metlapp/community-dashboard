@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import AuthContext from "../auth/Context";
-import {accentColor, headerBackgroundColor, headerTextColor} from "../config/defaultStyles";
+import {headerBackgroundColor, headerTextColor, headerBackColor} from "../config/defaultStyles";
 import {IconButton, Appbar} from "react-native-paper";
 
 export const screenOptions = {
@@ -34,7 +34,7 @@ export default function Header({scene, previous, navigation}) {
 
   return (
     <Appbar.Header style={{backgroundColor: headerBackgroundColor}}>
-      {hasBackButton && <Appbar.BackAction onPress={navigation.goBack} color={accentColor}/>}
+      {hasBackButton && <Appbar.BackAction onPress={navigation.goBack} color={headerBackColor}/>}
       {hasProfileIcon &&
       <Appbar.Action
         icon="account-circle"
