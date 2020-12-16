@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { makeUrl } from "expo-linking";
 import { NavigationContainer, useLinking } from "@react-navigation/native";
+import {StatusBar} from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
-import { theme, navigationTheme } from "./config/defaultStyles";
+import { theme, navigationTheme, headerBackgroundColor } from "./config/defaultStyles";
 import { decode, encode } from "base-64";
 import HomeScreen from "./screens/HomeScreen";
 import AccountScreen from "./screens/AccountScreen";
@@ -78,6 +79,9 @@ export default function App() {
           ref={(ref, navigationRef)}
           theme={navigationTheme}
         >
+          {/* StatusBar is necessary to force the color of the status bar text, which is a problem on iOS with white
+          text on white header background. */}
+          <StatusBar barStyle={'light-content'} backgroundColor={headerBackgroundColor} translucent={true} />
           {user ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       </PaperProvider>

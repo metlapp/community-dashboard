@@ -7,12 +7,13 @@ import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import VerifyEmail from "../screens/VerifyEmailScreen";
 import TermsOfService from "../screens/TermsOfService";
 import PrivacyPolicy from "../screens/PrivacyPolicy";
+import { screenOptions } from "../components/Header";
 
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName='Login'>
+    <Stack.Navigator initialRouteName='Login' screenOptions={screenOptions}>
       <Stack.Screen
         name="Login"
         component={LoginScreen}
