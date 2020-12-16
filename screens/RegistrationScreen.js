@@ -1,23 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import React, {useContext, useState} from "react";
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Title, Checkbox} from "react-native-paper";
 import axios from "axios";
-import { apiConfig } from "../config/config";
+import {apiConfig} from "../config/config";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
-import { FormContext } from "../auth/Context";
-import RegisterEmail from "./RegisterEmail";
-import RegisterName from "./RegisterName";
-import RegisterPassword from "./RegisterPassword";
 import PropTypes from "prop-types";
+import * as Yup from "yup";
 
-export default function RegistrationScreen(props) {
+import Form from "../components/Form";
+import AppFormField from "../components/AppFormField";
+import SubmitButton from "../components/SubmitButton";
+import defaultStyles, {linkColor, mediumGrey} from "../config/defaultStyles";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string().trim().required().min(8).label("New Password"),
+  confirmPassword: Yup.string().trim().oneOf([Yup.ref('password'), null]).required().min(8).label("Confirm Password"),
+});
+
+export default function RegistrationScreen({navigation}) {
   const authContext = useContext(AuthContext);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-  });
-  const [step, setStep] = useState(1);
+  const [checked, setChecked] = useState(false);
 
   const saveUser = async (user) => {
     axios
@@ -25,7 +29,7 @@ export default function RegistrationScreen(props) {
         apiConfig.baseUrl + "users/",
         {
           email: user.email,
-          first_name: user.name,
+          first_name: user.email,
           password: user.password,
           categories: [],
           organization: null,
@@ -38,60 +42,133 @@ export default function RegistrationScreen(props) {
         authContext.setUser(data.data);
         authStorage.storeUser(data.data);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.log(error);
+        console.log(error.response.data);
+      });
   };
 
-  useEffect(() => {
-    if (formData.name || props.test) {
-      saveUser(formData);
-    }
-  }, [formData]);
   return (
-    <FormContext.Provider value={{ formData, setFormData, step, setStep }}>
-      <SafeAreaView style={styles.container}>
-        {/* Conditionally rendering each step of the from */}
-        {step === 1 ? (
-          <>
-            <Text style={styles.text}>Registration Page</Text>
-            <Text testID="emailTitle" style={styles.text}>
-              Step 1: Enter your email
+    <SafeAreaView>
+      <ScrollView>
+        <View style={defaultStyles.mainContainer}>
+
+          <Title style={styles.pageTitle}>Sign Up</Title>
+
+          <View style={defaultStyles.formContainer}>
+            <Form
+              initialValues={{
+                email: "",
+                password: "",
+                confirmPassword: "",
+              }}
+              onSubmit={(values) => {
+                saveUser(values);
+              }}
+              validationSchema={validationSchema}
+            >
+              <Title style={defaultStyles.formFieldTitle}>Email</Title>
+              <AppFormField
+                testID="emailInput"
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholder="Email address"
+                name="email"
+              />
+              <Title style={defaultStyles.formFieldTitle}>Password</Title>
+              <AppFormField
+                name="password"
+                placeholder="Password"
+                secureTextEntry
+                testID="pass"
+              />
+              <AppFormField
+                name="confirmPassword"
+                placeholder="Repeat password"
+                secureTextEntry
+                testID="confirmPass"
+              />
+
+              <View style={{flexDirection: 'row'}}>
+                {/* Checkbox does not work with Formik, so we use the value of the checkbox as an extra validation
+                    parameter to the Submit button. */}
+                <View style={{display: 'flex', marginLeft: -10,}}>
+                  <Checkbox
+                    testID="termsCheckbox"
+                    status={checked ? 'checked' : 'unchecked'} onPress={() => {
+                    setChecked(!checked)
+                  }}/>
+                </View>
+
+                <Text style={{flex: 1, display: 'flex',}}>
+                  I agree to the
+                  &nbsp;
+                  <Text
+                    style={styles.termsLink}
+                    onPress={() => {
+                      navigation.navigate("TermsOfService");
+                    }}
+                  >
+                    Terms of Service
+                  </Text>
+                  &nbsp;and&nbsp;
+                  <Text
+                    style={styles.termsLink}
+                    onPress={() => {
+                      navigation.navigate("PrivacyPolicy");
+                    }}
+                  >
+                    Privacy Policy
+                  </Text>
+                </Text>
+              </View>
+
+              <SubmitButton className="submit" title="Register" extraIsValid={checked}/>
+
+            </Form>
+
+          </View>
+          <Text style={styles.signInText}>
+            Have an account?
+            &nbsp;
+            <Text
+              style={styles.signInLink}
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
+            >
+              Sign In
             </Text>
-            <RegisterEmail
-              email={formData.email}
-              navigation={props.navigation}
-            />
-          </>
-        ) : step === 2 ? (
-          <>
-            <Text style={styles.text}>Registration Page</Text>
-            <Text style={styles.text}>Step 2: Enter your password</Text>
-            <RegisterPassword />
-          </>
-        ) : (
-          <>
-            <Text style={styles.text}>Registration Page</Text>
-            <Text style={styles.text}>Step 3: Enter your name</Text>
-            <RegisterName name={formData.name} navigation={props.navigation} />
-          </>
-        )}
-      </SafeAreaView>
-    </FormContext.Provider>
+          </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+
   );
 }
 
 RegistrationScreen.propTypes = {
-  test: PropTypes.bool,
   navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
+  pageTitle: {
+    fontSize: 26,
+    marginTop: 100,
+    textAlign: 'left',
+    width: '100%',
   },
-  text: {
-    fontSize: 24,
-    fontWeight: "600",
-    marginBottom: 30,
-    marginTop: 5,
+  termsLink: {
+    color: linkColor,
+  },
+  signInText: {
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: mediumGrey,
+    marginHorizontal: 'auto',
+  },
+  signInLink: {
+    color: linkColor,
   },
 });

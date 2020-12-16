@@ -14,10 +14,10 @@ const Video = (props) => {
   }
   return (
     <ContentCard>
-      <View style={styles.container}>
+      <View>
         <Title>{props.video.item_object.title}</Title>
         <TouchableOpacity
-          style={styles.container}
+          style={styles.videoContainer}
           onPress={click}
           testID="video"
         >
@@ -37,7 +37,8 @@ const Video = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  videoContainer: {
+    marginVertical: 10,
     height: 250,
   },
 });

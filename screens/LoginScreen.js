@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { StyleSheet, View, SafeAreaView } from "react-native";
-import { Button, Title, Appbar } from "react-native-paper";
+import React, {useContext, useState} from "react";
+import {StyleSheet, ScrollView, View, SafeAreaView, Image} from "react-native";
+import {Title, Text} from "react-native-paper";
 import AuthContext from "../auth/Context";
 import authStorage from "../auth/Storage";
 import Form from "../components/Form";
@@ -8,16 +8,15 @@ import AppFormField from "../components/AppFormField";
 import SubmitButton from "../components/SubmitButton";
 import * as Yup from "yup";
 import axios from "axios";
-import { apiConfig } from "../config/config";
+import {apiConfig} from "../config/config";
 import ErroMessage from "../components/ErrorMessage";
-// need for testing on device
-import { HOST_WITH_PORT } from "../environment";
+import defaultStyles, {linkColor, subtleLinkColor} from "../config/defaultStyles";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
 });
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({navigation}) {
   //Grabs user data from the context. witht this you can use setUser and user
   const authContext = useContext(AuthContext);
   const [error, setError] = useState(false);
@@ -25,8 +24,6 @@ export default function LoginScreen({ navigation }) {
   const handleSubmit = async (values) => {
     axios
       .post(
-        // temporary for testing on device
-        // `${HOST_WITH_PORT}login/`,
         apiConfig.baseUrl + "login/",
         {
           email: values["email"],
@@ -47,64 +44,82 @@ export default function LoginScreen({ navigation }) {
   };
   return (
     <SafeAreaView>
-      <Appbar.Header>
-        <Appbar.Content testID="heading" title="LOGIN" />
-      </Appbar.Header>
-      <View style={styles.container}>
-        <Form
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppFormField id="email" placeholder="Email" name="email" />
-          <AppFormField
-            id="paswword"
-            placeholder="Password"
-            name="password"
-            secureTextEntry
+      <ScrollView>
+        <View style={{...defaultStyles.mainContainer, ...styles.container}}>
+          <Image
+            style={styles.logo}
+            source={require('../assets/logo.png')}
           />
-          <SubmitButton className="submit" title="Login" />
-        </Form>
-        <ErroMessage
-          error="Invalid Email password combination"
-          visible={error}
-          styling={styles.error}
-        />
-        <Button
-          style={styles.forgotButton}
-          color="blue"
-          onPress={() => {
-            navigation.navigate("VerifyEmail");
-          }}
-        >
-          Forgot Password
-        </Button>
+          <View style={defaultStyles.formContainer}>
+            <Form
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+            >
+              <Title style={defaultStyles.formFieldTitle}>Email</Title>
+              <AppFormField
+                id="email"
+                placeholder="Email"
+                placeholderTextColor="transparent"  // note - placeholder on email and password important for autofill
+                name="email"
+                textContentType="username"
+              />
+              <Title style={defaultStyles.formFieldTitle}>Password</Title>
+              <AppFormField
+                textContentType="password"
+                id="password"
+                placeholder="Password"
+                placeholderTextColor="transparent"
+                name="password"
+                secureTextEntry
+              />
+              <SubmitButton className="submit" title="Sign In"/>
+            </Form>
+          </View>
+          <ErroMessage
+            error="Invalid Email password combination"
+            visible={error}
+            styling={styles.error}
+          />
+          <View style={{flexDirection: 'row'}}>
+            <View>
+              <Text
+                style={styles.forgotLink}
+                onPress={() => {
+                  navigation.navigate("VerifyEmail");
+                }}
+              >
+                Forgot Password?
+              </Text>
+            </View>
+            <View style={{flex: 1}}>
+              <Text
+                style={styles.registerLink}
+                onPress={() => {
+                  navigation.navigate("Register");
+                }}
+              >
+                Sign Up
+              </Text>
+            </View>
+          </View>
 
-        <View>
-          <Title style={styles.registerContainer}>Don't have an account?</Title>
-          <Button
-            onPress={() => {
-              navigation.navigate("Register");
-            }}
-          >
-            Register
-          </Button>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 10,
+  logo: {
+    width: "70%",
+    resizeMode: 'contain',
   },
   container: {
-    height: "90%",
-    justifyContent: "center",
+    marginTop: '30%',
   },
   error: {
     alignItems: "center",
@@ -116,13 +131,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  forgotButton: {
+  forgotLink: {
+    color: subtleLinkColor,
     marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "center",
+    fontSize: 16,
+    fontWeight: 'bold',
   },
-  registerContainer: {
-    justifyContent: "center",
-    textAlign: "center",
+  registerLink: {
+    textAlign: 'right',
+    color: linkColor,
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+
   },
 });

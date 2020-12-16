@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import AppButton from "./AppButton";
 import PropTypes from "prop-types";
 
-function SubmitButton({ onPress, title, width }) {
+function SubmitButton({ onPress, title, width, extraIsValid = true }) {
   const { handleSubmit, isValid, dirty } = useFormikContext();
 
   return (
@@ -14,7 +14,7 @@ function SubmitButton({ onPress, title, width }) {
         onPress;
       }}
       width={width}
-      disabled={!(isValid && dirty)}
+      disabled={!(isValid && dirty && extraIsValid)}
     />
   );
 }

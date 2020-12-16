@@ -33,7 +33,7 @@ describe("<LoginScreen />", () => {
       fireEvent(getByPlaceholderText("Password"), "onChangeText", "password");
     });
     act(() => {
-      fireEvent.press(getByText("Login").parent);
+      fireEvent.press(getByText("Sign In").parent);
     });
     await waitFor(() => {
       expect(setUser).toHaveBeenCalled();
@@ -56,7 +56,7 @@ describe("<LoginScreen />", () => {
       fireEvent(getByPlaceholderText("Password"), "onChangeText", "password");
     });
     act(() => {
-      fireEvent(getByText("Login").parent, "onPress");
+      fireEvent(getByText("Sign In").parent, "onPress");
     });
     await waitFor(() => {
       expect(setUser).not.toHaveBeenCalled();
@@ -85,7 +85,7 @@ describe("<LoginScreen />", () => {
       fireEvent(getByPlaceholderText("Password"), "onChangeText", "password");
     });
     act(() => {
-      fireEvent(getByText("Login").parent, "onPress");
+      fireEvent(getByText("Sign In").parent, "onPress");
     });
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe("<LoginScreen />", () => {
       fireEvent(getByPlaceholderText("Password"), "onChangeText", "password");
     });
     act(() => {
-      fireEvent.press(getByText("Login").parent);
+      fireEvent.press(getByText("Sign In").parent);
     });
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalled();
