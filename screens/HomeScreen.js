@@ -10,8 +10,10 @@ import { feedBackgroundColor } from "../config/defaultStyles";
 import AppButton from "../components/AppButton";
 import FixedText from "../components/FixedText";
 import ZoomLink from "../components/ZoomLink";
+import Survey from "../components/Survey";
 
-export default function HomeScreen() {
+
+export default function HomeScreen({navigation}) {
   const authContext = useContext(AuthContext);
 
   //content from the API
@@ -117,6 +119,8 @@ export default function HomeScreen() {
     }
     if (props.content.content.item_type === "Static") {
       return <FixedText data={props.content.content.item_object} />;
+    }else if(props.content.content.item_type === "Survey"){
+      return <Survey data={props.content.content} navigation={navigation}/>
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {
