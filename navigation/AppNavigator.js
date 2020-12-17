@@ -23,7 +23,11 @@ function HomeStackScreen() {
   const authContext = useContext(AuthContext);
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
-      <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: authContext.user.organization_data.name }} />
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: authContext.user.organization_data.name }}
+      />
       <HomeStack.Screen name="Notification" component={NotificationScreen} />
     </HomeStack.Navigator>
   );
@@ -33,11 +37,15 @@ function ProfileStackScreen() {
   const authContext = useContext(AuthContext);
   return (
     <ProfileStack.Navigator screenOptions={screenOptions}>
-      <ProfileStack.Screen name="Profile" component={AccountScreen} options={{title: authContext.user.first_name}}/>
+      <ProfileStack.Screen
+        name="Profile"
+        component={AccountScreen}
+        options={{ title: authContext.user.first_name }}
+      />
       <ProfileStack.Screen
         name="PersonalInfo"
         component={PersonalInfoScreen}
-        options={{title: "Edit personal info"}}
+        options={{ title: "Edit personal info" }}
       />
     </ProfileStack.Navigator>
   );
@@ -47,6 +55,7 @@ const AppNavigator = ({ testToken }) => {
   const authContext = useContext(AuthContext);
   useNotifications((notification) => {
     trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
+    console.log(notification);
     // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
       notification.notification.request.content.data.content_type === "Content"
@@ -59,8 +68,6 @@ const AppNavigator = ({ testToken }) => {
     ) {
       navigation.navigate("Notification", {
         notification,
-        title: notification.notification.request.content.title,
-        body: notification.notification.request.content.body,
       });
     } else {
       //Will record answer in future
