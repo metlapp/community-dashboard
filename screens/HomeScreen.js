@@ -105,6 +105,9 @@ export default function HomeScreen() {
       postData(payLoad);
     };
 
+    // add publication_date_time to content object, to be passed to components
+    props.content.content['publication_date_time'] = props.content.publication_date_time;
+
     if (props.content.content.item_type == "Question") {
       return (
         <Question
