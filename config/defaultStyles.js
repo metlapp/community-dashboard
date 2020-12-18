@@ -83,6 +83,10 @@ export default {
         height: 150,
         flex: 1,
     },
+  publishDate: {
+    size: 9,
+    marginVertical: 10,
+  },
 
     button: {
         borderRadius: 6,
