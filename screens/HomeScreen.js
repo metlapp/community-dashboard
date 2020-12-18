@@ -105,7 +105,6 @@ export default function HomeScreen() {
       deleteItem(props.content.id);
       postData(payLoad);
     };
-    console.log(props.content.content.item_object.content_type);
     if (props.content.content.item_type == "Question") {
       return (
         <Question

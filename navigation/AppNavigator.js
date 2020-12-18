@@ -28,7 +28,11 @@ function HomeStackScreen() {
         component={HomeScreen}
         options={{ title: authContext.user.organization_data.name }}
       />
-      <HomeStack.Screen name="Notification" component={NotificationScreen} />
+      <HomeStack.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -58,10 +62,6 @@ const AppNavigator = ({ testToken }) => {
     console.log(notification);
     // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
-      notification.notification.request.content.data.content_type === "Content"
-    ) {
-      navigation.navigate("Home");
-    } else if (
       // This will most likely need to be changed once our backend is sending the notifications
       notification.actionIdentifier ===
       "expo.modules.notifications.actions.DEFAULT"

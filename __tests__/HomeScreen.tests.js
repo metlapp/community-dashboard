@@ -83,6 +83,25 @@ beforeEach(() => {
               item_type: "Content",
             },
           },
+          {
+            id: 20,
+            publication_date_time: "2020-11-03T00:01:00Z",
+            notification_date_time: "2020-11-03T12:00:00Z",
+            content: {
+              id: 26,
+              item_object: {
+                id: 3,
+                title: "Zoom",
+                link: "https://zoom.us/j/92639612311?pwd=bWliWHVzQndOMENJblhtajV2WkZBZz09",
+                description:
+                  "Zoom Team Meeting!",
+                organization: 1,
+                categories: [],
+                content_type: "Zoom",
+              },
+              item_type: "Content",
+            },
+          },
         ],
       },
     });
@@ -129,6 +148,18 @@ describe("<HomeScreen />", () => {
     await flushPromises();
     const Article = getByText("Test Article");
     expect(Article).toBeTruthy();
+  });
+  it("Zoom Links are displayed correctly", async () => {
+    const user = { id: 3 };
+    const setUser = jest.fn();
+    const { getByText } = render(
+      <AuthContext.Provider value={{ user, setUser }}>
+        <HomeScreen />
+      </AuthContext.Provider>
+    );
+    await flushPromises();
+    const Zoom = getByText("Zoom");
+    expect(Zoom).toBeTruthy();
   });
   it("Statics are displayed correctly", async () => {
     const user = { id: 3 };

@@ -9,5 +9,6 @@ export const apiConfig = {
   urls: {
     static: "static-text",
     question: "questions",
+    content: "content",
   },
 };
