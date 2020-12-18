@@ -42,14 +42,13 @@ export default function HomeScreen() {
           }
         )
         .then((data) => {
+          //Will not display button when no more pages are available 
+          data.data.next == null ? setLoadMore(false) : setLoadMore(true);
           page === 1
             ? setContent(data.data.results)
             : setContent([...content, ...data.data.results]);
         })
-        .catch((err) => {
-          //Will not display button when a 404 is recievced from the server
-          err.response.status == 404 ? setLoadMore(false) : console.warn(err);
-        });
+        .catch(console.error);
     };
     fetchData();
   }, [page]);
@@ -81,7 +80,7 @@ export default function HomeScreen() {
     //Determines what type the answer is ans stes up the payload to send to the API
     const answerCallBack = (answer) => {
       //will need to change these values later to fit specific users and questions
-      let payLoad = { user: 1, question: props.content.content.item_object.id };
+      let payLoad = { user: authContext.user.id, question: props.content.content.item_object.id };
 
       //detrmines what data type was answered
       switch (props.content.content.item_object.question_type) {
