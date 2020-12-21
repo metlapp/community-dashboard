@@ -59,7 +59,6 @@ const AppNavigator = ({ testToken }) => {
   const authContext = useContext(AuthContext);
   useNotifications((notification) => {
     trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
-    console.log(notification);
     // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
       // This will most likely need to be changed once our backend is sending the notifications
