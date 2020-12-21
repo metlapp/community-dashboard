@@ -120,7 +120,7 @@ export default function HomeScreen({navigation}) {
     if (props.content.content.item_type === "Static") {
       return <FixedText data={props.content.content.item_object} />;
     }else if(props.content.content.item_type === "Survey"){
-      return <Survey data={props.content.content} navigation={navigation}/>
+      return <Survey data={props.content.content.item_object} navigation={navigation}/>
     }
     switch (props.content.content.item_object.content_type) {
       case "Video": {

@@ -9,10 +9,10 @@ const Survey = ({data, navigation}) =>{
     const authContext = useContext(AuthContext);
     return(
         <ContentCard>
-            <Title>{data.item_object.title}</Title>
-            <Text>{data.item_object.description}</Text>
+            <Title>{data.title}</Title>
+            <Text>{data.description}</Text>
             <Button onPress={()=>{
-                navigation.navigate('Question', {questions: data.item_object.questions}), 
+                navigation.navigate('Question', {questions: data.questions}), 
                 trackClick(authContext.user.id, data.id, "VIEWED", "APP");}}>Take Survey</Button>
         </ContentCard>
     )
