@@ -7,6 +7,7 @@ import ContentCard from "./ContentCard";
 import AuthContext from "../auth/Context";
 import { trackClick } from "./TrackClick";
 import defaultStyles from "../config/defaultStyles";
+import {DateTime} from "luxon";
 
 const Video = (props) => {
   const authContext = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Video = (props) => {
     <ContentCard>
       <View>
         <Title>{props.video.item_object.title}</Title>
-        <Text style={defaultStyles.publishDate}>{props.video.publication_date_time}</Text>
+        <Text style={defaultStyles.publishDate}>{DateTime.fromISO(props.video.publication_date_time).toLocaleString(DateTime.DATETIME_SHORT)}</Text>
         <TouchableOpacity
           style={styles.videoContainer}
           onPress={click}

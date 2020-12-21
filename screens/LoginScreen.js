@@ -38,7 +38,8 @@ export default function LoginScreen({navigation}) {
         authContext.setUser(data.data);
         authStorage.storeUser(data.data);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err.response);
         setError(true);
       });
   };

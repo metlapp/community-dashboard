@@ -1,4 +1,5 @@
 import React, {useContext, useState} from "react";
+import * as Localization from "expo-localization";
 import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Title, Checkbox} from "react-native-paper";
 import axios from "axios";
@@ -33,6 +34,7 @@ export default function RegistrationScreen({navigation}) {
           password: user.password,
           categories: [],
           organization: null,
+          timezone: Localization.timezone,
         },
         {
           auth: apiConfig.auth,
