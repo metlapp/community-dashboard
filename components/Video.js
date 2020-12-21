@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { WebView } from "react-native-webview";
-import { Title, Paragraph } from "react-native-paper";
+import { Title, Paragraph, Text } from "react-native-paper";
 import PropTypes from "prop-types";
 import ContentCard from "./ContentCard";
 import AuthContext from "../auth/Context";
 import { trackClick } from "./TrackClick";
+import defaultStyles from "../config/defaultStyles";
 
 const Video = (props) => {
   const authContext = useContext(AuthContext);
@@ -16,6 +17,7 @@ const Video = (props) => {
     <ContentCard>
       <View>
         <Title>{props.video.item_object.title}</Title>
+        <Text style={defaultStyles.publishDate}>{props.video.publication_date_time}</Text>
         <TouchableOpacity
           style={styles.videoContainer}
           onPress={click}
