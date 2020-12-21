@@ -9,6 +9,7 @@ import AuthContext from "../auth/Context";
 import { feedBackgroundColor } from "../config/defaultStyles";
 import AppButton from "../components/AppButton";
 import FixedText from "../components/FixedText";
+import ZoomLink from "../components/ZoomLink";
 
 export default function HomeScreen() {
   const authContext = useContext(AuthContext);
@@ -103,10 +104,9 @@ export default function HomeScreen() {
       deleteItem(props.content.id);
       postData(payLoad);
     };
-
+    
     // add publication_date_time to content object, to be passed to components
     props.content.content['publication_date_time'] = props.content.publication_date_time;
-
     if (props.content.content.item_type == "Question") {
       return (
         <Question
@@ -114,7 +114,8 @@ export default function HomeScreen() {
           answerCallBack={answerCallBack}
         />
       );
-    } else if (props.content.content.item_type === "Static") {
+    }
+    if (props.content.content.item_type === "Static") {
       return <FixedText data={props.content.content.item_object} />;
     }
     switch (props.content.content.item_object.content_type) {
@@ -123,6 +124,9 @@ export default function HomeScreen() {
       }
       case "Article": {
         return <Article article={props.content.content} />;
+      }
+      case "Zoom": {
+        return <ZoomLink data={props.content.content} />;
       }
     }
   };

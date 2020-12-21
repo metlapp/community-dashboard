@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import axios from "axios";
+import { openURL } from "expo-linking";
 
 import AuthContext from "../auth/Context";
 import { apiConfig } from "../config/config";
 import FixedText from "../components/FixedText";
 import Question from "../components/Question";
+import LoadingScreen from "./LoadingScreen";
 
 export default function NotificationScreen({ navigation, route }) {
   const authContext = useContext(AuthContext);
@@ -39,6 +41,20 @@ export default function NotificationScreen({ navigation, route }) {
           console.log(err);
         });
       setData(contentInfo);
+    } else if (contentType === "Content") {
+      const contentInfo = await axios
+        .get(apiConfig.baseUrl + `${apiConfig.urls.content}/${itemId}/`, {
+          auth: apiConfig.auth,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      if (contentInfo.data.content_type === "Zoom") {
+        navigation.navigate("Home");
+        openURL(contentInfo.data.link);
+      } else {
+        navigation.navigate("Home");
+      }
     }
   };
 
@@ -89,12 +105,11 @@ export default function NotificationScreen({ navigation, route }) {
         )}
       </View>
     );
+  }
+  if (contentType === "Content") {
+    return <LoadingScreen />;
   } else {
     // Will leave else here until we define Surveys
-    return (
-      <View>
-        <Text>else</Text>
-      </View>
-    );
+    return <Text>Else...</Text>;
   }
 }

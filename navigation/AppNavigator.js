@@ -23,8 +23,16 @@ function HomeStackScreen() {
   const authContext = useContext(AuthContext);
   return (
     <HomeStack.Navigator screenOptions={screenOptions}>
-      <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: authContext.user.organization_data.name }} />
-      <HomeStack.Screen name="Notification" component={NotificationScreen} />
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: authContext.user.organization_data.name }}
+      />
+      <HomeStack.Screen
+        name="Notification"
+        component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -33,11 +41,15 @@ function ProfileStackScreen() {
   const authContext = useContext(AuthContext);
   return (
     <ProfileStack.Navigator screenOptions={screenOptions}>
-      <ProfileStack.Screen name="Profile" component={AccountScreen} options={{title: authContext.user.first_name}}/>
+      <ProfileStack.Screen
+        name="Profile"
+        component={AccountScreen}
+        options={{ title: authContext.user.first_name }}
+      />
       <ProfileStack.Screen
         name="PersonalInfo"
         component={PersonalInfoScreen}
-        options={{title: "Edit personal info"}}
+        options={{ title: "Edit personal info" }}
       />
     </ProfileStack.Navigator>
   );
@@ -49,18 +61,12 @@ const AppNavigator = ({ testToken }) => {
     trackClick(authContext.user.id, null, "VIEWED", "NOTIFICATION");
     // If content type is content, we redirect to home page, otherwise we will go to the notification screen
     if (
-      notification.notification.request.content.data.content_type === "Content"
-    ) {
-      navigation.navigate("Home");
-    } else if (
       // This will most likely need to be changed once our backend is sending the notifications
       notification.actionIdentifier ===
       "expo.modules.notifications.actions.DEFAULT"
     ) {
       navigation.navigate("Notification", {
         notification,
-        title: notification.notification.request.content.title,
-        body: notification.notification.request.content.body,
       });
     } else {
       //Will record answer in future

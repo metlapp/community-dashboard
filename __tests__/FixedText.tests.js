@@ -69,7 +69,7 @@ beforeEach(() => {
   });
 });
 
-describe("Displpaying different FixedTexts on the <HomeScreen />", () => {
+describe("Displaying different FixedTexts", () => {
   it("displays a GREETING to the User", async () => {
     user = {
       id: 5,
