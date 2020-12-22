@@ -18,4 +18,8 @@ const Survey = ({data, navigation}) =>{
     )
 }
 
+Survey.propTypes = {
+    data: PropTypes.object,
+  };
+
 export default Survey

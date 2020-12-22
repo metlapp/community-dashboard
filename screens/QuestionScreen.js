@@ -6,7 +6,7 @@ import Question from "../components/Question";
 import AuthContext from "../auth/Context";
 import { trackClick } from "../components/TrackClick";
 import {Text} from "react-native-paper";
-import { HOST_WITH_PORT } from "../environment";
+
 
 const QuestionScreen = ({ navigation, route }) => {
   const [loading, setLoading] = React.useState(true);
