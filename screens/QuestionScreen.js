@@ -1,16 +1,19 @@
 import React, { useEffect, useContext } from "react";
-import { Appbar } from "react-native-paper";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView} from "react-native";
 import { apiConfig } from "../config/config";
 import axios from "axios";
 import Question from "../components/Question";
 import AuthContext from "../auth/Context";
 import { trackClick } from "../components/TrackClick";
+import {Text} from "react-native-paper";
 
-const QuestionScreen = ({ navigation }) => {
+
+const QuestionScreen = ({ navigation, route }) => {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState();
+  const [x, setX] = React.useState(0);
   const authContext = useContext(AuthContext);
+  const {questions} = route.params
 
   const postData = async (payLoad) => {
     axios
@@ -18,7 +21,13 @@ const QuestionScreen = ({ navigation }) => {
         auth: apiConfig.auth,
       })
       .then(() => {
-        navigation.navigate("Account");
+        if(questions.length != x+1){
+          setX(x+1)
+        }else{
+          navigation.navigate("Home")
+        }
+
+    
       })
       .catch((error) => {
         console.log(error);
@@ -27,7 +36,7 @@ const QuestionScreen = ({ navigation }) => {
   //Recieves Answers from child component and send it to the postData function to save
   const answerCallBack = (answer) => {
     //will need to change these values later to fit specific users and questions
-    let payLoad = { user: 1, question: data.id };
+    let payLoad = { user: authContext.user.id, question: data.id };
 
     //deteermines what data type was answered
     switch (data.question_type) {
@@ -51,11 +60,9 @@ const QuestionScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    //Grabs the specific question from api
     const fetchData = async () => {
       axios
-        .get(apiConfig.baseUrl + "questions/1/", {
-          //This is hard coded until we get a solution later
+        .get(apiConfig.baseUrl + `questions/${questions[x]}/`, {
           auth: apiConfig.auth,
         })
         .then((data) => {
@@ -68,12 +75,9 @@ const QuestionScreen = ({ navigation }) => {
         });
     };
     fetchData();
-  }, []);
+  }, [x]);
   return (
     <SafeAreaView>
-      <Appbar.Header>
-        <Appbar.Content title="QUESTION" />
-      </Appbar.Header>
       {loading ? (
         <Text>Loading</Text>
       ) : (

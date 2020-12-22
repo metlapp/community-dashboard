@@ -74,10 +74,16 @@ describe("Tracking Clicks", () => {
   });
   it("<QuestionScreen> Calls TrackClick when Question is viewed", async () => {
     const user = { id: 1 };
+    const navigation = {
+      navigate: jest.fn()
+    }
+    const route = {
+      params: jest.fn()
+    }
 
     const { getByTestId } = render(
       <AuthContext.Provider value={{ user }}>
-        <QuestionScreen />
+        <QuestionScreen navigation={navigation} route={route}/>
       </AuthContext.Provider>
     );
     await flushPromises();

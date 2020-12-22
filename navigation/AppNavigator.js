@@ -14,6 +14,7 @@ import HomeScreen from "../screens/HomeScreen";
 import AuthContext from "../auth/Context";
 import { trackClick } from "../components/TrackClick";
 import { screenOptions } from "../components/Header";
+import QuestionScreen from "../screens/QuestionScreen"
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -33,6 +34,7 @@ function HomeStackScreen() {
         component={NotificationScreen}
         options={{ headerShown: false }}
       />
+      <HomeStack.Screen name="Question" component={QuestionScreen} />
     </HomeStack.Navigator>
   );
 }

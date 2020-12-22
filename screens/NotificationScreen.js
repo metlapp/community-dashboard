@@ -8,6 +8,8 @@ import { apiConfig } from "../config/config";
 import FixedText from "../components/FixedText";
 import Question from "../components/Question";
 import LoadingScreen from "./LoadingScreen";
+import Survey from "../components/Survey"
+
 
 export default function NotificationScreen({ navigation, route }) {
   const authContext = useContext(AuthContext);
@@ -55,8 +57,17 @@ export default function NotificationScreen({ navigation, route }) {
       } else {
         navigation.navigate("Home");
       }
-    }
-  };
+      setData(contentInfo);
+    } else if (contentType === "Survey") {
+      const contentInfo = await axios
+        .get(apiConfig.baseUrl + `${apiConfig.urls.survey}/${itemId}/`, {
+          auth: apiConfig.auth,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+        setData(contentInfo);
+  };}
 
   //Posts the answer to the API
   const postData = async (payLoad) => {
@@ -105,11 +116,12 @@ export default function NotificationScreen({ navigation, route }) {
         )}
       </View>
     );
-  }
-  if (contentType === "Content") {
-    return <LoadingScreen />;
-  } else {
+  } else if(contentType === "Survey") {
     // Will leave else here until we define Surveys
-    return <Text>Else...</Text>;
+    return (
+      <View>
+        {!!data && (<Survey data={data.data} navigation={navigation} />)}
+      </View>
+    );
   }
 }
