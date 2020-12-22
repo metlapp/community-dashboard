@@ -84,7 +84,7 @@ export default {
         flex: 1,
     },
   publishDate: {
-    size: 9,
+    fontSize: 12,
     marginVertical: 10,
   },
 

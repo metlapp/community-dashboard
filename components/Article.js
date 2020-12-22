@@ -7,13 +7,15 @@ import { accentColor } from "../config/defaultStyles";
 import AuthContext from "../auth/Context";
 import { trackClick } from "./TrackClick";
 import defaultStyles from "../config/defaultStyles";
+import {DateTime} from "luxon";
+
 
 const Article = (props) => {
   const authContext = useContext(AuthContext);
   return (
     <ContentCard>
       <Title>{props.article.item_object.title}</Title>
-      <Text style={defaultStyles.publishDate}>{props.article.publication_date_time}</Text>
+      <Text style={defaultStyles.publishDate}>{DateTime.fromISO(props.article.publication_date_time).toLocaleString(DateTime.DATETIME_SHORT)}</Text>
       <Paragraph numberOfLines={2}>
         {props.article.item_object.description}
       </Paragraph>
